@@ -1,0 +1,8 @@
+:root {
+  --button--background-default: rgb(25, 118, 210);
+  --button--background-hover: rgb(21, 101, 192);
+  --button--background-active: rgb(11, 91, 170);
+  --button--background-disabled: grey;
+  --button--text-default: white;
+  --button--text-disabled: lightgrey;
+}
