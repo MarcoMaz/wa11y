@@ -1,5 +1,6 @@
 # Description
-This project is an unstyled UI library built with web components using the Lit framework. It provides a collection of reusable UI components that can be easily integrated into web applications.
+Unstyled UI library of Web Components (Lit).
+
 
 ## Features
 - **Web Components:** Utilizes Lit to create lightweight, encapsulated components.
@@ -14,4 +15,3 @@ To install and start using the library, follow these steps:
 1. Clone the repository: ```git clone https://github.com/your/repository.git```
 2. Install dependencies: ```npm install```
 3. Build the library: ```npm run build```
-# wa11y
