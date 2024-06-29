@@ -5,12 +5,24 @@ import { customElement, property } from 'lit/decorators.js';
 export class WaButton extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
-  @property({ type: String }) label = 'Default label';
+  @property({ type: String, reflect: true }) label?: string;
 
-  render() {
+  private handleClick() {
+    this.dispatchEvent(new CustomEvent('onClick'));
+  }
+
+  render() {    
+    const labelText = this.label || 'default button label';
+
     return html`
-      <button ?disabled="${this.disabled}" type="${this.type}" part="button">
-        ${this.label}
+      <button
+        ?disabled="${this.disabled}"
+        type="${this.type}"
+        .label=${labelText}
+        @click="${this.handleClick}"
+        part="button"
+      >
+        ${labelText}
       </button>
     `;
   }
