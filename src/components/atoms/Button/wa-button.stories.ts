@@ -64,8 +64,8 @@ export default {
 
   render: ({ disabled, label, type }) =>
     html`<wa-button
-      ?disabled=${disabled}
-      type=${type}
+      .disabled=${disabled}
+      .type=${type}
       .label=${label}
       @onClick=${() => alert('Custom event fired')}
       >${label}</wa-button
