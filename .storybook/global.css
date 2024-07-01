@@ -21,6 +21,13 @@
   --checkbox--checkmark-X: 0.375rem;
   --checkbox--checkmark-Y: 0.5rem;
   --checkbox--checkmark-color: #ffffff;
+
+  --radio--border-default-default: #E2E8F0;
+  --radio--border-default-hover: #B0BCC8;
+  --radio--border-default-active: #8099B4;
+  --radio--border-selected-default: #3182CE;
+  --radio--border-selected-hover: #2B6CB0;
+  --radio--border-selected-active: #1E547D;
   
   --chrome-outline: #a86d5a;
   --chrome-box-shadow: #f4a26e;
