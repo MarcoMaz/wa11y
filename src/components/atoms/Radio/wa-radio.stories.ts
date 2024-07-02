@@ -4,7 +4,7 @@ import { html } from 'lit';
 import './wa-radio';
 
 export default {
-  title: 'Radio',
+  title: 'Atoms/Radio',
   parameters: {
     layout: 'centered',
   },

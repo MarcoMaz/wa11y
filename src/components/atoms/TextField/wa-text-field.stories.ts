@@ -4,7 +4,7 @@ import { html } from 'lit';
 import './wa-text-field';
 
 export default {
-  title: 'Text Field',
+  title: 'Atoms/Text Field',
   parameters: {
     layout: 'centered',
   },

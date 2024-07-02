@@ -4,7 +4,7 @@ import { html } from 'lit';
 import './wa-button';
 
 export default {
-  title: 'Button',
+  title: 'Atoms/Button',
   parameters: {
     layout: 'centered',
   },

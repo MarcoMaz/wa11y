@@ -4,7 +4,7 @@ import { html } from 'lit';
 import './wa-checkbox';
 
 export default {
-  title: 'Checkbox',
+  title: 'Atoms/Checkbox',
   parameters: {
     layout: 'centered',
   },
