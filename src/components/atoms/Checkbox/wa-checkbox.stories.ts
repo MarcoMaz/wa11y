@@ -131,7 +131,7 @@ export default {
 
   render: ({ currentId, name, checked, focused }) =>
     html` <wa-checkbox
-      .currentId=${currentId}
+      .currentId="${currentId}"
       .name="${name}"
       .checked="${checked}"
       .focused="${focused}"
