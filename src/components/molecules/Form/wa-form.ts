@@ -7,6 +7,8 @@ import '../../atoms/Button/wa-button';
 export class WaForm extends LitElement {
   @property({ type: String, reflect: true }) buttonLabel =
     'default submit button';
+  @query('form')
+  formElement!: HTMLFormElement | null;
   @query('wa-button') submitButton!: HTMLElement | null;
   @queryAll('wa-text-field') textFields!: NodeListOf<HTMLElement>;
 
@@ -30,11 +32,14 @@ export class WaForm extends LitElement {
   }
 
   private setupTextFields() {
-    if (this.textFields.length === 0) {
+    if (this.textFields.length === 0 && this.formElement) {
       const defaultTextField = document.createElement(
         'wa-text-field'
       ) as HTMLElement;
-      this.appendChild(defaultTextField);
+      this.formElement.insertBefore(
+        defaultTextField,
+        this.formElement.firstChild
+      ); // Insert as first child
     }
   }
 
