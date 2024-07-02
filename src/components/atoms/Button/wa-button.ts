@@ -11,6 +11,17 @@ export class WaButton extends LitElement {
     this.dispatchEvent(new CustomEvent('onClick'));
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('onClick', this.handleClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('onClick', this.handleClick);
+    super.disconnectedCallback();
+  }
+
+
   render() {    
     const labelText = this.label || 'default button label';
 

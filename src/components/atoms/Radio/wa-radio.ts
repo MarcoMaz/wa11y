@@ -18,6 +18,17 @@ export class WaRadio extends LitElement {
     this.focused = !this.focused;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('change', this.handleChange);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('change', this.handleChange);
+    super.disconnectedCallback();
+  }
+
+
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
