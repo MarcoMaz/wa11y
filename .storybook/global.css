@@ -28,6 +28,11 @@
   --radio--border-selected-default: #3182CE;
   --radio--border-selected-hover: #2B6CB0;
   --radio--border-selected-active: #1E547D;
+
+  --text-field--border-default-default: #E2E8F0;
+  --text-field--border-default-hover: #B0BCC8;
+  --text-field--border-default-active: #8099B4;
+  --text-field--font-default: 1rem;
   
   --chrome-outline: #a86d5a;
   --chrome-box-shadow: #f4a26e;
