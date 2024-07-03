@@ -5,8 +5,7 @@ import '../../atoms/Button/wa-button';
 
 @customElement('wa-form')
 export class WaForm extends LitElement {
-  @property({ type: String, reflect: true }) buttonLabel =
-    'default submit button';
+  @property({ type: String, reflect: true }) buttonLabel!: string;
   @query('form')
   formElement!: HTMLFormElement | null;
   @query('wa-button') submitButton!: HTMLElement | null;
@@ -39,7 +38,7 @@ export class WaForm extends LitElement {
       this.formElement.insertBefore(
         defaultTextField,
         this.formElement.firstChild
-      ); // Insert as first child
+      );
     }
   }
 
@@ -79,6 +78,10 @@ export class WaForm extends LitElement {
     if (this.submitButton) {
       this.submitButton.setAttribute('label', label);
     }
+  }
+
+  createRenderRoot() {
+    return this;
   }
 
   render() {

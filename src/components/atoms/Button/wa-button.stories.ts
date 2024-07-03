@@ -20,48 +20,6 @@ export default {
       control: 'text',
     },
   },
-  decorators: [
-    (story) => html`
-      <style>
-        wa-button::part(button) {
-          display: inline-flex;
-        }
-
-        wa-button:hover {
-          cursor: pointer;
-        }
-
-        wa-button[disabled]::part(button) {
-          background: var(--button--background-disabled);
-          color: var(--button--text-disabled);
-          cursor: initial;
-        }
-
-        wa-button::part(button) {
-          align-items: center;
-          background: var(--button--background-default);
-          border: 0;
-          border-radius: 1rem;
-          color: var(--button--text-default);
-          display: inline-flex;
-          font-size: 1rem;
-          height: 2rem;
-          padding: 0.5rem 0.75rem;
-        }
-
-        wa-button:not([disabled])::part(button):hover {
-          background: var(--button--background-hover);
-          cursor: pointer;
-        }
-
-        wa-button:not([disabled])::part(button):active {
-          background: var(--button--background-active);
-        }
-      </style>
-      ${story()}
-    `,
-  ],
-
   render: ({ disabled, label, type }) =>
     html`<wa-button
       .disabled=${disabled}

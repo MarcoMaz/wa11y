@@ -25,39 +25,6 @@ export default {
       control: 'boolean',
     },
   },
-  decorators: [
-    (story) => html`
-      <style>
-        wa-text-field {
-          display: grid;
-        }
-
-        wa-text-field::part(label) {
-          display: flex;
-          font-family: arial;
-          font-size: var(--text-field--font-default);
-          margin-bottom: 0.25rem;
-        }
-
-        wa-text-field::part(input) {
-          border: 0.125rem solid var(--text-field--border-default-default);
-          border-radius: 0.375rem;
-          font-size: var(--text-field--font-default);
-          padding: 0.5rem;
-        }
-
-        wa-text-field::part(input):hover {
-          border-color: var(--text-field--border-default-hover);
-        }
-
-        wa-text-field::part(input)::placeholder {
-          color: var(--text-field--border-default-hover);
-        }
-      </style>
-      ${story()}
-    `,
-  ],
-
   render: ({ currentId, name, label, placeholder, required }) =>
     html`<wa-text-field
       .currentId="${currentId}"
