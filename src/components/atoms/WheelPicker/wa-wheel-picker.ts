@@ -10,8 +10,8 @@ export class WaWheelPicker extends LitElement {
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: String, reflect: true }) warningId?: string;
   @property({ type: String, reflect: true }) warningText?: string;
-  @property({ type: Number, reflect: true }) min: number = 1;
-  @property({ type: Number, reflect: true }) max: number = 10;
+  @property({ type: Number, reflect: true }) min?: number;
+  @property({ type: Number, reflect: true }) max?: number;
 
   @query('.BeatPicker') picker!: HTMLDivElement;
   @query('.BeatPicker__beats') pickerBeats!: HTMLDivElement;
@@ -24,9 +24,12 @@ export class WaWheelPicker extends LitElement {
   }
 
   private createElements(): void {
+    const min = this.min !== undefined ? this.min : 1;
+    const max = this.max !== undefined ? this.max : 10;
+  
     const missingNumbers = Array.from(
-      { length: this.max - this.min + 1 },
-      (_, i) => i + this.min
+      { length: max - min + 1 },
+      (_, i) => i + min
     );
 
     const spans = missingNumbers
@@ -67,7 +70,10 @@ export class WaWheelPicker extends LitElement {
   }
 
   private centerBeatOnLoad(): void {
-    const defaultAimNumber = Math.floor((this.max - this.min) / 2) + 1;
+    const min = this.min !== undefined ? this.min : 1;
+    const max = this.max !== undefined ? this.max : 10;
+  
+    const defaultAimNumber = Math.floor((max - min) / 2) + 1;
 
     const verticalCenterItem = this.pickerBeats.querySelector(
       `.BeatPicker__item:nth-of-type(${defaultAimNumber})`
@@ -125,12 +131,13 @@ export class WaWheelPicker extends LitElement {
     const warningElement = this.shadowRoot?.querySelector(
       '.warning'
     ) as HTMLSpanElement;
+    
 
     if (inputElement && warningElement) {
       const value = inputElement.valueAsNumber;
-      const min = this.min;
-      const max = this.max;
-
+      const min = this.min !== undefined ? this.min : 1;
+      const max = this.max !== undefined ? this.max : 10;
+  
       if (isNaN(value) || value < min || value > max) {
         warningElement.style.display = 'inline';
       } else {
@@ -145,12 +152,14 @@ export class WaWheelPicker extends LitElement {
     const currentName = this.name || 'defaultName';
     const currentWarningId = this.warningId || 'default-warning-id';
     const currentWarningText = this.warningText || 'default warning text';
-
+    const min = this.min || 1;
+    const max = this.max || 10;
+  
     return html`
       <label for="${ifDefined(currentId)}">${currentLabel}</label>
       <input
-        min="${this.min}"
-        max="${this.max}"
+        min="${min}"
+        max="${max}"
         type="number"
         id="${ifDefined(currentId)}"
         name="${currentName}"
@@ -172,3 +181,16 @@ declare global {
     'wa-wheel-picker': WaWheelPicker;
   }
 }
+
+/*
+- Clean up the whole class
+- Change the classnames of the component
+
+
+RESOURCES:
+- https://v10.carbondesignsystem.com/components/number-input/accessibility/
+- https://designsystem.backbase.com/web-components/input-number/web#_interactive-demo
+- https://carbondesignsystem.com/components/number-input/accessibility/ 
+
+Future Feat: Aim is editable.
+*/
