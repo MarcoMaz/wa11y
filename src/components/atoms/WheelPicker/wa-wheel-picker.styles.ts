@@ -15,12 +15,12 @@ export const wheelPickerStyles = css`
     width: fit-content;
   }
 
-  .BeatPicker {
+  .WheelPicker {
     position:relative
   }
 
-  .BeatPicker:after,
-  .BeatPicker:before {
+  .WheelPicker:after,
+  .WheelPicker:before {
     content:" ";
     height:calc(50% - 1.5rem);
     pointer-events:none;
@@ -28,16 +28,16 @@ export const wheelPickerStyles = css`
     width:100%
   }
 
-  .BeatPicker:before{
+  .WheelPicker:before{
     background:linear-gradient(180deg, var(--color-white) 25%,transparent)
   }
 
-  .BeatPicker:after{
+  .WheelPicker:after{
     background:linear-gradient(0deg, var(--color-white) 25%,transparent);
     bottom:0
   }
 
-  .BeatPicker__beats{
+  .WheelPicker__items{
     font-family: Arial;
     font-size:2rem;
     font-weight:lighter;
@@ -47,26 +47,26 @@ export const wheelPickerStyles = css`
     scrollbar-width:none
   }
 
-  .BeatPicker__beats::-webkit-scrollbar{
+  .WheelPicker__items::-webkit-scrollbar{
     display:none
   }
     
-  .BeatPicker__item{
+  .WheelPicker__item{
     align-items:center;
     display:flex;
     height:3rem;
     scroll-snap-align:center
   }
 
-  .BeatPicker__item:first-of-type{
+  .WheelPicker__item:first-of-type{
     margin-top:6rem
   }
 
-  .BeatPicker__item:nth-last-child(2){
+  .WheelPicker__item:nth-last-child(2){
     margin-bottom:6rem
   }
 
-  .BeatPicker__aim{
+  .WheelPicker__aim{
     border:.125rem solid var(--wheel-picker--border-default-default);
     border-radius:.375rem;
     box-sizing:content-box;
@@ -78,12 +78,12 @@ export const wheelPickerStyles = css`
     width:3rem
   }
 
-  .-focus .BeatPicker__aim{
+  .-focus .WheelPicker__aim{
     display:block
   }
 
-  .BeatPicker__aim:after,
-  .BeatPicker__aim:before{
+  .WheelPicker__aim:after,
+  .WheelPicker__aim:before{
     background: var(--color-white);
     content:" ";
     height:2.5rem;
@@ -92,42 +92,42 @@ export const wheelPickerStyles = css`
     width:.125rem
   }
 
-  .BeatPicker__aim:before{
+  .WheelPicker__aim:before{
     left:-.125rem
   }
     
-  .BeatPicker__aim:after{
+  .WheelPicker__aim:after{
     right:-.125rem
   }
 
-  .BeatPicker__aim {
+  .WheelPicker__aim {
     display: flex;
     left: unset;
   }
 
-  .BeatPicker__beats {
+  .WheelPicker__items {
     width: 3.5rem;
   }
 
-  .BeatPicker__item {
+  .WheelPicker__item {
     justify-content: center;
     position: relative;
     width: 3rem;
     z-index: 999;
   }
 
-  .BeatPicker::before,
-  .BeatPicker::after {
+  .WheelPicker::before,
+  .WheelPicker::after {
     z-index: 9999;
   }
 
-  :host(:focus-within) .BeatPicker {
+  :host(:focus-within) .WheelPicker {
     outline: 1px solid var(--chrome-outline);
     box-shadow: 0 0 0 2px var(--chrome-box-shadow);
   }
 
   label,
-  .warning {
+  .WheelPicker__warning {
     font-family: arial;
     font-size: 1rem;
     padding: 0.5rem;

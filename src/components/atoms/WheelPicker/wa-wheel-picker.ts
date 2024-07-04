@@ -3,6 +3,13 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { wheelPickerStyles } from './wa-wheel-picker.styles';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+const WHEEL_PICKER_CLASS = 'WheelPicker';
+const WHEEL_PICKER_ITEMS_CLASS = 'WheelPicker__items';
+const WHEEL_PICKER_ITEM_CLASS = 'WheelPicker__item';
+const WHEEL_PICKER_AIM_CLASS = 'WheelPicker__aim';
+const WHEEL_PICKER_WARNING_CLASS = 'WheelPicker__warning';
+const WHEEL_PICKER_CENTER_CLASS = '-center';
+
 @customElement('wa-wheel-picker')
 export class WaWheelPicker extends LitElement {
   @property({ type: String, reflect: true }) currentId?: string;
@@ -13,8 +20,8 @@ export class WaWheelPicker extends LitElement {
   @property({ type: Number, reflect: true }) min?: number;
   @property({ type: Number, reflect: true }) max?: number;
 
-  @query('.BeatPicker') picker!: HTMLDivElement;
-  @query('.BeatPicker__beats') pickerBeats!: HTMLDivElement;
+  @query(`.${WHEEL_PICKER_CLASS}`) wheelPicker!: HTMLDivElement;
+  @query(`.${WHEEL_PICKER_ITEMS_CLASS}`) wheelPickerItems!: HTMLDivElement;
 
   static styles = wheelPickerStyles;
 
@@ -26,25 +33,25 @@ export class WaWheelPicker extends LitElement {
   private createElements(): void {
     const min = this.min !== undefined ? this.min : 1;
     const max = this.max !== undefined ? this.max : 10;
-  
+
     const missingNumbers = Array.from(
       { length: max - min + 1 },
       (_, i) => i + min
     );
 
     const spans = missingNumbers
-      .map((beat) => `<span class="BeatPicker__item">${beat}</span>`)
+      .map((beat) => `<span class="${WHEEL_PICKER_ITEM_CLASS}">${beat}</span>`)
       .join('');
 
-    if (this.pickerBeats) {
-      this.pickerBeats.innerHTML = spans;
+    if (this.wheelPickerItems) {
+      this.wheelPickerItems.innerHTML = spans;
     }
 
     const beatPickerAimElement = document.createElement('span');
-    beatPickerAimElement.classList.add('BeatPicker__aim');
+    beatPickerAimElement.classList.add(WHEEL_PICKER_AIM_CLASS);
 
-    if (this.pickerBeats) {
-      this.pickerBeats.appendChild(beatPickerAimElement);
+    if (this.wheelPickerItems) {
+      this.wheelPickerItems.appendChild(beatPickerAimElement);
     }
   }
 
@@ -54,7 +61,7 @@ export class WaWheelPicker extends LitElement {
       window.scrollY + pickerBounds.top + pickerBounds.height / 2;
 
     const centerItem = Array.from(
-      element.querySelectorAll('.BeatPicker__item')
+      element.querySelectorAll(`.${WHEEL_PICKER_ITEM_CLASS}`)
     ).find((item) => {
       const itemBounds = item.getBoundingClientRect();
       const itemTopY = window.scrollY + itemBounds.top;
@@ -63,39 +70,41 @@ export class WaWheelPicker extends LitElement {
     });
 
     element
-      .querySelectorAll('.BeatPicker__item')
-      .forEach((item) => item.classList.remove('-center'));
+      .querySelectorAll(`.${WHEEL_PICKER_ITEM_CLASS}`)
+      .forEach((item) => item.classList.remove(WHEEL_PICKER_CENTER_CLASS));
 
-    if (centerItem) centerItem.classList.add('-center');
+    if (centerItem) centerItem.classList.add(WHEEL_PICKER_CENTER_CLASS);
   }
 
   private centerBeatOnLoad(): void {
     const min = this.min !== undefined ? this.min : 1;
     const max = this.max !== undefined ? this.max : 10;
-  
+
     const defaultAimNumber = Math.floor((max - min) / 2) + 1;
 
-    const verticalCenterItem = this.pickerBeats.querySelector(
-      `.BeatPicker__item:nth-of-type(${defaultAimNumber})`
+    const verticalCenterItem = this.wheelPickerItems.querySelector(
+      `.${WHEEL_PICKER_ITEM_CLASS}:nth-of-type(${defaultAimNumber})`
     ) as HTMLElement | null;
 
     if (verticalCenterItem) {
       const centerItemPositionY =
         verticalCenterItem.offsetTop -
-        this.pickerBeats.offsetHeight / 2 +
+        this.wheelPickerItems.offsetHeight / 2 +
         verticalCenterItem.offsetHeight / 2;
 
       requestAnimationFrame(() => {
-        this.pickerBeats.scrollTop = centerItemPositionY;
-        this.highlightCenterItem(this.pickerBeats);
+        this.wheelPickerItems.scrollTop = centerItemPositionY;
+        this.highlightCenterItem(this.wheelPickerItems);
       });
     }
   }
 
   private handleScroll(): void {
-    this.highlightCenterItem(this.picker);
+    this.highlightCenterItem(this.wheelPicker);
 
-    const centerItem = this.picker.querySelector('.BeatPicker__item.-center');
+    const centerItem = this.wheelPicker.querySelector(
+      `.${WHEEL_PICKER_ITEM_CLASS}.${WHEEL_PICKER_CENTER_CLASS}`
+    );
     if (centerItem) {
       const value = centerItem.textContent;
       const inputElement = this.shadowRoot?.querySelector('input');
@@ -108,19 +117,19 @@ export class WaWheelPicker extends LitElement {
 
   private onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).valueAsNumber;
-    const centerItem = this.pickerBeats.querySelector(
-      `.BeatPicker__item:nth-of-type(${value})`
+    const centerItem = this.wheelPickerItems.querySelector(
+      `.${WHEEL_PICKER_ITEM_CLASS}:nth-of-type(${value})`
     ) as HTMLElement | null;
 
     if (centerItem) {
       const centerItemPositionY =
         centerItem.offsetTop -
-        this.pickerBeats.offsetHeight / 2 +
+        this.wheelPickerItems.offsetHeight / 2 +
         centerItem.offsetHeight / 2;
 
       requestAnimationFrame(() => {
-        this.pickerBeats.scrollTop = centerItemPositionY;
-        this.highlightCenterItem(this.pickerBeats);
+        this.wheelPickerItems.scrollTop = centerItemPositionY;
+        this.highlightCenterItem(this.wheelPickerItems);
         this.validateInput();
       });
     }
@@ -129,15 +138,14 @@ export class WaWheelPicker extends LitElement {
   private validateInput() {
     const inputElement = this.shadowRoot?.querySelector('input');
     const warningElement = this.shadowRoot?.querySelector(
-      '.warning'
+      `.${WHEEL_PICKER_WARNING_CLASS}`
     ) as HTMLSpanElement;
-    
 
     if (inputElement && warningElement) {
       const value = inputElement.valueAsNumber;
       const min = this.min !== undefined ? this.min : 1;
       const max = this.max !== undefined ? this.max : 10;
-  
+
       if (isNaN(value) || value < min || value > max) {
         warningElement.style.display = 'inline';
       } else {
@@ -154,7 +162,7 @@ export class WaWheelPicker extends LitElement {
     const currentWarningText = this.warningText || 'default warning text';
     const min = this.min || 1;
     const max = this.max || 10;
-  
+
     return html`
       <label for="${ifDefined(currentId)}">${currentLabel}</label>
       <input
@@ -166,10 +174,13 @@ export class WaWheelPicker extends LitElement {
         @input="${this.onInputChange}"
         aria-describedby="${currentWarningId}"
       />
-      <div class="BeatPicker">
-        <div class="BeatPicker__beats" @scroll="${this.handleScroll}"></div>
+      <div class="${WHEEL_PICKER_CLASS}">
+        <div
+          class="${WHEEL_PICKER_ITEMS_CLASS}"
+          @scroll="${this.handleScroll}"
+        ></div>
       </div>
-      <span class="warning" id="${currentWarningId}"
+      <span class="${WHEEL_PICKER_WARNING_CLASS}" id="${currentWarningId}"
         >${currentWarningText}</span
       >
     `;
