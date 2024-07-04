@@ -4,6 +4,7 @@ import { wheelPickerStyles } from './wa-wheel-picker.styles';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 const WHEEL_PICKER_CLASS = 'WheelPicker';
+const WHEEL_PICKER_INPUT_CLASS = "WheelPicker__input";
 const WHEEL_PICKER_ITEMS_CLASS = 'WheelPicker__items';
 const WHEEL_PICKER_ITEM_CLASS = 'WheelPicker__item';
 const WHEEL_PICKER_AIM_CLASS = 'WheelPicker__aim';
@@ -21,7 +22,9 @@ export class WaWheelPicker extends LitElement {
   @property({ type: Number, reflect: true }) max?: number;
 
   @query(`.${WHEEL_PICKER_CLASS}`) wheelPicker!: HTMLDivElement;
+  @query(`.${WHEEL_PICKER_INPUT_CLASS}`) wheelPickerInput!: HTMLInputElement;
   @query(`.${WHEEL_PICKER_ITEMS_CLASS}`) wheelPickerItems!: HTMLDivElement;
+  @query(`.${WHEEL_PICKER_WARNING_CLASS}`) wheelPickerWarning!: HTMLSpanElement;
 
   static styles = wheelPickerStyles;
 
@@ -107,9 +110,9 @@ export class WaWheelPicker extends LitElement {
     );
     if (centerItem) {
       const value = centerItem.textContent;
-      const inputElement = this.shadowRoot?.querySelector('input');
-      if (inputElement && value) {
-        inputElement.value = value;
+
+      if (this.wheelPickerInput && value) {
+        this.wheelPickerInput.value = value;
         this.validateInput();
       }
     }
@@ -136,20 +139,15 @@ export class WaWheelPicker extends LitElement {
   }
 
   private validateInput() {
-    const inputElement = this.shadowRoot?.querySelector('input');
-    const warningElement = this.shadowRoot?.querySelector(
-      `.${WHEEL_PICKER_WARNING_CLASS}`
-    ) as HTMLSpanElement;
-
-    if (inputElement && warningElement) {
-      const value = inputElement.valueAsNumber;
+    if (this.wheelPickerInput && this.wheelPickerWarning) {
+      const value = this.wheelPickerInput.valueAsNumber;
       const min = this.min !== undefined ? this.min : 1;
       const max = this.max !== undefined ? this.max : 10;
 
       if (isNaN(value) || value < min || value > max) {
-        warningElement.style.display = 'inline';
+        this.wheelPickerWarning.style.display = 'inline';
       } else {
-        warningElement.style.display = 'none';
+        this.wheelPickerWarning.style.display = 'none';
       }
     }
   }
@@ -166,6 +164,7 @@ export class WaWheelPicker extends LitElement {
     return html`
       <label for="${ifDefined(currentId)}">${currentLabel}</label>
       <input
+        class="${WHEEL_PICKER_INPUT_CLASS}"
         min="${min}"
         max="${max}"
         type="number"
