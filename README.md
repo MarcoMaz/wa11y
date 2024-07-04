@@ -14,6 +14,6 @@ Unstyled UI library of Web Components (Lit).
 ## Installation
 To install and start using the library, follow these steps:
 
-1. Clone the repository: ```git clone https://github.com/your/repository.git```
+1. Clone the repository: ```git clone https://github.com/MarcoMaz/wa11y-ui.git```
 2. Install dependencies: ```npm install```
 3. Build the library: ```npm run build```
