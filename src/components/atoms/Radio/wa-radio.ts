@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 export class WaRadio extends LitElement {
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) name?: string;
-  @property({ type: Boolean, reflect: true }) checked = false;
+  @property({ type: Boolean, reflect: true }) checked?: boolean;
   @property({ type: Boolean, reflect: true }) focused = false;
 
   private handleChange() {
@@ -18,20 +18,10 @@ export class WaRadio extends LitElement {
     this.focused = !this.focused;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('change', this.handleChange);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener('change', this.handleChange);
-    super.disconnectedCallback();
-  }
-
-
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
+    const checked = this.checked || false;
 
     return html`
       <label id="${currentId}" part="label">
@@ -40,10 +30,10 @@ export class WaRadio extends LitElement {
           id="${ifDefined(currentId)}"
           value="${ifDefined(currentId)}"
           name="${ifDefined(currentName)}"
-          ?checked="${this.checked}"
+          ?checked="${checked}"
           @change="${this.handleChange}"
           @focus="${this.handleFocus}"
-          aria-checked="${this.checked}"
+          aria-checked="${checked}"
           part="input"
         />
         <span part="span">
