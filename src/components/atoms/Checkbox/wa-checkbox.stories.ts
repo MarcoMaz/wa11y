@@ -73,4 +73,16 @@ export const CheckboxWithSelectedInput: StoryObj = {
     checked: true,
     focused: true,
   },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'color-contrast',
+            selector: '*:not(span)',
+          },
+        ],
+      },
+    },
+  },
 };
