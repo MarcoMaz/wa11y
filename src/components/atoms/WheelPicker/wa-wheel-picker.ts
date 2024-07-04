@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { wheelPickerStyles } from './wa-wheel-picker.styles';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 const WHEEL_PICKER_CLASS = 'WheelPicker';
@@ -25,8 +24,6 @@ export class WaWheelPicker extends LitElement {
   @query(`.${WHEEL_PICKER_INPUT_CLASS}`) wheelPickerInput!: HTMLInputElement;
   @query(`.${WHEEL_PICKER_ITEMS_CLASS}`) wheelPickerItems!: HTMLDivElement;
   @query(`.${WHEEL_PICKER_WARNING_CLASS}`) wheelPickerWarning!: HTMLSpanElement;
-
-  static styles = wheelPickerStyles;
 
   firstUpdated(): void {
     this.createElements();
@@ -150,6 +147,10 @@ export class WaWheelPicker extends LitElement {
         this.wheelPickerWarning.style.display = 'none';
       }
     }
+  }
+
+  createRenderRoot() {
+    return this;
   }
 
   render() {
