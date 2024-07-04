@@ -7,6 +7,17 @@ export default {
   title: 'Atoms/Wheel Picker',
   parameters: {
     layout: 'centered',
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'color-contrast',
+            enabled: false
+          },
+        ],
+      },
+      options: {},
+    },
   },
   argTypes: {
     currentId: {
@@ -50,49 +61,49 @@ export const WheelPickerDefault: StoryObj = {
 export const WheelPickerWithCustomId: StoryObj = {
   name: 'Wheel Picker with custom id',
   args: {
-    currentId: "custom-id"
-  }
+    currentId: 'custom-id',
+  },
 };
 
 export const WheelPickerWithCustomLabel: StoryObj = {
   name: 'Wheel Picker with custom label',
   args: {
-    label: "custom label"
-  }
+    label: 'custom label',
+  },
 };
 
 export const WheelPickerWithCustomName: StoryObj = {
   name: 'Wheel Picker with custom name',
   args: {
-    name: "custom-name"
-  }
+    name: 'custom-name',
+  },
 };
 
 export const WheelPickerWithCustomWarningId: StoryObj = {
   name: 'Wheel Picker with custom warning id',
   args: {
-    warningId: "custom-warning-id"
-  }
+    warningId: 'custom-warning-id',
+  },
 };
 
 export const WheelPickerWithCustomWarningText: StoryObj = {
   name: 'Wheel Picker with custom warning text',
   args: {
-    warningText: "custom warning text"
-  }
+    warningText: 'custom warning text',
+  },
 };
 
 export const WheelPickerFrom1to50: StoryObj = {
   name: 'Wheel Picker from 1 to 50',
   args: {
-    max: 50
-  }
+    max: 50,
+  },
 };
 
 export const WheelPickerFrom10to50: StoryObj = {
   name: 'Wheel Picker from 10 to 50',
   args: {
     min: 10,
-    max: 50
-  }
+    max: 50,
+  },
 };

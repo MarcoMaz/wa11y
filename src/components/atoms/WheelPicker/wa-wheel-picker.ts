@@ -176,6 +176,7 @@ export class WaWheelPicker extends LitElement {
       />
       <div class="${WHEEL_PICKER_CLASS}">
         <div
+          tabindex="0"
           class="${WHEEL_PICKER_ITEMS_CLASS}"
           @scroll="${this.handleScroll}"
         ></div>
