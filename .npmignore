@@ -1,0 +1,6 @@
+.git/
+.vscode/
+.storybook/
+node_modules/
+src/
+storybook-static/
