@@ -1,7 +1,15 @@
 {
   "name": "wa11y",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "Unstyled UI library of Web Components (Lit).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcoMaz/wa11y.git"
+  },
+  "keywords": [],
+  "author": "Marco Mazzai",
+  "license": "MIT",
+  "homepage": "https://wa11y-storybook.netlify.app/",
   "type": "module",
   "scripts": {
     "dev": "vite",
