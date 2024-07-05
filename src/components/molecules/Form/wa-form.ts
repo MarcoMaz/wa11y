@@ -2,10 +2,12 @@ import { LitElement, html, PropertyValues } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
 
 import '../../atoms/Button/wa-button';
+import "../../atoms/TextField/wa-text-field";
 
 @customElement('wa-form')
 export class WaForm extends LitElement {
   @property({ type: String, reflect: true }) buttonLabel!: string;
+
   @query('form')
   formElement!: HTMLFormElement | null;
   @query('wa-button') submitButton!: HTMLElement | null;
@@ -14,7 +16,6 @@ export class WaForm extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.updateComplete.then(() => {
-      this.setupTextFields();
       this.setupButtonEvent();
     });
   }
@@ -27,18 +28,6 @@ export class WaForm extends LitElement {
   updated(changedProperties: PropertyValues) {
     if (changedProperties.has('buttonLabel')) {
       this.updateButtonLabelState(this.buttonLabel);
-    }
-  }
-
-  private setupTextFields() {
-    if (this.textFields.length === 0 && this.formElement) {
-      const defaultTextField = document.createElement(
-        'wa-text-field'
-      ) as HTMLElement;
-      this.formElement.insertBefore(
-        defaultTextField,
-        this.formElement.firstChild
-      );
     }
   }
 
@@ -60,10 +49,16 @@ export class WaForm extends LitElement {
     }
   }
 
+  private updateButtonLabelState(label: string) {
+    if (this.submitButton) {
+      this.submitButton.setAttribute('label', label);
+    }
+  }
+
   private handleSubmit(event: Event) {
     event.preventDefault();
     const values = Array.from(this.textFields).map((field) => {
-      const input = field.shadowRoot?.querySelector('input');
+      const input = field.querySelector('input');
       return input ? input.value : '';
     });
     const submitEvent = new CustomEvent('formSubmit', {
@@ -74,11 +69,13 @@ export class WaForm extends LitElement {
     this.dispatchEvent(submitEvent);
   }
 
-  private updateButtonLabelState(label: string) {
-    if (this.submitButton) {
-      this.submitButton.setAttribute('label', label);
+  private renderTextFields() {
+    if (this.children.length === 0) {
+      return html`<wa-text-field label="Default Field"></wa-text-field>`;
     }
+    return html`${Array.from(this.children)}`;
   }
+
 
   createRenderRoot() {
     return this;
@@ -86,12 +83,13 @@ export class WaForm extends LitElement {
 
   render() {
     return html`
-      <form part="form">
-        <slot></slot>
+      <form @submit="${this.handleSubmit}">
+        ${this.renderTextFields()}
         <wa-button type="submit"></wa-button>
       </form>
     `;
   }
+
 }
 
 declare global {
