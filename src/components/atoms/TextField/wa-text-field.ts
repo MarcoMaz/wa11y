@@ -17,14 +17,8 @@ export class WaTextField extends LitElement {
     );
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('change', this.handleChange);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener('change', this.handleChange);
-    super.disconnectedCallback();
+  createRenderRoot() {
+    return this;
   }
 
   render() {
@@ -35,7 +29,7 @@ export class WaTextField extends LitElement {
     const ariaLabel = this.label ? undefined : currentLabel;
 
     return html`
-      <label for="${currentId}" part="label">${currentLabel}</label>
+      <label for="${currentId}">${currentLabel}</label>
       <input
         type="text"
         placeholder="${ifDefined(currentPlaceholder)}"
@@ -44,7 +38,6 @@ export class WaTextField extends LitElement {
         ?required="${this.required}"
         @change="${this.handleChange}"
         aria-label="${ifDefined(ariaLabel)}"
-        part="input"
       />
     `;
   }
