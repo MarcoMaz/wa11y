@@ -27,10 +27,10 @@ export class WaCheckbox extends LitElement {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const labelText = this.label || 'default button label';
+    const labelText = this.label || 'default checkbox label';
 
     return html`
-      <label id="${currentId}" part="label">
+      <label id="${currentId}">
         <input
           type="checkbox"
           id="${ifDefined(currentId)}"
@@ -39,9 +39,8 @@ export class WaCheckbox extends LitElement {
           @change="${this.handleChange}"
           @focus="${this.handleFocus}"
           aria-checked="${checked}"
-          part="input"
         />
-        <span part="span">${labelText}</span>
+        <span>${labelText}</span>
       </label>
     `;
   }

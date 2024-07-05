@@ -24,7 +24,6 @@ export class WaButton extends LitElement {
         type="${this.type}"
         .label=${labelText}
         @click="${this.handleClick}"
-        part="button"
       >
         ${labelText}
       </button>
