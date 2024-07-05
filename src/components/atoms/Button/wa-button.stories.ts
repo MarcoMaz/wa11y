@@ -26,7 +26,7 @@ export default {
       .type=${type}
       .label=${label}
       @onClick=${() => alert('Custom event fired')}
-      >${label}</wa-button
+      ></wa-button
     >`,
 } as Meta;
 

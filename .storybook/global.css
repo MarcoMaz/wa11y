@@ -42,39 +42,41 @@
   --chrome-box-shadow: #f4a26e;
 }
 
-wa-button::part(button) {
+wa-button {
   display: inline-flex;
-}
+  
+  &:hover {
+    cursor: pointer;
+  }
 
-wa-button:hover {
-  cursor: pointer;
-}
-
-wa-button[disabled]::part(button) {
-  background: var(--button--background-disabled);
-  color: var(--button--text-disabled);
-  cursor: initial;
-}
-
-wa-button::part(button) {
-  align-items: center;
-  background: var(--button--background-default);
-  border: 0;
-  border-radius: 1rem;
-  color: var(--button--text-default);
-  display: inline-flex;
-  font-size: 1rem;
-  height: 2rem;
-  padding: 0.5rem 0.75rem;
-}
-
-wa-button:not([disabled])::part(button):hover {
-  background: var(--button--background-hover);
-  cursor: pointer;
-}
-
-wa-button:not([disabled])::part(button):active {
-  background: var(--button--background-active);
+  & button {
+    align-items: center;
+    background: var(--button--background-default);
+    border: 0;
+    border-radius: 1rem;
+    color: var(--button--text-default);
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  &:not([disabled]) {
+    & button:hover {
+      background: var(--button--background-hover);
+      cursor: pointer;  
+    }
+  
+    & button:active {
+      background: var(--button--background-active);  
+    }
+  }
+  
+  &[disabled] button {
+    background: var(--button--background-disabled);
+    color: var(--button--text-disabled);
+    cursor: initial;
+  }
 }
 
 wa-checkbox {
