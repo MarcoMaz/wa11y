@@ -8,6 +8,7 @@ export class WaCheckbox extends LitElement {
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: Boolean, reflect: true }) checked?: boolean;
   @property({ type: Boolean, reflect: true }) focused = false;
+  @property({ type: String, reflect: true }) label?: string;
 
   private handleChange() {
     this.checked = !this.checked;
@@ -26,6 +27,7 @@ export class WaCheckbox extends LitElement {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
+    const labelText = this.label || 'default button label';
 
     return html`
       <label id="${currentId}" part="label">
@@ -39,9 +41,7 @@ export class WaCheckbox extends LitElement {
           aria-checked="${checked}"
           part="input"
         />
-        <span part="span">
-          <slot>default text</slot>
-        </span>
+        <span part="span">${labelText}</span>
       </label>
     `;
   }

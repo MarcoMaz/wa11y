@@ -21,13 +21,17 @@ export default {
     focused: {
       control: 'boolean',
     },
+    label: {
+      control: "text"
+    }
   },
-  render: ({ currentId, name, checked, focused }) =>
+  render: ({ currentId, name, checked, focused, label }) =>
     html` <wa-checkbox
       .currentId="${currentId}"
       .name="${name}"
       .checked="${checked}"
       .focused="${focused}"
+      .label="${label}"
     ></wa-checkbox>`,
 } as Meta;
 
@@ -54,10 +58,6 @@ export const CheckboxWithCustomLabel: StoryObj = {
   args: {
     label: 'Custom Label',
   },
-  argTypes: {
-    label: { control: 'text' },
-  },
-  render: ({ label }) => html`<wa-checkbox label="${label}"></wa-checkbox>`,
 };
 
 export const CheckboxWithFocusedInput: StoryObj = {
