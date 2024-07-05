@@ -18,6 +18,10 @@ export class WaCheckbox extends LitElement {
     this.focused = !this.focused;
   }
 
+  createRenderRoot() {
+    return this;
+  }
+
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';

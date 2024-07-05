@@ -57,7 +57,7 @@ export const CheckboxWithCustomLabel: StoryObj = {
   argTypes: {
     label: { control: 'text' },
   },
-  render: ({ label }) => html`<wa-checkbox>${label}</wa-checkbox>`,
+  render: ({ label }) => html`<wa-checkbox label="${label}"></wa-checkbox>`,
 };
 
 export const CheckboxWithFocusedInput: StoryObj = {
