@@ -21,13 +21,17 @@ export default {
     focused: {
       control: 'boolean',
     },
+    label: {
+      control: 'text',
+    },
   },
-  render: ({ currentId, name, checked, focused }) =>
+  render: ({ currentId, name, checked, focused, label }) =>
     html`<wa-radio
       .currentId=${currentId}
       .name="${name}"
       .checked="${checked}"
       .focused="${focused}"
+      .label="${label}"
     ></wa-radio>`,
 } as Meta;
 
@@ -54,10 +58,6 @@ export const RadioWithCustomLabel: StoryObj = {
   args: {
     label: 'Custom Label',
   },
-  argTypes: {
-    label: { control: 'text' },
-  },
-  render: ({ label }) => html`<wa-radio>${label}</wa-radio>`,
 };
 
 export const RadioWithFocusedInput: StoryObj = {
