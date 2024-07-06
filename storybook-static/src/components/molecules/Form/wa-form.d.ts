@@ -8,11 +8,11 @@ export declare class WaForm extends LitElement {
     connectedCallback(): void;
     disconnectedCallback(): void;
     updated(changedProperties: PropertyValues): void;
-    private setupTextFields;
     private setupButtonEvent;
     private tearDownButtonEvent;
-    private handleSubmit;
     private updateButtonLabelState;
+    private handleSubmit;
+    private renderTextFields;
     createRenderRoot(): this;
     render(): import('lit-html').TemplateResult<1>;
 }

@@ -5,8 +5,10 @@ export declare class WaCheckbox extends LitElement {
     name?: string;
     checked?: boolean;
     focused: boolean;
+    label?: string;
     private handleChange;
     private handleFocus;
+    createRenderRoot(): this;
     render(): import('lit-html').TemplateResult<1>;
 }
 declare global {

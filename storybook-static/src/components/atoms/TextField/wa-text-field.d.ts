@@ -7,8 +7,7 @@ export declare class WaTextField extends LitElement {
     placeholder?: string;
     required: boolean;
     private handleChange;
-    connectedCallback(): void;
-    disconnectedCallback(): void;
+    createRenderRoot(): this;
     render(): import('lit-html').TemplateResult<1>;
 }
 declare global {

@@ -5,8 +5,7 @@ export declare class WaButton extends LitElement {
     type: 'button' | 'submit' | 'reset';
     label?: string;
     private handleClick;
-    connectedCallback(): void;
-    disconnectedCallback(): void;
+    createRenderRoot(): this;
     render(): import('lit-html').TemplateResult<1>;
 }
 declare global {
