@@ -25,3 +25,57 @@ Using the Light DOM allows these components to:
 2. **Consistency with Global Styles:** The Light DOM ensures that components naturally inherit and respect global CSS styles defined in the parent application. This avoids issues where styles need to be duplicated inside shadow roots, making the styling process simpler and more maintainable.
 3. **Flexibility in Theming:** By using the Light DOM, components can be easily themed using existing CSS variables, utility classes, and CSS-in-JS solutions available in the parent application, providing a unified and consistent look across the entire application.
 
+## Frameworks
+
+### React
+
+To use components from the wa11y-ui library in your React application, follow these steps:
+
+1. Install the library
+
+`npm install wa11y-ui` or `yarn add wa11y-ui`
+
+2. Import the component
+
+For example, to use the **wa-button** component:
+
+`import 'wa11y-ui/wa-button'`
+
+3. Use the component
+
+```
+import React from 'react';
+import 'wa11y-ui/wa-button';
+
+function App() {
+  return (
+    <>
+      <wa-button label="hello world!"></wa-button>
+    </>
+  );
+}
+
+export default App;
+```
+
+4. Add TypeScript declarations (First time only!)
+
+To ensure TypeScript correctly recognizes the custom elements, you need to add a declarations file. Create a file named `declarations.d.ts` in your `src` directory and add the following code:
+
+```
+/* eslint-disable @typescript-eslint/no-namespace */
+import * as React from 'react';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      [elemName: `wa-${string}`]: React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          [key: string]: string | number | boolean;
+        },
+        HTMLElement
+      >;
+    }
+  }
+}
+```
