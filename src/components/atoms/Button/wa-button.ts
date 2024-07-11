@@ -1,8 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 
 @customElement('wa-button')
-export class WaButton extends LitElement {
+export class WaButton extends DynamicStyleMixin(LitElement) {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
   @property({ type: String, reflect: true }) label?: string;
@@ -20,6 +21,7 @@ export class WaButton extends LitElement {
 
     return html`
       <button
+        class="${this.applyClassMap('button')}"
         ?disabled="${this.disabled}"
         type="${this.type}"
         .label=${labelText}
