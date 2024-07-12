@@ -79,3 +79,57 @@ declare global {
   }
 }
 ```
+
+## Styling
+
+### CSS Modules
+
+#### How to Use
+
+Wa11y supports CSS Modules, allowing you to scope CSS by automatically creating unique class names. This ensures styles are scoped to the component and do not affect other parts of your application.
+
+
+#### Steps to Use Components with CSS Modules
+
+**1. Import Your Component Styles**
+
+Create a CSS module file (e.g., **Component.module.css**) with your styles:
+
+```
+.className {
+  background-color: purple;
+}
+```
+
+Import this CSS module in your component file:
+
+```
+import styles from './Component.module.css';
+```
+
+**2. Define Your Class Map**
+
+Map your CSS module class names to the component's class names:
+
+```
+const classMap = {
+  className: styles.className
+};
+```
+**Note:**
+
+You can include more properties in the **classMap** object as needed. Available properties and their usage are documented in each component's documentation. This allows for more flexible and granular control over the component's styling.
+
+
+**3. Pass the Class Map to the Component**
+
+Use the classMap prop to pass the class mapping to your component:
+
+```
+<your-component classMap={JSON.stringify(classMap)}></your-component>
+```
+**Note:** 
+
+If you are using React, use **JSON.stringify** to pass the class map as a string. Other frameworks do not require this step.
+
+
