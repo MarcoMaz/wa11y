@@ -1,9 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement('wa-text-field')
-export class WaTextField extends LitElement {
+export class WaTextField extends DynamicStyleMixin(LitElement) {
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: String, reflect: true }) label?: string;
@@ -29,7 +30,11 @@ export class WaTextField extends LitElement {
     const ariaLabel = this.label ? undefined : currentLabel;
 
     return html`
-      <label for="${currentId}">${currentLabel}</label>
+      <label
+        for="${currentId}"
+        class="${ifDefined(this.applyClassMap('label'))}"
+        >${currentLabel}</label
+      >
       <input
         type="text"
         placeholder="${ifDefined(currentPlaceholder)}"
@@ -38,6 +43,7 @@ export class WaTextField extends LitElement {
         ?required="${this.required}"
         @change="${this.handleChange}"
         aria-label="${ifDefined(ariaLabel)}"
+        class="${ifDefined(this.applyClassMap('input'))}"
       />
     `;
   }

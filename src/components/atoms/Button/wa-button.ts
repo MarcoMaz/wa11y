@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement('wa-button')
 export class WaButton extends DynamicStyleMixin(LitElement) {
@@ -21,7 +22,7 @@ export class WaButton extends DynamicStyleMixin(LitElement) {
 
     return html`
       <button
-        class="${this.applyClassMap('button')}"
+        class="${ifDefined(this.applyClassMap('button'))}"
         ?disabled="${this.disabled}"
         type="${this.type}"
         .label=${labelText}

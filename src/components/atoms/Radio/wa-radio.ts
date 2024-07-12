@@ -1,9 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement('wa-radio')
-export class WaRadio extends LitElement {
+export class WaRadio extends DynamicStyleMixin(LitElement) {
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: Boolean, reflect: true }) checked?: boolean;
@@ -30,7 +31,10 @@ export class WaRadio extends LitElement {
     const labelText = this.label || 'default radio label';
 
     return html`
-      <label id="${currentId}">
+      <label
+        id="${currentId}"
+        class="${ifDefined(this.applyClassMap('label'))}"
+      >
         <input
           type="radio"
           id="${ifDefined(currentId)}"
@@ -40,8 +44,11 @@ export class WaRadio extends LitElement {
           @change="${this.handleChange}"
           @focus="${this.handleFocus}"
           aria-checked="${checked}"
+          class="${ifDefined(this.applyClassMap('input'))}"
         />
-        <span>${labelText}</span>
+        <span class="${ifDefined(this.applyClassMap('span'))}"
+          >${labelText}</span
+        >
       </label>
     `;
   }
