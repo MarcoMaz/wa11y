@@ -244,3 +244,49 @@ function App() {
 
 export default App;
 ```
+### Styled Components
+
+Wa11y components can be styled using styled components. Follow the steps below to integrate styled components and style the **wa-button** component.
+
+#### Example in a React Application
+
+**1: Install Styled Components**
+
+First, install Styled Components and its dependencies in your React project:
+
+```
+npm install styled-components
+```
+
+**2: Import Your Web Component and Styled Components**
+
+Assuming you have your **wa-button** Web Component available and imported into your React application, you can integrate it with Styled Components.
+
+
+```
+import styled from 'styled-components'
+import 'wa11y-ui/wa-button'
+
+const StyledWaButton = styled('wa-button')`
+  display: flex;
+  align-items: center;
+
+  button {
+    background: blue;
+    border: 0;
+    border-radius: 0.5rem;
+    color: white;
+    padding: 1rem;
+  }
+`
+
+function App() {
+  return (
+    <>
+      <StyledWaButton label="Hello World"></StyledWaButton>
+    </>
+  )
+}
+
+export default App
+```
