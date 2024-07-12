@@ -89,7 +89,7 @@ declare global {
 Wa11y supports CSS Modules, allowing you to scope CSS by automatically creating unique class names. This ensures styles are scoped to the component and do not affect other parts of your application.
 
 
-#### Steps to Use Components with CSS Modules
+#### Steps to follow
 
 **1. Import Your Component Styles**
 
@@ -132,4 +132,49 @@ Use the classMap prop to pass the class mapping to your component:
 
 If you are using React, use **JSON.stringify** to pass the class map as a string. Other frameworks do not require this step.
 
+### Tailwind CSS
 
+Wa11y components can be styled using Tailwind CSS, offering a utility-first approach similar to CSS Modules. Follow the steps below to integrate Tailwind CSS and style the **wa-checkbox** component.
+
+#### Example in a React Application
+
+**1. Install Tailwind CSS**
+
+Follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) to set up Tailwind in your project.
+
+**2. Define Your Class Map**
+
+Create a class map with Tailwind CSS utility classes:
+
+```
+const classMap = {
+  label: "text-gray-700 font-medium",
+  input: "form-checkbox h-4 w-4 text-blue-600",
+  span: "ml-2 text-sm"
+};
+```
+
+**3. Use the Component**
+
+Apply the class map to the **wa-checkbox** component:
+
+```
+import React from 'react';
+import 'wa11y-ui/wa-checkbox';
+
+function App() {
+  const classMap = {
+    label: "text-gray-700 font-medium",
+    input: "form-checkbox h-4 w-4 text-blue-600",
+    span: "ml-2 text-sm"
+  };
+  
+  return (
+    <>
+      <wa-checkbox classMap={JSON.stringify(classMap)}></wa-checkbox>
+    </>
+  );
+}
+
+export default App;
+```
