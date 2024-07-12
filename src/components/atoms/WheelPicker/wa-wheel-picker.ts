@@ -1,9 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 const WHEEL_PICKER_CLASS = 'WheelPicker';
-const WHEEL_PICKER_INPUT_CLASS = "WheelPicker__input";
+const WHEEL_PICKER_INPUT_CLASS = 'WheelPicker__input';
 const WHEEL_PICKER_ITEMS_CLASS = 'WheelPicker__items';
 const WHEEL_PICKER_ITEM_CLASS = 'WheelPicker__item';
 const WHEEL_PICKER_AIM_CLASS = 'WheelPicker__aim';
@@ -11,7 +12,7 @@ const WHEEL_PICKER_WARNING_CLASS = 'WheelPicker__warning';
 const WHEEL_PICKER_CENTER_CLASS = '-center';
 
 @customElement('wa-wheel-picker')
-export class WaWheelPicker extends LitElement {
+export class WaWheelPicker extends DynamicStyleMixin(LitElement) {
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: String, reflect: true }) name?: string;
@@ -163,9 +164,15 @@ export class WaWheelPicker extends LitElement {
     const max = this.max || 10;
 
     return html`
-      <label for="${ifDefined(currentId)}">${currentLabel}</label>
+      <label
+        for="${ifDefined(currentId)}"
+        class="${ifDefined(this.applyClassMap('label'))}"
+        >${currentLabel}</label
+      >
       <input
-        class="${WHEEL_PICKER_INPUT_CLASS}"
+        class="${WHEEL_PICKER_INPUT_CLASS} ${this.applyClassMap(
+          'wheelPickerInput'
+        )}"
         min="${min}"
         max="${max}"
         type="number"
@@ -174,14 +181,20 @@ export class WaWheelPicker extends LitElement {
         @input="${this.onInputChange}"
         aria-describedby="${currentWarningId}"
       />
-      <div class="${WHEEL_PICKER_CLASS}">
+      <div class="${WHEEL_PICKER_CLASS} ${this.applyClassMap('wheelPicker')}">
         <div
           tabindex="0"
-          class="${WHEEL_PICKER_ITEMS_CLASS}"
+          class="${WHEEL_PICKER_ITEMS_CLASS} ${this.applyClassMap(
+            'wheelPickerItems'
+          )}"
           @scroll="${this.handleScroll}"
         ></div>
       </div>
-      <span class="${WHEEL_PICKER_WARNING_CLASS}" id="${currentWarningId}"
+      <span
+        class="${WHEEL_PICKER_WARNING_CLASS} ${this.applyClassMap(
+          'wheelPickerWarning'
+        )}"
+        id="${currentWarningId}"
         >${currentWarningText}</span
       >
     `;
@@ -195,10 +208,6 @@ declare global {
 }
 
 /*
-- Clean up the whole class
-- Change the classnames of the component
-
-
 RESOURCES:
 - https://v10.carbondesignsystem.com/components/number-input/accessibility/
 - https://designsystem.backbase.com/web-components/input-number/web#_interactive-demo
