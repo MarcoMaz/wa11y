@@ -1,11 +1,13 @@
 import { LitElement, html, PropertyValues } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
+import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import '../../atoms/Button/wa-button';
-import "../../atoms/TextField/wa-text-field";
+import '../../atoms/TextField/wa-text-field';
 
 @customElement('wa-form')
-export class WaForm extends LitElement {
+export class WaForm extends DynamicStyleMixin(LitElement) {
   @property({ type: String, reflect: true }) buttonLabel!: string;
 
   @query('form')
@@ -76,20 +78,21 @@ export class WaForm extends LitElement {
     return html`${Array.from(this.children)}`;
   }
 
-
   createRenderRoot() {
     return this;
   }
 
   render() {
     return html`
-      <form @submit="${this.handleSubmit}">
+      <form
+        @submit="${this.handleSubmit}"
+        class="${ifDefined(this.applyClassMap('form'))}"
+      >
         ${this.renderTextFields()}
         <wa-button type="submit"></wa-button>
       </form>
     `;
   }
-
 }
 
 declare global {
