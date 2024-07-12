@@ -10,7 +10,6 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
   @property({ type: Boolean, reflect: true }) checked?: boolean;
   @property({ type: Boolean, reflect: true }) focused = false;
   @property({ type: String, reflect: true }) label?: string;
-  @property({ type: Object }) classMap = {};
 
   private handleChange() {
     this.checked = !this.checked;
@@ -23,13 +22,6 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
 
   createRenderRoot() {
     return this;
-  }
-
-  requestUpdate(name: PropertyKey | undefined, oldValue: unknown) {
-    if (name === 'classMap' && JSON.stringify(this.classMap) === JSON.stringify(oldValue)) {
-      return;
-    }
-    super.requestUpdate(name, oldValue);
   }
 
   render() {
