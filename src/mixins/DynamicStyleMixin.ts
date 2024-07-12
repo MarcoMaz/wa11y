@@ -12,8 +12,8 @@ export const DynamicStyleMixin = <TBase extends Constructor>(superclass: TBase) 
       this.classMap = {};
     }
 
-    applyClassMap(elementName: string): string {
-      return this.classMap[elementName] || '';
+    applyClassMap(elementName: string): string | undefined {
+      return this.classMap[elementName];
     }
   }
 
