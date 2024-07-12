@@ -5,8 +5,14 @@ import { property } from 'lit/decorators.js';
 // Define Constructor type
 type Constructor<T = LitElement> = new (...args: any[]) => T;
 
+export interface DynamicStyleMixinInterface {
+  classMap: Record<string, string>;
+  applyClassMap(elementName: string): string | undefined;
+}
+
 export const DynamicStyleMixin = <TBase extends Constructor>(superclass: TBase) => {
-  class Mixed extends superclass {
+  
+  class Mixed extends superclass implements DynamicStyleMixinInterface{
     @property({ type: Object }) classMap: Record<string, string> = {};
 
     constructor(...args: any[]) {
@@ -28,5 +34,5 @@ export const DynamicStyleMixin = <TBase extends Constructor>(superclass: TBase) 
     }
   }
 
-  return Mixed;
+  return Mixed as TBase & Constructor<DynamicStyleMixinInterface>;
 };
