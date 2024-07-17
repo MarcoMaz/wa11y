@@ -20,14 +20,6 @@ To install and start using the library, follow these steps:
 2. Install dependencies: `npm install`
 3. Build the library: `npm run build`
 
-## Why Light DOM?
-
-Using the Light DOM allows these components to:
-
-1. **Open Up to External Styling:** Since the components are unstyled by default, they are meant to be styled by the parent application. The Light DOM makes it easier to apply global styles or CSS frameworks directly to the components without the encapsulation restrictions of the Shadow DOM.
-2. **Consistency with Global Styles:** The Light DOM ensures that components naturally inherit and respect global CSS styles defined in the parent application. This avoids issues where styles need to be duplicated inside shadow roots, making the styling process simpler and more maintainable.
-3. **Flexibility in Theming:** By using the Light DOM, components can be easily themed using existing CSS variables, utility classes, and CSS-in-JS solutions available in the parent application, providing a unified and consistent look across the entire application.
-
 ## Usage with frameworks
 
 To integrate wa11y-ui components into your framework, follow these common steps:
@@ -84,6 +76,7 @@ function App() {
 
 export default App;
 ```
+**Note:** In React, use React-compatible props (**label**, **onClick**, etc.) directly within <wa-button> tags instead of web component syntax (**.label**, **@click**) for proper integration and functionality.
 
 - **Vue:**
 
@@ -165,7 +158,14 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 ### Overview
 Wa11y-UI is designed to provide maximum flexibility in styling your web components. 
 
-This is achieved through the **`classMap`** attribute, which allows dynamic application of CSS classes to internal elements within a component.
+This is achieved by the components utilizing the **Light DOM** and the **classMap** attribute, which allows for the dynamic application of CSS classes to internal elements within a component.
+
+
+## Why the Light DOM?
+
+- **External Styling Flexibility:** By using the Light DOM, Wa11y-UI components allow external stylesheets and styles to directly affect their internal elements. This openness facilitates easier customization and integration with various styling frameworks and methodologies.
+
+- **Selector Compatibility:** Unlike Shadow DOM, which restricts chaining certain selectors like **:has** and **::part**, the Light DOM enables it and makes it possible to style nested elements effectively. This flexibility is crucial for complex styling requirements and maintaining consistency across components.
 
 ### What is `classMap`?
 
@@ -175,6 +175,10 @@ The **`classMap`** attribute is an object where:
 - **Values** are the corresponding CSS class names to be applied to those elements.
 
 This attribute ensures that you can define the appearance of each part of the component without modifying its internal structure. When the **`classMap`** attribute is updated, the component ensures that the specified classes are applied to the correct elements, allowing for dynamic and responsive styling.
+
+**Notes:**
+
+Currently, Wa11y-UI implements the **classMap** logic primarily on atomic elements. This decision stems from the encapsulation of components at the outer level, which limits the potential for external overrides.
 
 ### How to Use `classMap`
 
