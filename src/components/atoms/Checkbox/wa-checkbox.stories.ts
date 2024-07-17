@@ -37,6 +37,10 @@ export default {
 
 export const CheckboxWithDefaultIdNameAndLabel: StoryObj = {
   name: 'Checkbox with default id, name and label',
+  args: {
+    checked: false,
+    focused: false
+  }
 };
 
 export const CheckboxWithCustomId: StoryObj = {

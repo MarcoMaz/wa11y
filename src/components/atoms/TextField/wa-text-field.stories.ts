@@ -37,6 +37,9 @@ export default {
 
 export const TextFieldDefault: StoryObj = {
   name: 'Text Field Default',
+  args: {
+    required: false
+  }
 };
 
 export const TextFieldWithCustomId: StoryObj = {

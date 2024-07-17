@@ -56,6 +56,10 @@ export default {
 
 export const WheelPickerDefault: StoryObj = {
   name: 'Wheel Picker Default',
+  args: {
+    min: 1,
+    max: 10
+  }
 };
 
 export const WheelPickerWithCustomId: StoryObj = {

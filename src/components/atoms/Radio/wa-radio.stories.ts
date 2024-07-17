@@ -37,6 +37,10 @@ export default {
 
 export const RadioWithDefaultIdNameAndLabel: StoryObj = {
   name: 'Radio with default id, name and label',
+  args: {
+    checked: false,
+    focused: false
+  }
 };
 
 export const RadioWithCustomId: StoryObj = {
