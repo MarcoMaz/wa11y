@@ -1,0 +1,47 @@
+import { Meta, Story } from '@storybook/blocks';
+
+import './wa-button';
+import * as ButtonStories from './wa-button.stories';
+
+<Meta title="Atoms/Button" of={ButtonStories} />
+
+# Button
+
+<Story />
+&nbsp;
+
+## Description
+
+A button enables users to initiate an action using mouse, touch, or keyboard inputs.
+
+## Tag
+
+`<wa-button>`
+
+## ClassMap
+- button
+
+## Props 
+
+### disabled
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Description:** Indicates whether the button is disabled. When set to **true**, the button is not clickable and appears in a disabled state.
+
+### type
+
+- **Type: 'button' | 'submit' | 'reset'**
+- **Default: 'button'**
+- **Description:** Specifies the type of the button. 
+
+  It can be one of the following values:
+  - **'button'**: A clickable button with no default behavior.
+  - **'submit'**: A button that submits a form.
+  - **'reset'**: A button that resets form fields to their default values.
+
+### label
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The label displayed on the button. If no label is provided, the button defaults to "default button label".
