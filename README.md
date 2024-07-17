@@ -28,23 +28,47 @@ Using the Light DOM allows these components to:
 2. **Consistency with Global Styles:** The Light DOM ensures that components naturally inherit and respect global CSS styles defined in the parent application. This avoids issues where styles need to be duplicated inside shadow roots, making the styling process simpler and more maintainable.
 3. **Flexibility in Theming:** By using the Light DOM, components can be easily themed using existing CSS variables, utility classes, and CSS-in-JS solutions available in the parent application, providing a unified and consistent look across the entire application.
 
-## Frameworks
+## Usage with frameworks
 
-### React
+To integrate wa11y-ui components into your framework, follow these common steps:
 
-To use components from the wa11y-ui library in your React application, follow these steps:
+**1. Install the library:**
 
-1. Install the library
+- Using npm:
 
-`npm install wa11y-ui` or `yarn add wa11y-ui`
+```
+npm install wa11y-ui
+``` 
 
-2. Import the component
+- Using yarn:
 
-For example, to use the **wa-button** component:
+```
+yarn add wa11y-ui
+```
 
-`import 'wa11y-ui/wa-button'`
+**2. Import a component (E.g. wa-button):**
 
-3. Use the component
+- **React (inside the wrapper using it):**
+
+```
+import 'wa11y-ui/wa-button';
+```
+
+- **Vue (inside the component's `script` tag ):**
+
+```
+<script setup lang="ts">
+  import 'wa11y-ui/wa-button';
+</script>
+```
+- **Angular (inside main.ts):**
+```
+import 'wa11y-ui/wa-button';
+```
+
+**3. Use the component:**
+
+-  **React:**
 
 ```
 import React from 'react';
@@ -61,9 +85,31 @@ function App() {
 export default App;
 ```
 
-4. Add TypeScript declarations (First time only!)
+- **Vue:**
 
-To ensure TypeScript correctly recognizes the custom elements, you need to add a declarations file. Create a file named `declarations.d.ts` in your `src` directory and add the following code:
+```
+<script setup lang="ts">
+  import 'wa11y-ui/wa-button';
+</script>
+
+<template>
+  <wa-button label="hello world"></wa-button>
+</template>
+
+<style scoped>
+</style>
+```
+
+- **Angular:**
+```
+<main class="main">
+  <wa-button label="Hello world"></wa-button>
+</main>
+```
+
+**4. Add declarations:**
+
+- **React:** Create a **declarations.d.ts** file in your **src** directory
 
 ```
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -82,89 +128,241 @@ declare global {
   }
 }
 ```
+- **Vue:** Modify **vite.config.ts** (or equivalent for your build setup)
+
+```
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          // @ts-ignore
+          isCustomElement: (tag) => ['wa-button'].includes(tag),
+        },
+      },
+    }),
+  ],
+});
+```
+
+- **Angular:** Add the schemas in **add.component.ts**
+
+```
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+
+@Component({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+
+```
 
 ## Styling
 
-### CSS Modules
+### Overview
+Wa11y-UI is designed to provide maximum flexibility in styling your web components. 
 
-#### How to Use
+This is achieved through the **`classMap`** attribute, which allows dynamic application of CSS classes to internal elements within a component.
 
-Wa11y supports CSS Modules, allowing you to scope CSS by automatically creating unique class names. This ensures styles are scoped to the component and do not affect other parts of your application.
+### What is `classMap`?
 
-#### Steps to follow
+The **`classMap`** attribute is an object where:
 
-**1. Import Your Component Styles**
+- **Keys** represent the names of internal elements within the component.
+- **Values** are the corresponding CSS class names to be applied to those elements.
 
-Create a CSS module file (e.g., **Component.module.css**) with your styles:
+This attribute ensures that you can define the appearance of each part of the component without modifying its internal structure. When the **`classMap`** attribute is updated, the component ensures that the specified classes are applied to the correct elements, allowing for dynamic and responsive styling.
+
+### How to Use `classMap`
+
+To use the **`classMap`** attribute, simply define the class mappings in your component and pass them as an attribute. 
+
+Here are some examples:
+
+**Example 1: Styling a Checkbox Component in React with Tailwind CSS**
 
 ```
-.className {
-  background-color: purple;
+function App() {
+  const classMap = {
+    label: "text-gray-700 font-medium",
+    input: "form-checkbox h-4 w-4 text-blue-600",
+    span: "ml-2 text-sm"
+  };
+
+  return (
+    <>
+      <wa-checkbox classMap={JSON.stringify(classMap)}></wa-checkbox>
+    </>
+  );
 }
 ```
 
-Import this CSS module in your component file:
+**Example 2: Styling a Button Component in Vue with Bootstrap**
 
 ```
-import styles from './Component.module.css';
+<script setup lang="ts">
+  import 'wa11y-ui/wa-button';
+  const classMap = {
+    button: "btn btn-primary"
+  };
+</script>
+
+<template>
+  <wa-button label="hello world" :classMap="classMap"></wa-button>
+</template>
 ```
 
-**2. Define Your Class Map**
+### Documentation
 
-Map your CSS module class names to the component's class names:
+For details on the specific elements and how they can be exposed and styled, refer to the documentation for each element within the [library's storybook](https://wa11y-storybook.netlify.app/?path=/story/atoms-button--button-with-default-label).
 
+The documentation provides comprehensive information on the internal elements that can be targeted and styled using the **`classMap`** attribute.
+
+### Styling Methods Supported
+
+Wa11y-UI supports a wide range of styling methods, providing you with the flexibility to choose the best approach for your project. 
+The supported methods include:
+
+1. CSS
+2. SCSS
+3. Tailwind CSS
+4. Bootstrap and similar libraries
+5. CSS Modules (Except for Angular)
+6. Styled Components (Except for Angular)
+
+### Styling with CSS
+
+**Steps Common for Each Framework**
+
+1. **Define Your Styles:** Create CSS rules for your components in a **.css** file. Ensure the CSS file name follows the naming conventions specific to your framework.
+
+**- React Usage**
+
+**WaButton.css:**
 ```
-const classMap = {
-  className: styles.className
-};
-```
-
-**Note:**
-
-You can include more properties in the **classMap** object as needed. Available properties and their usage are documented in each component's documentation. This allows for more flexible and granular control over the component's styling.
-
-**3. Pass the Class Map to the Component**
-
-Use the classMap prop to pass the class mapping to your component:
-
-```
-<your-component classMap={JSON.stringify(classMap)}></your-component>
-```
-
-**Note:**
-
-If you are using React, use **JSON.stringify** to pass the class map as a string. Other frameworks do not require this step.
-
-### Tailwind CSS
-
-Wa11y components can be styled using Tailwind CSS, offering a utility-first approach similar to CSS Modules. Follow the steps below to integrate Tailwind CSS and style the **wa-checkbox** component.
-
-#### Example in a React Application
-
-**1. Install Tailwind CSS**
-
-Follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) to set up Tailwind in your project.
-
-**2. Define Your Class Map**
-
-Create a class map with Tailwind CSS utility classes:
-
-```
-const classMap = {
-  label: "text-gray-700 font-medium",
-  input: "form-checkbox h-4 w-4 text-blue-600",
-  span: "ml-2 text-sm"
-};
+wa-button button {
+  background: blue;
+  color: white;
+}
 ```
 
-**3. Use the Component**
+**App.tsx:**
+```
+import './WaButton.css';
 
-Apply the class map to the **wa-checkbox** component:
+function App() {
+  return (
+    <wa-button></wa-button>
+  );
+}
+```
+**- Vue Usage**
+
+**App.vue:**
+```
+<template>
+  <wa-button></wa-button>
+</template>
+
+<style>
+wa-button button {
+  background: blue;
+  color: white;
+}
+</style>
+```
+**- Angular Usage**
+
+**app.component.css:**
+```
+wa-button button {
+  background: blue;
+  color: white;
+}
+```
+
+**app.component.ts:**
+```
+@Component({
+  styleUrl: './app.component.scss',
+  encapsulation: ViewEncapsulation.None
+}]
+```
+
+**app.component.html:**
+```
+<main>
+  <wa-button></wa-button>
+</main>
+```
+### Styling with SCSS
+
+**Steps Common for Each Framework**
+
+1. **Install the SCSS Compiler:** 
+
+Begin by installing the SCSS compiler using npm or yarn:
 
 ```
-import React from 'react';
-import 'wa11y-ui/wa-checkbox';
+npm install sass
+```
+or
 
+```
+yarn add sass
+```
+
+2. Rename your CSS files to **.scss** files and update all references accordingly throughout your project.
+3. Incorporate your SCSS files into your framework's component or style management system as you would with standard CSS files.
+
+**- React Usage**
+
+**WaButton.scss:**
+```
+$colorWhite: white;
+
+wa-button button {
+  background: blue;
+  color: $colorWhite;
+}
+```
+**- Vue Usage**
+
+**App.vue:**
+```
+<style lang="scss">
+$colorWhite: white;
+
+wa-button button {
+  background: blue;
+  color: $colorWhite;
+}
+</style>
+```
+**- Angular Usage**
+**app.component.scss:**
+```
+$colorWhite: white;
+
+wa-button button {
+  background: blue;
+  color: $colorWhite;
+}
+```
+
+### Styling with Tailwind
+
+**Steps Common for Each Framework**
+
+1. **Install Tailwind:** Follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) to set up Tailwind in your project.
+
+**- React Usage**
+
+**App.tsx:**
+```
 function App() {
   const classMap = {
     label: "text-gray-700 font-medium",
@@ -181,25 +379,59 @@ function App() {
 
 export default App;
 ```
+**- Vue Usage**
 
-### Bootstrap CSS
+**App.vue:**
+```
+<script setup lang="ts">
+const classMap = {
+  label: "text-gray-700 font-medium",
+  input: "form-checkbox h-4 w-4 text-blue-600",
+  span: "ml-2 text-sm"
+};
+</script>
 
-Wa11y components can be styled using Bootstrap CSS. Follow the steps below to integrate Bootstrap CSS and style the **wa-button** component.
+<template>
+  <wa-checkbox :classMap="classMap"></wa-checkbox>
+</template>
+```
+**- Angular Usage**
 
-#### Example in a React Application
+**app.component.ts:**
+```
+export class AppComponent {
+  classMap = {
+    label: "text-gray-700 font-medium",
+    input: "form-checkbox h-4 w-4 text-blue-600",
+    span: "ml-2 text-sm"  
+  }
+}
+```
+**app.component.html:**
+```
+<wa-checkbox [classMap]="classMap"></wa-checkbox>
+```
+### Styling with Bootstrap (or similar libraries)
 
-**1: Install Bootstrap**
+**Steps Common for Each Framework**
+
+1. **Install Bootstrap:** 
 
 First, install Bootstrap and its dependencies in your React project:
 
 ```
 npm install bootstrap
 ```
+or
+```
+yarn add bootstrap
+```
 
-**2: Import Bootstrap CSS**
+2. **Import Bootstrap CSS:**
 
 Place the `<link>` tag in the `<head>` for our CSS, and the `<script>` tag before the closing `</body>`.
 
+**index.html:**
 ```
 <!doctype html>
 <html lang="en">
@@ -211,25 +443,10 @@ Place the `<link>` tag in the `<head>` for our CSS, and the `<script>` tag befor
   </body>
 </html>
 ```
+**- React Usage**
 
-**3. Define Your Class Map**
-
-Create a class map with Bootstrap CSS classes:
-
+**App.tsx:**
 ```
-const classMap = {
-  button: "btn btn-primary",
-};
-```
-
-**4. Use the Component**
-
-Apply the class map to the **wa-button** component:
-
-```
-import React from 'react';
-import 'wa11y-ui/wa-button';
-
 function App() {
   const classMap = {
     button: "btn btn-primary",
@@ -244,49 +461,179 @@ function App() {
 
 export default App;
 ```
-### Styled Components
+**- Vue Usage**
 
-Wa11y components can be styled using styled components. Follow the steps below to integrate styled components and style the **wa-button** component.
+**App.vue:**
+```
+<script setup lang="ts">
+const classMap = {
+  button: "btn btn-primary"
+};
+</script>
 
-#### Example in a React Application
+<template>
+  <wa-button :classMap="classMap"></wa-button>
+</template>
+```
 
-**1: Install Styled Components**
+**- Angular Usage**
 
-First, install Styled Components and its dependencies in your React project:
+**app.component.ts:**
+```
+export class AppComponent {
+  classMap = {
+    button: 'btn btn-primary'
+  }
+}
+```
+**app.component.html:**
+```
+<wa-button [classMap]="classMap"></wa-button>
+```
+
+### Styling with CSS Modules
+
+**Steps Common for React and Vue**
+
+1. **Import Your Component Styles:**
+
+Create a CSS module file with your styles:
+
+**example.module.css:**
+```
+.button {
+  background: blue;
+  color: white;
+}
+```
+**- React Usage**
+
+**App.tsx:**
+```
+import styles from "./example.module.css";
+
+function App() {
+  const classMap = {
+    button: styles.button
+  };
+
+  return (
+    <>
+      <wa-button classMap={JSON.stringify(classMap)}></wa-button>
+    </>
+  );
+}
+
+export default App;
+```
+**- Vue Usage**
+
+**App.vue:**
+```
+<script setup lang="ts">
+import styles from "./example.module.css";
+
+const classMap = {
+  button: styles.button
+};
+</script>
+
+<template>
+  <wa-button :classMap="classMap"></wa-button>
+</template>
+```
+**- Angular Usage**
+
+**Note:** Angular does not natively support scoped styles like some other frameworks do. 
+
+However, you can achieve a similar effect by following these steps:
+
+**1. Add a class to the component to scope its styles:**
+```
+<wa-button class="wa-button"></wa-button>
+```
+**2. use the classmap attribute:**
+
+**app.component.ts:**
+```
+export class AppComponent {
+  classMap = {
+    button: "button"
+  }
+}
+```
+**app.component.html:**
+```
+<wa-button [classMap]="classMap" class="wa-button"></wa-button>
+```
+
+**3. style Using CSS or SCSS Techniques:**
+
+**app.component.css:**
+```
+.wa-button .button {
+  background: blue;
+  color: white;
+}
+```
+
+### Styling with Styled Components
+
+**Steps Common for React and Vue (Angular is not supported)**
+
+1. **Install Styled Components:**
+
+First, install Styled Components and its dependencies in your project:
 
 ```
 npm install styled-components
 ```
+or
+```
+yarn add styled-components
+```
+**- React Usage**
 
-**2: Import Your Web Component and Styled Components**
-
-Assuming you have your **wa-button** Web Component available and imported into your React application, you can integrate it with Styled Components.
-
-
+**App.tsx:**
 ```
 import styled from 'styled-components'
 import 'wa11y-ui/wa-button'
 
 const StyledWaButton = styled('wa-button')`
-  display: flex;
-  align-items: center;
-
   button {
     background: blue;
-    border: 0;
-    border-radius: 0.5rem;
     color: white;
-    padding: 1rem;
   }
 `
 
 function App() {
   return (
     <>
-      <StyledWaButton label="Hello World"></StyledWaButton>
+      <StyledWaButton></StyledWaButton>
     </>
   )
 }
 
 export default App
+```
+
+**- Vue Usage**
+
+**App.vue:**
+```
+<script setup lang="ts">
+import 'wa11y-ui/wa-button';
+import styled from 'styled-components';
+
+const StyledWaButton = styled('wa-button')`
+  button {
+    background: blue;
+    color: white;
+  }
+`
+</script>
+
+<template>
+  <StyledWaButton></StyledWaButton>
+</template>
 ```
