@@ -1,0 +1,70 @@
+import { Meta, Story } from '@storybook/blocks';
+
+import './wa-wheel-picker';
+import * as WheelPickerStories from './wa-wheel-picker.stories';
+
+<Meta title="Atoms/WheelPicker" of={WheelPickerStories} />
+
+# WheelPicker
+&nbsp;
+<Story />
+&nbsp;
+
+## Description
+
+A wheel picker enables users to select numeric values with interactive scrolling and validation capabilities.
+
+## Tag
+
+`<wa-wheel-picker>`
+
+## ClassMap
+- label
+- wheelPickerInput
+- wheelPicker
+- wheelPickerItems
+- wheelPickerWarning
+
+## Props 
+
+### currentId
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The unique identifier for the wheel picker component.
+
+### label
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The label associated with the wheel picker component.
+
+### name
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The name attribute for the wheel picker input.
+
+### warningId
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The unique identifier for the warning message associated with the wheel picker component.
+
+### warningText
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The text content of the warning message displayed when input is invalid.
+
+### min
+
+- **Type: Number**
+- **Reflects to Attribute: true**
+- **Description:** The minimum allowed value for the wheel picker input.
+
+### max
+
+- **Type: Number**
+- **Reflects to Attribute: true**
+- **Description:** The maximum allowed value for the wheel picker input.
