@@ -4,6 +4,8 @@ Unstyled UI library of Web Components (Lit).
 
 [LIVE Storybook Link](https://wa11y-storybook.netlify.app/?path=/story/atoms-button--button-with-default-label)
 
+**Note:** The Storybook utilizes a global CSS style for demonstration purposes only, as the library itself remains unstyled.
+
 ## Features
 
 - **Web Components:** Utilizes Lit to create lightweight, encapsulated components.
@@ -176,7 +178,7 @@ The **`classMap`** attribute is an object where:
 
 This attribute ensures that you can define the appearance of each part of the component without modifying its internal structure. When the **`classMap`** attribute is updated, the component ensures that the specified classes are applied to the correct elements, allowing for dynamic and responsive styling.
 
-**Notes:**
+**Note:**
 
 Currently, Wa11y-UI implements the **classMap** logic primarily on atomic elements. This decision stems from the encapsulation of components at the outer level, which limits the potential for external overrides.
 
