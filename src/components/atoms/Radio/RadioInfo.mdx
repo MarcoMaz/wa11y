@@ -1,0 +1,57 @@
+import { Meta, Story } from '@storybook/blocks';
+
+import './wa-radio';
+import * as RadioStories from './wa-radio.stories';
+
+<Meta title="Atoms/Radio" of={RadioStories} />
+
+# Radio
+
+<Story />
+&nbsp;
+
+## Description
+
+A radio allows a user to select a single option at a time.
+
+
+## Tag
+
+`<wa-radio>`
+
+## ClassMap
+- label
+- input
+- span
+
+## Props 
+
+### currentId
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The unique identifier for the radio element. Defaults to **default-id** if not provided.
+
+### name
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The name attribute for the radio element. Defaults to **default-name** if not provided.
+
+### checked
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Description:** Indicates whether the radio is checked. Defaults to **false**.
+
+### focused
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Description:** Indicates whether the radio is focused. Defaults to **false**.
+
+### label
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The label displayed next to the radio. Defaults to **default radio label** if not provided.
