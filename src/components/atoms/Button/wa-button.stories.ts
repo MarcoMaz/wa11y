@@ -9,7 +9,7 @@ export default {
     layout: 'centered',
   },
   argTypes: {
-    disabled: {
+    isDisabled: {
       control: 'boolean',
     },
     type: {
@@ -20,28 +20,27 @@ export default {
       control: 'text',
     },
   },
-  render: ({ disabled, label, type }) =>
+  render: ({ isDisabled, label, type }) =>
     html`<wa-button
-      .disabled=${disabled}
+      .disabled=${isDisabled}
       .type=${type}
       .label=${label}
       @onClick=${() => alert('Custom event fired')}
-      ></wa-button
-    >`,
+    ></wa-button>`,
 } as Meta;
 
 export const ButtonWithDefaultLabel: StoryObj = {
   name: 'Button with default label',
   args: {
-    disabled: false,
-    type: 'button'
+    isDisabled: false,
+    type: 'button',
   },
 };
 
 export const ButtonWithCustomLabel: StoryObj = {
   name: 'Button with custom label',
   args: {
-    disabled: false,
+    isDisabled: false,
     type: 'button',
     label: 'custom label',
   },
@@ -50,7 +49,7 @@ export const ButtonWithCustomLabel: StoryObj = {
 export const ButtonDisabled: StoryObj = {
   name: 'Button Disabled',
   args: {
-    disabled: true,
+    isDisabled: true,
     type: 'button',
     label: 'button disabled',
   },
@@ -59,7 +58,7 @@ export const ButtonDisabled: StoryObj = {
 export const ButtonWithTypeSubmit: StoryObj = {
   name: 'Button with type submit',
   args: {
-    disabled: false,
+    isDisabled: false,
     type: 'submit',
     label: 'button with type submit',
   },
@@ -68,7 +67,7 @@ export const ButtonWithTypeSubmit: StoryObj = {
 export const ButtonWithTypeReset: StoryObj = {
   name: 'Button with type reset',
   args: {
-    disabled: false,
+    isDisabled: false,
     type: 'reset',
     label: 'button with type reset',
   },
