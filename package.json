@@ -7,34 +7,34 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     "./wa-button": {
+      "types": "./dist/types/components/atoms/Button/wa-button.d.ts",
       "import": "./dist/wa-button.es.js",
-      "require": "./dist/wa-button.umd.js",
-      "types": "./dist/types/components/atoms/Button/wa-button.d.ts"
+      "require": "./dist/wa-button.umd.js"
     },
     "./wa-checkbox": {
+      "types": "./dist/types/components/atoms/Checkbox/wa-checkbox.d.ts",
       "import": "./dist/wa-checkbox.es.js",
-      "require": "./dist/wa-checkbox.umd.js",
-      "types": "./dist/types/components/atoms/Checkbox/wa-checkbox.d.ts"
+      "require": "./dist/wa-checkbox.umd.js"
     },
     "./wa-radio": {
+      "types": "./dist/types/components/atoms/Radio/wa-radio.d.ts",
       "import": "./dist/wa-radio.es.js",
-      "require": "./dist/wa-radio.umd.js",
-      "types": "./dist/types/components/atoms/Radio/wa-radio.d.ts"
+      "require": "./dist/wa-radio.umd.js"
     },
     "./wa-text-field": {
+      "types": "./dist/types/components/atoms/TextField/wa-text-field.d.ts",
       "import": "./dist/wa-text-field.es.js",
-      "require": "./dist/wa-text-field.umd.js",
-      "types": "./dist/types/components/atoms/TextField/wa-text-field.d.ts"
+      "require": "./dist/wa-text-field.umd.js"
     },
     "./wa-wheel-picker": {
+      "types": "./dist/types/components/atoms/WheelPicker/wa-wheel-picker.d.ts",
       "import": "./dist/wa-wheel-picker.es.js",
-      "require": "./dist/wa-wheel-picker.umd.js",
-      "types": "./dist/types/components/atoms/WheelPicker/wa-wheel-picker.d.ts"
+      "require": "./dist/wa-wheel-picker.umd.js"
     },
     "./wa-form": {
+      "types": "./dist/types/components/molecules/Form/wa-form.d.ts",
       "import": "./dist/wa-form.es.js",
-      "require": "./dist/wa-form.umd.js",
-      "types": "./dist/types/components/molecules/Form/wa-form.d.ts"
+      "require": "./dist/wa-form.umd.js"
     }
   },
   "files": [
