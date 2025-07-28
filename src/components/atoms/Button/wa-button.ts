@@ -19,11 +19,12 @@ export class WaButton extends DynamicStyleMixin(LitElement) {
 
   render() {
     const labelText = this.label || 'default button label';
+    const isDisabled = this.isDisabled || false;
 
     return html`
       <button
         class="${ifDefined(this.applyClassMap('button'))}"
-        ?disabled="${this.isDisabled}"
+        aria-disabled=${isDisabled}
         type="${this.type}"
         .label=${labelText}
         @click="${this.handleClick}"
