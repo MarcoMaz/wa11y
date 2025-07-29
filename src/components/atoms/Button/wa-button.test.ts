@@ -1,24 +1,40 @@
 import { describe, expect, it, vi } from 'vitest';
-import './wa-button'; // registers the <wa-button> custom element
+import './wa-button';
+
+const createWaButton = async () => {
+  const waButton = document.createElement('wa-button');
+  document.body.appendChild(waButton);
+  await waButton.updateComplete;
+  const innerButton = waButton.querySelector('button');
+
+  if (!innerButton) {
+    throw new Error('<button> not found inside <wa-button>');
+  }
+
+  const sanitizeText = (el: HTMLElement | null) => {
+    return el?.textContent?.trim() ?? '';
+  };
+
+  return { waButton, innerButton, sanitizeText };
+};
 
 describe('wa-button', () => {
   it('renders correctly', async () => {
-    const waButton = document.createElement('wa-button');
-    const onClick = vi.fn();
+    const { waButton, innerButton, sanitizeText } = await createWaButton();
 
-    document.body.appendChild(waButton);
-    await waButton.updateComplete;
+    const onClick = vi.fn();
 
     // checks it has type "button"
     expect(waButton.type).toBe('button');
+    expect(innerButton.type).toBe('button');
 
     // checks it has the default label
-    const defaultButtonLabel = waButton.textContent?.trim();
-    expect(defaultButtonLabel).toContain('default button label');
+    expect(sanitizeText(waButton)).toContain('default button label');
+    expect(sanitizeText(innerButton)).toBe('default button label');
 
     // checks that the onClick works
     waButton.addEventListener('click', onClick);
-    waButton.click();
+    innerButton.click();
     expect(onClick).toHaveBeenCalled();
   });
 

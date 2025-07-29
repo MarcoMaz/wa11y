@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 @customElement('wa-button')
 export class WaButton extends DynamicStyleMixin(LitElement) {
   @property({ type: Boolean, reflect: true }) isDisabled = false;
-  @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
+  @property({ type: String, reflect: true }) type: 'button' | 'submit' | 'reset' = 'button';
   @property({ type: String, reflect: true }) label?: string;
 
 private handleClick(event: Event) {
