@@ -37,11 +37,20 @@ describe('wa-button', () => {
       waButton.remove();
     }
   });
+
+  it("accepts the 'label' prop", async () => {
+    const waButton = document.createElement('wa-button');
+
+    document.body.appendChild(waButton);
+
+    waButton.setAttribute('label', 'custom label');
+    await waButton.updateComplete;
+
+    expect(waButton.label).toBe('custom label');
+  });
 });
 
 /*
-3. "accepts a custom label prop"
-
 4. "accepts the isDisabled prop"
 - - aria-disabled is set to true
 - - onClick doesn't trigger
