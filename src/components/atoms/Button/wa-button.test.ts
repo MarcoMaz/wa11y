@@ -70,15 +70,13 @@ describe('wa-button', () => {
   });
 
   it("accepts the 'isDisabled' prop", async () => {
-    const waButton = document.createElement('wa-button');
     const onClick = vi.fn();
 
-    document.body.appendChild(waButton);
+    const { waButton, innerButton } = await createWaButton({
+      isDisabled: 'true',
+    });
 
-    waButton.setAttribute('isDisabled', 'true');
-    await waButton.updateComplete;
-
-    const innerButton = waButton.querySelector('button');
+    expect(waButton.isDisabled).toBe(true);
     expect(innerButton?.getAttribute('aria-disabled')).toBe('true');
 
     waButton.addEventListener('click', onClick);
