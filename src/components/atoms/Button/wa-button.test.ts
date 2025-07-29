@@ -48,12 +48,21 @@ describe('wa-button', () => {
 
     expect(waButton.label).toBe('custom label');
   });
+
+  it("accepts the 'isDisabled' prop", async () => {
+    const waButton = document.createElement('wa-button');
+    const onClick = vi.fn();
+
+    document.body.appendChild(waButton);
+
+    waButton.setAttribute('isDisabled', 'true');
+    await waButton.updateComplete;
+
+    const innerButton = waButton.querySelector('button');
+    expect(innerButton?.getAttribute('aria-disabled')).toBe('true');
+
+    waButton.addEventListener('click', onClick);
+    innerButton?.click();
+    expect(onClick).not.toHaveBeenCalled();
+  });
 });
-
-/*
-4. "accepts the isDisabled prop"
-- - aria-disabled is set to true
-- - onClick doesn't trigger
-
-
-*/

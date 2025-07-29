@@ -9,7 +9,13 @@ export class WaButton extends DynamicStyleMixin(LitElement) {
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
   @property({ type: String, reflect: true }) label?: string;
 
-  private handleClick() {
+private handleClick(event: Event) {
+  if (this.isDisabled) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    return;
+  }
+
     this.dispatchEvent(new CustomEvent('onClick'));
   }
 
