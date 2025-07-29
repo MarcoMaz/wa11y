@@ -61,14 +61,12 @@ describe('wa-button', () => {
   });
 
   it("accepts the 'label' prop", async () => {
-    const waButton = document.createElement('wa-button');
+    const { waButton, innerButton, sanitizeText } = await createWaButton({
+      label: 'custom label',
+    });
 
-    document.body.appendChild(waButton);
-
-    waButton.setAttribute('label', 'custom label');
-    await waButton.updateComplete;
-
-    expect(waButton.label).toBe('custom label');
+    expect(sanitizeText(waButton)).toBe('custom label');
+    expect(sanitizeText(innerButton)).toBe('custom label');
   });
 
   it("accepts the 'isDisabled' prop", async () => {
