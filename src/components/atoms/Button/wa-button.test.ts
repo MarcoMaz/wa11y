@@ -21,12 +21,25 @@ describe('wa-button', () => {
     waButton.click();
     expect(onClick).toHaveBeenCalled();
   });
+
+  it("accepts the 'type' prop", async () => {
+    const types = ['button', 'submit', 'reset'];
+
+    for (const typeValue of types) {
+      const waButton = document.createElement('wa-button');
+      waButton.setAttribute('type', typeValue);
+
+      document.body.appendChild(waButton);
+      await waButton.updateComplete;
+
+      expect(waButton.type).toBe(typeValue);
+
+      waButton.remove();
+    }
+  });
 });
 
 /*
-
-2. "accepts the type prop"
-
 3. "accepts a custom label prop"
 
 4. "accepts the isDisabled prop"
