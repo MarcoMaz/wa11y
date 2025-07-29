@@ -1,0 +1,37 @@
+import { describe, expect, it, vi } from 'vitest';
+import './wa-button'; // registers the <wa-button> custom element
+
+describe('wa-button', () => {
+  it('renders correctly', async () => {
+    const waButton = document.createElement('wa-button');
+    const onClick = vi.fn();
+
+    document.body.appendChild(waButton);
+    await waButton.updateComplete;
+
+    // checks it has type "button"
+    expect(waButton.type).toBe('button');
+
+    // checks it has the default label
+    const defaultButtonLabel = waButton.textContent?.trim();
+    expect(defaultButtonLabel).toContain('default button label');
+
+    // checks that the onClick works
+    waButton.addEventListener('click', onClick);
+    waButton.click();
+    expect(onClick).toHaveBeenCalled();
+  });
+});
+
+/*
+
+2. "accepts the type prop"
+
+3. "accepts a custom label prop"
+
+4. "accepts the isDisabled prop"
+- - aria-disabled is set to true
+- - onClick doesn't trigger
+
+
+*/
