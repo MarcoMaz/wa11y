@@ -1,8 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 import './wa-button';
 
-const createWaButton = async () => {
+const createWaButton = async (attributes?: Record<string, string>) => {
   const waButton = document.createElement('wa-button');
+
+  if (attributes) {
+    for (const [key, value] of Object.entries(attributes)) {
+      waButton.setAttribute(key, value);
+    }
+  }
+
   document.body.appendChild(waButton);
   await waButton.updateComplete;
   const innerButton = waButton.querySelector('button');
@@ -42,13 +49,12 @@ describe('wa-button', () => {
     const types = ['button', 'submit', 'reset'];
 
     for (const typeValue of types) {
-      const waButton = document.createElement('wa-button');
-      waButton.setAttribute('type', typeValue);
-
-      document.body.appendChild(waButton);
-      await waButton.updateComplete;
+      const { waButton, innerButton } = await createWaButton({
+        type: typeValue,
+      });
 
       expect(waButton.type).toBe(typeValue);
+      expect(innerButton.type).toBe(typeValue);
 
       waButton.remove();
     }
