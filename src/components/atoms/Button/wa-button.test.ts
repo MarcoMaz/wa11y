@@ -1,33 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import './wa-button';
-
-const createWaButton = async (attributes?: Record<string, string>) => {
-  const waButton = document.createElement('wa-button');
-
-  if (attributes) {
-    for (const [key, value] of Object.entries(attributes)) {
-      waButton.setAttribute(key, value);
-    }
-  }
-
-  document.body.appendChild(waButton);
-  await waButton.updateComplete;
-  const innerButton = waButton.querySelector('button');
-
-  if (!innerButton) {
-    throw new Error('<button> not found inside <wa-button>');
-  }
-
-  const sanitizeText = (el: HTMLElement | null) => {
-    return el?.textContent?.trim() ?? '';
-  };
-
-  return { waButton, innerButton, sanitizeText };
-};
+import { createTestComponent } from '../../../test/create-component';
+import { WaButtonProps } from './wa-button';
 
 describe('wa-button', () => {
   it('renders correctly', async () => {
-    const { waButton, innerButton, sanitizeText } = await createWaButton();
+    const {
+      component: waButton,
+      innerElement,
+      sanitizeText,
+    } = await createTestComponent<HTMLButtonElement>('wa-button', 'button');
+    const innerButton = innerElement as HTMLButtonElement;
 
     const onClick = vi.fn();
 
@@ -49,9 +32,11 @@ describe('wa-button', () => {
     const types = ['button', 'submit', 'reset'];
 
     for (const typeValue of types) {
-      const { waButton, innerButton } = await createWaButton({
-        type: typeValue,
-      });
+      const { component: waButton, innerElement } =
+        await createTestComponent<HTMLButtonElement>('wa-button', 'button', {
+          type: typeValue,
+        });
+      const innerButton = innerElement as HTMLButtonElement;
 
       expect(waButton.type).toBe(typeValue);
       expect(innerButton.type).toBe(typeValue);
@@ -61,9 +46,14 @@ describe('wa-button', () => {
   });
 
   it("accepts the 'label' prop", async () => {
-    const { waButton, innerButton, sanitizeText } = await createWaButton({
+    const {
+      component: waButton,
+      innerElement,
+      sanitizeText,
+    } = await createTestComponent<HTMLButtonElement>('wa-button', 'button', {
       label: 'custom label',
     });
+    const innerButton = innerElement as HTMLButtonElement;
 
     expect(sanitizeText(waButton)).toBe('custom label');
     expect(sanitizeText(innerButton)).toBe('custom label');
@@ -72,9 +62,12 @@ describe('wa-button', () => {
   it("accepts the 'isDisabled' prop", async () => {
     const onClick = vi.fn();
 
-    const { waButton, innerButton } = await createWaButton({
-      isDisabled: 'true',
-    });
+    const { component, innerElement } =
+      await createTestComponent<HTMLButtonElement>('wa-button', 'button', {
+        isDisabled: 'true',
+      });
+    const waButton = component as unknown as WaButtonProps;
+    const innerButton = innerElement as HTMLButtonElement;
 
     expect(waButton.isDisabled).toBe(true);
     expect(innerButton?.getAttribute('aria-disabled')).toBe('true');
