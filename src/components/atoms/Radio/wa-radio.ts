@@ -3,13 +3,22 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+export interface WaRadioProps extends HTMLElement {
+  contentText?: string;
+  currentId?: string;
+  name?: string;
+}
+
 @customElement('wa-radio')
-export class WaRadio extends DynamicStyleMixin(LitElement) {
+export class WaRadio
+  extends DynamicStyleMixin(LitElement)
+  implements WaRadioProps
+{
+  @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: Boolean, reflect: true }) checked?: boolean;
   @property({ type: Boolean, reflect: true }) focused = false;
-  @property({ type: String, reflect: true }) label?: string;
 
   private handleChange() {
     this.checked = !this.checked;
@@ -28,26 +37,24 @@ export class WaRadio extends DynamicStyleMixin(LitElement) {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const labelText = this.label || 'default radio label';
+    const currentContentText = this.contentText || 'default radio content';
 
     return html`
       <label
-        id="${currentId}"
+        for="${currentId}"
         class="${ifDefined(this.applyClassMap('label'))}"
       >
         <input
           type="radio"
           id="${ifDefined(currentId)}"
-          value="${ifDefined(currentId)}"
           name="${ifDefined(currentName)}"
           ?checked="${checked}"
           @change="${this.handleChange}"
           @focus="${this.handleFocus}"
-          aria-checked="${checked}"
           class="${ifDefined(this.applyClassMap('input'))}"
         />
         <span class="${ifDefined(this.applyClassMap('span'))}"
-          >${labelText}</span
+          >${currentContentText}</span
         >
       </label>
     `;
