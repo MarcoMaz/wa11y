@@ -3,13 +3,22 @@ import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
+export interface WaCheckboxProps extends HTMLElement {
+  contentText?: string;
+  currentId?: string;
+  name?: string;
+}
+
 @customElement('wa-checkbox')
-export class WaCheckbox extends DynamicStyleMixin(LitElement) {
+export class WaCheckbox
+  extends DynamicStyleMixin(LitElement)
+  implements WaCheckboxProps
+{
+  @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: Boolean, reflect: true }) checked?: boolean;
   @property({ type: Boolean, reflect: true }) focused = false;
-  @property({ type: String, reflect: true }) label?: string;
 
   private handleChange() {
     this.checked = !this.checked;
@@ -28,7 +37,7 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const contentText = this.label || 'default checkbox content';
+    const currentContentText = this.contentText || 'default checkbox content';
 
     return html`
       <label
@@ -45,7 +54,7 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
           class="${ifDefined(this.applyClassMap('input'))}"
         />
         <span class="${ifDefined(this.applyClassMap('span'))}"
-          >${contentText}</span
+          >${currentContentText}</span
         >
       </label>
     `;
