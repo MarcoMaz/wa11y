@@ -4,26 +4,43 @@ import { createTestComponent } from '../../../test/create-component';
 
 describe('wa-checkbox', () => {
   it('renders correctly', async () => {
-		const {
-			component: waCheckbox,
-			innerElement,
-			sanitizeText,
-		} = await createTestComponent<HTMLInputElement>('wa-checkbox', 'input');
-    const innerInput = innerElement as HTMLInputElement;
+    const {
+      component: waCheckbox,
+      innerElement,
+      sanitizeText,
+    } = await createTestComponent<HTMLInputElement>('wa-checkbox', 'label');
+    const innerLabel = innerElement as HTMLLabelElement;
+    const input = waCheckbox.querySelector('input');
+    const span = waCheckbox.querySelector('span');
 
-    const onClick = vi.fn();
+    // console.log('innerLabel', innerLabel?.outerHTML);
+    const onChange = vi.fn();
 
-    // checks it has type "button"
-    // expect(waCheckbox.type).toBe('button');
-    expect(innerInput.type).toBe('checkbox');
+    // checks all the proper elements are present
+    expect(innerLabel).toBeDefined();
+    expect(input).not.toBeNull();
+    expect(span).not.toBeNull();
 
-    // checks it has the default label
-    expect(sanitizeText(waCheckbox)).toContain('default checkbox label');
-    expect(sanitizeText(innerInput)).toBe('');
+    if (input && span) {
+      expect(innerLabel.contains(input)).toBe(true);
+      expect(innerLabel.contains(span)).toBe(true);
+    }
 
-    // checks that the onClick works
-    waCheckbox.addEventListener('click', onClick);
-    innerInput.click();
-    expect(onClick).toHaveBeenCalled();
+    // - - - Label
+    expect(innerLabel.htmlFor).toBe('default-id');
+
+    // - - - Input
+    expect(input?.type).toBe('checkbox');
+    expect(input?.name).toBe('default-name');
+    expect(input?.id).toBe('default-id');
+    expect(input?.id).toBe(innerLabel.htmlFor);
+
+    // - - - Span
+    expect(sanitizeText(span)).toContain('default checkbox content');
+
+    // checks that the onChange works
+    waCheckbox.addEventListener('click', onChange);
+    innerLabel.click();
+    expect(onChange).toHaveBeenCalled();
   });
 });

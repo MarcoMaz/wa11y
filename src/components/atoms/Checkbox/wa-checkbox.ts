@@ -28,10 +28,13 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const labelText = this.label || 'default checkbox label';
+    const contentText = this.label || 'default checkbox content';
 
     return html`
-      <label id="${currentId}" class="${ifDefined(this.applyClassMap('label'))}">
+      <label
+        for="${currentId}"
+        class="${ifDefined(this.applyClassMap('label'))}"
+      >
         <input
           type="checkbox"
           id="${ifDefined(currentId)}"
@@ -39,10 +42,11 @@ export class WaCheckbox extends DynamicStyleMixin(LitElement) {
           ?checked="${checked}"
           @change="${this.handleChange}"
           @focus="${this.handleFocus}"
-          aria-checked="${checked}"
-          class="${ifDefined(this.applyClassMap('input'))}"          
+          class="${ifDefined(this.applyClassMap('input'))}"
         />
-        <span class="${ifDefined(this.applyClassMap('span'))}">${labelText}</span>
+        <span class="${ifDefined(this.applyClassMap('span'))}"
+          >${contentText}</span
+        >
       </label>
     `;
   }
