@@ -25,8 +25,8 @@ export class WaTextField extends DynamicStyleMixin(LitElement) {
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
-    const currentLabel = this.label || 'Default label';
-    const currentPlaceholder = this.placeholder || 'Search for the docs...';
+    const currentLabel = this.label || 'default text field content';
+    const currentPlaceholder = this.placeholder || 'default text field placeholder';
     const ariaLabel = this.label ? undefined : currentLabel;
 
     return html`
