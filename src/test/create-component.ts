@@ -4,7 +4,7 @@ interface UpdateComplete {
 
 export const createTestComponent = async <T extends HTMLElement>(
   tagName: string,
-  innerSelector: string,
+  innerSelector?: string,
   attributes?: Record<string, string>
 ) => {
   const component = document.createElement(tagName) as T &
@@ -22,11 +22,9 @@ export const createTestComponent = async <T extends HTMLElement>(
     await component.updateComplete;
   }
 
-  const innerElement = component.querySelector(innerSelector);
-
-  if (!innerElement) {
-    throw new Error(`<${innerSelector}> not found inside <${tagName}>`);
-  }
+  const innerElement = innerSelector
+    ? component.querySelector(innerSelector)
+    : null;
 
   return {
     component,
