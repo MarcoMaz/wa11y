@@ -68,4 +68,15 @@ describe('wa-text-field', () => {
     expect(waTextField.contentText).toBe('custom content text');
     expect(sanitizeText(label)).toBe('custom content text');
   });
+
+  it('accepts the "placeholder" prop', async () => {
+    const { component: waTextField, sanitizeText } =
+      await createTestComponent<WaTextFieldProps>('wa-text-field', undefined, {
+        placeholder: 'custom placeholder',
+      });
+    const input = waTextField.querySelector('input') as HTMLInputElement;
+
+    expect(waTextField.placeholder).toBe('custom placeholder');
+    expect(input.placeholder).toBe('custom placeholder');
+  });
 });
