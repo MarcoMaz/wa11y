@@ -9,7 +9,7 @@ describe('wa-checkbox', () => {
       component: waCheckbox,
       innerElement,
       sanitizeText,
-    } = await createTestComponent<HTMLInputElement>('wa-checkbox', 'label');
+    } = await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label');
     const innerLabel = innerElement as HTMLLabelElement;
     const input = waCheckbox.querySelector('input') as HTMLInputElement;
     const span = waCheckbox.querySelector('span') as HTMLSpanElement;
@@ -45,11 +45,10 @@ describe('wa-checkbox', () => {
   });
 
   it('accepts the "id" prop', async () => {
-    const { component, innerElement } =
-      await createTestComponent<HTMLButtonElement>('wa-checkbox', 'label', {
+    const { component: waCheckbox, innerElement } =
+      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
         currentId: 'custom id',
       });
-    const waCheckbox = component as unknown as WaCheckboxProps;
     const innerLabel = innerElement as HTMLLabelElement;
     const input = waCheckbox.querySelector('input') as HTMLInputElement;
 
@@ -59,14 +58,10 @@ describe('wa-checkbox', () => {
   });
 
   it('accepts the "name" prop', async () => {
-    const { component } = await createTestComponent<HTMLButtonElement>(
-      'wa-checkbox',
-      'label',
-      {
+    const { component: waCheckbox } =
+      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
         name: 'custom name',
-      }
-    );
-    const waCheckbox = component as unknown as WaCheckboxProps;
+      });
     const input = waCheckbox.querySelector('input') as HTMLInputElement;
 
     expect(waCheckbox.name).toBe('custom name');
@@ -74,11 +69,10 @@ describe('wa-checkbox', () => {
   });
 
   it('accepts the "contentText" prop', async () => {
-    const { component, sanitizeText } =
-      await createTestComponent<HTMLButtonElement>('wa-checkbox', 'label', {
+    const { component: waCheckbox, sanitizeText } =
+      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
         contentText: 'custom content',
       });
-    const waCheckbox = component as unknown as WaCheckboxProps;
     const span = waCheckbox.querySelector('span') as HTMLSpanElement;
 
     expect(waCheckbox.contentText).toBe('custom content');

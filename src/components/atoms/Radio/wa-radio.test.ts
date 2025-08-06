@@ -9,7 +9,7 @@ describe('wa-radio', () => {
       component: waRadio,
       innerElement,
       sanitizeText,
-    } = await createTestComponent<HTMLInputElement>('wa-radio', 'label');
+    } = await createTestComponent<WaRadioProps>('wa-radio', 'label');
     const innerLabel = innerElement as HTMLLabelElement;
     const input = waRadio.querySelector('input') as HTMLInputElement;
     const span = waRadio.querySelector('span') as HTMLSpanElement;
@@ -45,11 +45,10 @@ describe('wa-radio', () => {
   });
 
   it('accepts the "id" prop', async () => {
-    const { component, innerElement } =
-      await createTestComponent<HTMLButtonElement>('wa-radio', 'label', {
+    const { component: waRadio, innerElement } =
+      await createTestComponent<WaRadioProps>('wa-radio', 'label', {
         currentId: 'custom id',
       });
-    const waRadio = component as unknown as WaRadioProps;
     const innerLabel = innerElement as HTMLLabelElement;
     const input = waRadio.querySelector('input') as HTMLInputElement;
 
@@ -59,14 +58,13 @@ describe('wa-radio', () => {
   });
 
   it('accepts the "name" prop', async () => {
-    const { component } = await createTestComponent<HTMLButtonElement>(
+    const { component: waRadio } = await createTestComponent<WaRadioProps>(
       'wa-radio',
       'label',
       {
         name: 'custom name',
       }
     );
-    const waRadio = component as unknown as WaRadioProps;
     const input = waRadio.querySelector('input') as HTMLInputElement;
 
     expect(waRadio.name).toBe('custom name');
@@ -74,11 +72,10 @@ describe('wa-radio', () => {
   });
 
   it('accepts the "contentText" prop', async () => {
-    const { component, sanitizeText } =
-      await createTestComponent<HTMLButtonElement>('wa-radio', 'label', {
+    const { component: waRadio, sanitizeText } =
+      await createTestComponent<WaRadioProps>('wa-radio', 'label', {
         contentText: 'custom content',
       });
-    const waRadio = component as unknown as WaRadioProps;
     const span = waRadio.querySelector('span') as HTMLSpanElement;
 
     expect(waRadio.contentText).toBe('custom content');
