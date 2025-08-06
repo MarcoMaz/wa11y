@@ -70,7 +70,7 @@ describe('wa-text-field', () => {
   });
 
   it('accepts the "placeholder" prop', async () => {
-    const { component: waTextField, sanitizeText } =
+    const { component: waTextField } =
       await createTestComponent<WaTextFieldProps>('wa-text-field', undefined, {
         placeholder: 'custom placeholder',
       });
@@ -78,5 +78,16 @@ describe('wa-text-field', () => {
 
     expect(waTextField.placeholder).toBe('custom placeholder');
     expect(input.placeholder).toBe('custom placeholder');
+  });
+
+  it("accepts the 'isRequired' prop", async () => {
+    const { component: waTextField } =
+      await createTestComponent<WaTextFieldProps>('wa-text-field', undefined, {
+        isRequired: 'true',
+      });
+    const input = waTextField.querySelector('input') as HTMLInputElement;
+
+    expect(waTextField.isRequired).toBe(true);
+    expect(input?.getAttribute('aria-required')).toBe('true');
   });
 });

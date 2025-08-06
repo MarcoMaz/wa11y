@@ -6,9 +6,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 export interface WaTextFieldProps extends HTMLElement {
   contentText?: string;
   currentId?: string;
+  isRequired: boolean;
   name?: string;
   placeholder?: string;
-  required: boolean;
 }
 
 @customElement('wa-text-field')
@@ -18,9 +18,9 @@ export class WaTextField
 {
   @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
+  @property({ type: Boolean, reflect: true }) isRequired = false;
   @property({ type: String, reflect: true }) name?: string;
   @property({ type: String, reflect: true }) placeholder?: string;
-  @property({ type: Boolean, reflect: true }) required = false;
 
   private handleChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -51,7 +51,7 @@ export class WaTextField
         placeholder="${ifDefined(currentPlaceholder)}"
         id="${ifDefined(currentId)}"
         name="${ifDefined(currentName)}"
-        ?required="${this.required}"
+        aria-required=${ifDefined(this.isRequired ? 'true' : undefined)}
         @change="${this.handleChange}"
         class="${ifDefined(this.applyClassMap('input'))}"
       />
