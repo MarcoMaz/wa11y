@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import './wa-text-field';
 import { createTestComponent } from '../../../test/create-component';
+import { WaTextFieldProps } from './wa-text-field';
 
 describe('wa-text-field', () => {
   it('renders correctly', async () => {
     const { component: waTextField, sanitizeText } =
-      await createTestComponent<HTMLInputElement>('wa-text-field');
-    // const innerLabel = innerElement as HTMLLabelElement;
+      await createTestComponent<WaTextFieldProps>('wa-text-field');
     const label = waTextField.querySelector('label') as HTMLLabelElement;
     const input = waTextField.querySelector('input') as HTMLInputElement;
 
@@ -31,5 +31,19 @@ describe('wa-text-field', () => {
     waTextField.addEventListener('click', onChange);
     label.click();
     expect(onChange).toHaveBeenCalled();
+  });
+
+  it('accepts the "id" prop', async () => {
+    const { component: waTextField } =
+      await createTestComponent<WaTextFieldProps>('wa-text-field', undefined, {
+        currentId: 'custom id',
+      });
+
+    const label = waTextField.querySelector('label') as HTMLLabelElement;
+    const input = waTextField.querySelector('input') as HTMLInputElement;
+
+    expect(waTextField.currentId).toBe('custom id');
+    expect(label.htmlFor).toBe('custom id');
+    expect(input?.id).toBe('custom id');
   });
 });
