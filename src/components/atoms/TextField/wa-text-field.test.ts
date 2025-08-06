@@ -46,4 +46,15 @@ describe('wa-text-field', () => {
     expect(label.htmlFor).toBe('custom id');
     expect(input?.id).toBe('custom id');
   });
+
+  it('accepts the "name" prop', async () => {
+    const { component: waTextField } =
+      await createTestComponent<WaTextFieldProps>('wa-text-field', undefined, {
+        name: 'custom name',
+      });
+    const input = waTextField.querySelector('input') as HTMLInputElement;
+
+    expect(waTextField.name).toBe('custom name');
+    expect(input?.name).toBe('custom name');
+  });
 });
