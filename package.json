@@ -6,6 +6,11 @@
   "module": "dist/wa11y.es.js",
   "types": "dist/types/index.d.ts",
   "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/wa11y.es.js",
+      "require": "./dist/wa11y.umd.js"
+    },
     "./wa-button": {
       "types": "./dist/types/components/atoms/Button/wa-button.d.ts",
       "import": "./dist/wa-button.es.js",
