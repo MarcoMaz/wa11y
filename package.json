@@ -1,6 +1,6 @@
 {
   "name": "wa11y-ui",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Unstyled UI library of Web Components (Lit).",
   "main": "dist/wa11y.umd.js",
   "module": "dist/wa11y.es.js",
