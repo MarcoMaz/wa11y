@@ -6,40 +6,29 @@
   "module": "dist/wa11y.es.js",
   "types": "dist/types/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/wa11y.es.js",
-      "require": "./dist/wa11y.umd.js"
-    },
     "./wa-button": {
-      "types": "./dist/types/components/atoms/Button/wa-button.d.ts",
-      "import": "./dist/wa-button.es.js",
-      "require": "./dist/wa-button.umd.js"
+      "types": "./dist/src/components/atoms/Button/wa-button.d.ts",
+      "import": "./dist/wa-button.es.js"
     },
     "./wa-checkbox": {
-      "types": "./dist/types/components/atoms/Checkbox/wa-checkbox.d.ts",
-      "import": "./dist/wa-checkbox.es.js",
-      "require": "./dist/wa-checkbox.umd.js"
+      "types": "./dist/src/components/atoms/Checkbox/wa-checkbox.d.ts",
+      "import": "./dist/wa-checkbox.es.js"
     },
     "./wa-radio": {
-      "types": "./dist/types/components/atoms/Radio/wa-radio.d.ts",
-      "import": "./dist/wa-radio.es.js",
-      "require": "./dist/wa-radio.umd.js"
+      "types": "./dist/src/components/atoms/Radio/wa-radio.d.ts",
+      "import": "./dist/wa-radio.es.js"
     },
     "./wa-text-field": {
-      "types": "./dist/types/components/atoms/TextField/wa-text-field.d.ts",
-      "import": "./dist/wa-text-field.es.js",
-      "require": "./dist/wa-text-field.umd.js"
+      "types": "./dist/src/components/atoms/TextField/wa-text-field.d.ts",
+      "import": "./dist/wa-text-field.es.js"
     },
     "./wa-wheel-picker": {
-      "types": "./dist/types/components/atoms/WheelPicker/wa-wheel-picker.d.ts",
-      "import": "./dist/wa-wheel-picker.es.js",
-      "require": "./dist/wa-wheel-picker.umd.js"
+      "types": "./dist/src/components/atoms/WheelPicker/wa-wheel-picker.d.ts",
+      "import": "./dist/wa-wheel-picker.es.js"
     },
     "./wa-form": {
-      "types": "./dist/types/components/molecules/Form/wa-form.d.ts",
-      "import": "./dist/wa-form.es.js",
-      "require": "./dist/wa-form.umd.js"
+      "types": "./dist/src/components/molecules/Form/wa-form.d.ts",
+      "import": "./dist/wa-form.es.js"
     }
   },
   "files": [
