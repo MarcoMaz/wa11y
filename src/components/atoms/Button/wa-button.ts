@@ -3,13 +3,25 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-@customElement('wa-button')
-export class WaButton extends DynamicStyleMixin(LitElement) {
-  @property({ type: Boolean, reflect: true }) isDisabled = false;
-  @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
-  @property({ type: String, reflect: true }) label?: string;
+export interface WaButtonProps extends HTMLElement {
+  isDisabled: boolean;
+  label?: string;
+  type: 'button' | 'submit' | 'reset';
+}
 
-  private handleClick() {
+@customElement('wa-button')
+export class WaButton extends DynamicStyleMixin(LitElement) implements WaButtonProps {
+  @property({ type: Boolean, reflect: true }) isDisabled = false;
+  @property({ type: String, reflect: true }) label?: string;
+  @property({ type: String, reflect: true }) type: 'button' | 'submit' | 'reset' = 'button';
+
+private handleClick(event: Event) {
+  if (this.isDisabled) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    return;
+  }
+
     this.dispatchEvent(new CustomEvent('onClick'));
   }
 

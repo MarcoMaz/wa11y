@@ -3,13 +3,24 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+export interface WaTextFieldProps extends HTMLElement {
+  contentText?: string;
+  currentId?: string;
+  isRequired: boolean;
+  name?: string;
+  placeholder?: string;
+}
+
 @customElement('wa-text-field')
-export class WaTextField extends DynamicStyleMixin(LitElement) {
+export class WaTextField
+  extends DynamicStyleMixin(LitElement)
+  implements WaTextFieldProps
+{
+  @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
+  @property({ type: Boolean, reflect: true }) isRequired = false;
   @property({ type: String, reflect: true }) name?: string;
-  @property({ type: String, reflect: true }) label?: string;
   @property({ type: String, reflect: true }) placeholder?: string;
-  @property({ type: Boolean, reflect: true }) required = false;
 
   private handleChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -25,24 +36,23 @@ export class WaTextField extends DynamicStyleMixin(LitElement) {
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
-    const currentLabel = this.label || 'Default label';
-    const currentPlaceholder = this.placeholder || 'Search for the docs...';
-    const ariaLabel = this.label ? undefined : currentLabel;
+    const currentContentText = this.contentText || 'default text field content';
+    const currentPlaceholder =
+      this.placeholder || 'default text field placeholder';
 
     return html`
       <label
         for="${currentId}"
         class="${ifDefined(this.applyClassMap('label'))}"
-        >${currentLabel}</label
+        >${currentContentText}</label
       >
       <input
         type="text"
         placeholder="${ifDefined(currentPlaceholder)}"
         id="${ifDefined(currentId)}"
         name="${ifDefined(currentName)}"
-        ?required="${this.required}"
+        aria-required=${ifDefined(this.isRequired ? 'true' : undefined)}
         @change="${this.handleChange}"
-        aria-label="${ifDefined(ariaLabel)}"
         class="${ifDefined(this.applyClassMap('input'))}"
       />
     `;
