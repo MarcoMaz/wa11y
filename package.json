@@ -10,9 +10,9 @@
       "types": "./dist/src/components/atoms/Button/wa-button.d.ts",
       "import": "./dist/wa-button.es.js"
     },
-    "./wa-checkbox": {
-      "types": "./dist/src/components/atoms/Checkbox/wa-checkbox.d.ts",
-      "import": "./dist/wa-checkbox.es.js"
+    "./wa-input-checkbox": {
+      "types": "./dist/src/components/atoms/InputCheckbox/wa-input-checkbox.d.ts",
+      "import": "./dist/wa-input-checkbox.es.js"
     },
     "./wa-radio": {
       "types": "./dist/src/components/atoms/Radio/wa-radio.d.ts",

@@ -3,16 +3,16 @@ import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
-export interface WaCheckboxProps extends HTMLElement {
+export interface WaInputCheckboxProps extends HTMLElement {
   contentText?: string;
   currentId?: string;
   name?: string;
 }
 
-@customElement('wa-checkbox')
-export class WaCheckbox
+@customElement('wa-input-checkbox')
+export class WaInputCheckbox
   extends DynamicStyleMixin(LitElement)
-  implements WaCheckboxProps
+  implements WaInputCheckboxProps
 {
   @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
@@ -37,7 +37,8 @@ export class WaCheckbox
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const currentContentText = this.contentText || 'default checkbox content';
+    const currentContentText =
+      this.contentText || 'default input checkbox content';
 
     return html`
       <label
@@ -63,6 +64,6 @@ export class WaCheckbox
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wa-checkbox': WaCheckbox;
+    'wa-input-checkbox': WaInputCheckbox;
   }
 }

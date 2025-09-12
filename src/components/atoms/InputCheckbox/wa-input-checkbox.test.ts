@@ -1,18 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import './wa-checkbox';
+import './wa-input-checkbox';
 import { createTestComponent } from '../../../test/create-component';
-import { WaCheckboxProps } from './wa-checkbox';
+import { WaInputCheckboxProps } from './wa-input-checkbox';
 
-describe('wa-checkbox', () => {
+describe('wa-input-checkbox', () => {
   it('renders correctly', async () => {
     const {
-      component: waCheckbox,
+      component: waInputCheckbox,
       innerElement,
       sanitizeText,
-    } = await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label');
+    } = await createTestComponent<WaInputCheckboxProps>('wa-input-checkbox', 'label');
     const innerLabel = innerElement as HTMLLabelElement;
-    const input = waCheckbox.querySelector('input') as HTMLInputElement;
-    const span = waCheckbox.querySelector('span') as HTMLSpanElement;
+    const input = waInputCheckbox.querySelector('input') as HTMLInputElement;
+    const span = waInputCheckbox.querySelector('span') as HTMLSpanElement;
 
     const onChange = vi.fn();
 
@@ -36,46 +36,46 @@ describe('wa-checkbox', () => {
     expect(input?.id).toBe(innerLabel.htmlFor);
 
     // - - - Span
-    expect(sanitizeText(span)).toContain('default checkbox content');
+    expect(sanitizeText(span)).toContain('default input checkbox content');
 
     // checks that the onChange works
-    waCheckbox.addEventListener('click', onChange);
+    waInputCheckbox.addEventListener('click', onChange);
     innerLabel.click();
     expect(onChange).toHaveBeenCalled();
   });
 
   it('accepts the "id" prop', async () => {
-    const { component: waCheckbox, innerElement } =
-      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
+    const { component: waInputCheckbox, innerElement } =
+      await createTestComponent<WaInputCheckboxProps>('wa-input-checkbox', 'label', {
         currentId: 'custom id',
       });
     const innerLabel = innerElement as HTMLLabelElement;
-    const input = waCheckbox.querySelector('input') as HTMLInputElement;
+    const input = waInputCheckbox.querySelector('input') as HTMLInputElement;
 
-    expect(waCheckbox.currentId).toBe('custom id');
+    expect(waInputCheckbox.currentId).toBe('custom id');
     expect(innerLabel.htmlFor).toBe('custom id');
     expect(input?.id).toBe('custom id');
   });
 
   it('accepts the "name" prop', async () => {
-    const { component: waCheckbox } =
-      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
+    const { component: waInputCheckbox } =
+      await createTestComponent<WaInputCheckboxProps>('wa-input-checkbox', 'label', {
         name: 'custom name',
       });
-    const input = waCheckbox.querySelector('input') as HTMLInputElement;
+    const input = waInputCheckbox.querySelector('input') as HTMLInputElement;
 
-    expect(waCheckbox.name).toBe('custom name');
+    expect(waInputCheckbox.name).toBe('custom name');
     expect(input?.name).toBe('custom name');
   });
 
   it('accepts the "contentText" prop', async () => {
-    const { component: waCheckbox, sanitizeText } =
-      await createTestComponent<WaCheckboxProps>('wa-checkbox', 'label', {
+    const { component: waInputCheckbox, sanitizeText } =
+      await createTestComponent<WaInputCheckboxProps>('wa-input-checkbox', 'label', {
         contentText: 'custom content',
       });
-    const span = waCheckbox.querySelector('span') as HTMLSpanElement;
+    const span = waInputCheckbox.querySelector('span') as HTMLSpanElement;
 
-    expect(waCheckbox.contentText).toBe('custom content');
+    expect(waInputCheckbox.contentText).toBe('custom content');
     expect(sanitizeText(span)).toBe('custom content');
   });
 });

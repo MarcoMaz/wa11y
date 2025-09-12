@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
-import './wa-checkbox';
+import './wa-input-checkbox';
 
 export default {
-  title: 'Atoms/Checkbox',
+  title: 'Atoms/InputCheckbox',
   parameters: {
     layout: 'centered',
   },
@@ -26,53 +26,53 @@ export default {
     },
   },
   render: ({ currentId, name, checked, focused, contentText }) =>
-    html` <wa-checkbox
+    html` <wa-input-checkbox
       .currentId="${currentId}"
       .name="${name}"
       .checked="${checked}"
       .focused="${focused}"
       .contentText="${contentText}"
-    ></wa-checkbox>`,
+    ></wa-input-checkbox>`,
 } as Meta;
 
-export const CheckboxWithDefaultIdNameAndLabel: StoryObj = {
-  name: 'Checkbox with default id, name and label',
+export const InputCheckboxWithDefaultIdNameAndLabel: StoryObj = {
+  name: 'InputCheckbox with default id, name and label',
   args: {
     checked: false,
     focused: false
   }
 };
 
-export const CheckboxWithCustomId: StoryObj = {
-  name: 'Checkbox with custom id',
+export const InputCheckboxWithCustomId: StoryObj = {
+  name: 'InputCheckbox with custom id',
   args: {
     currentId: 'custom-id',
   },
 };
 
-export const CheckboxWithCustomName: StoryObj = {
-  name: 'Checkbox with custom name',
+export const InputCheckboxWithCustomName: StoryObj = {
+  name: 'InputCheckbox with custom name',
   args: {
     name: 'custom-name',
   },
 };
 
-export const CheckboxWithCustomContentText: StoryObj = {
-  name: 'Checkbox with custom content',
+export const InputCheckboxWithCustomContentText: StoryObj = {
+  name: 'InputCheckbox with custom content',
   args: {
     contentText: 'Custom Content',
   },
 };
 
-export const CheckboxWithFocusedInput: StoryObj = {
-  name: 'Checkbox with focused input',
+export const InputCheckboxWithFocusedInput: StoryObj = {
+  name: 'InputCheckbox with focused input',
   args: {
     focused: true,
   },
 };
 
-export const CheckboxWithSelectedInput: StoryObj = {
-  name: 'Checkbox with selected input',
+export const InputCheckboxWithSelectedInput: StoryObj = {
+  name: 'InputCheckbox with selected input',
   args: {
     checked: true,
     focused: true,

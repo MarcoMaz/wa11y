@@ -188,7 +188,7 @@ To use the **`classMap`** attribute, simply define the class mappings in your co
 
 Here are some examples:
 
-**Example 1: Styling a Checkbox Component in React with Tailwind CSS**
+**Example 1: Styling a Input Checkbox Component in React with Tailwind CSS**
 
 ```
 function App() {
@@ -200,7 +200,7 @@ function App() {
 
   return (
     <>
-      <wa-checkbox classMap={JSON.stringify(classMap)}></wa-checkbox>
+      <wa-input-checkbox classMap={JSON.stringify(classMap)}></wa-input-checkbox>
     </>
   );
 }
@@ -378,7 +378,7 @@ function App() {
 
   return (
     <>
-      <wa-checkbox classMap={JSON.stringify(classMap)}></wa-checkbox>
+      <wa-input-checkbox classMap={JSON.stringify(classMap)}></wa-input-checkbox>
     </>
   );
 }
@@ -398,7 +398,7 @@ const classMap = {
 </script>
 
 <template>
-  <wa-checkbox :classMap="classMap"></wa-checkbox>
+  <wa-input-checkbox :classMap="classMap"></wa-input-checkbox>
 </template>
 ```
 **- Angular Usage**
@@ -415,7 +415,7 @@ export class AppComponent {
 ```
 **app.component.html:**
 ```
-<wa-checkbox [classMap]="classMap"></wa-checkbox>
+<wa-input-checkbox [classMap]="classMap"></wa-input-checkbox>
 ```
 ### Styling with Bootstrap (or similar libraries)
 

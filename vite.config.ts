@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: {
         'wa-button': resolve(__dirname, 'src/components/atoms/Button/wa-button.ts'),
-        'wa-checkbox': resolve(__dirname, 'src/components/atoms/Checkbox/wa-checkbox.ts'),
+        'wa-input-checkbox': resolve(__dirname, 'src/components/atoms/InputCheckbox/wa-input-checkbox.ts'),
         'wa-radio': resolve(__dirname, 'src/components/atoms/Radio/wa-radio.ts'),
         'wa-text-field': resolve(__dirname, 'src/components/atoms/TextField/wa-text-field.ts'),
         'wa-wheel-picker': resolve(__dirname, 'src/components/atoms/WheelPicker/wa-wheel-picker.ts'),
