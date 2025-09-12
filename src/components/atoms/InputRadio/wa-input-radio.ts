@@ -3,16 +3,16 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-export interface WaRadioProps extends HTMLElement {
+export interface WaInputRadioProps extends HTMLElement {
   contentText?: string;
   currentId?: string;
   name?: string;
 }
 
-@customElement('wa-radio')
-export class WaRadio
+@customElement('wa-input-radio')
+export class WaInputRadio
   extends DynamicStyleMixin(LitElement)
-  implements WaRadioProps
+  implements WaInputRadioProps
 {
   @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
@@ -37,7 +37,8 @@ export class WaRadio
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
     const checked = this.checked || false;
-    const currentContentText = this.contentText || 'default radio content';
+    const currentContentText =
+      this.contentText || 'default input radio content';
 
     return html`
       <label
@@ -63,6 +64,6 @@ export class WaRadio
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wa-radio': WaRadio;
+    'wa-input-radio': WaInputRadio;
   }
 }

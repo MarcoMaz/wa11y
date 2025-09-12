@@ -1,18 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import './wa-radio';
+import './wa-input-radio';
 import { createTestComponent } from '../../../test/create-component';
-import { WaRadioProps } from './wa-radio';
+import { WaInputRadioProps } from './wa-input-radio';
 
-describe('wa-radio', () => {
+describe('wa-input-radio', () => {
   it('renders correctly', async () => {
     const {
-      component: waRadio,
+      component: waInputRadio,
       innerElement,
       sanitizeText,
-    } = await createTestComponent<WaRadioProps>('wa-radio', 'label');
+    } = await createTestComponent<WaInputRadioProps>('wa-input-radio', 'label');
     const innerLabel = innerElement as HTMLLabelElement;
-    const input = waRadio.querySelector('input') as HTMLInputElement;
-    const span = waRadio.querySelector('span') as HTMLSpanElement;
+    const input = waInputRadio.querySelector('input') as HTMLInputElement;
+    const span = waInputRadio.querySelector('span') as HTMLSpanElement;
 
     const onChange = vi.fn();
 
@@ -36,49 +36,46 @@ describe('wa-radio', () => {
     expect(input?.id).toBe(innerLabel.htmlFor);
 
     // - - - Span
-    expect(sanitizeText(span)).toContain('default radio content');
+    expect(sanitizeText(span)).toContain('default input radio content');
 
     // checks that the onChange works
-    waRadio.addEventListener('click', onChange);
+    waInputRadio.addEventListener('click', onChange);
     innerLabel.click();
     expect(onChange).toHaveBeenCalled();
   });
 
   it('accepts the "id" prop', async () => {
-    const { component: waRadio, innerElement } =
-      await createTestComponent<WaRadioProps>('wa-radio', 'label', {
+    const { component: waInputRadio, innerElement } =
+      await createTestComponent<WaInputRadioProps>('wa-input-radio', 'label', {
         currentId: 'custom id',
       });
     const innerLabel = innerElement as HTMLLabelElement;
-    const input = waRadio.querySelector('input') as HTMLInputElement;
+    const input = waInputRadio.querySelector('input') as HTMLInputElement;
 
-    expect(waRadio.currentId).toBe('custom id');
+    expect(waInputRadio.currentId).toBe('custom id');
     expect(innerLabel.htmlFor).toBe('custom id');
     expect(input?.id).toBe('custom id');
   });
 
   it('accepts the "name" prop', async () => {
-    const { component: waRadio } = await createTestComponent<WaRadioProps>(
-      'wa-radio',
-      'label',
-      {
+    const { component: waInputRadio } =
+      await createTestComponent<WaInputRadioProps>('wa-input-radio', 'label', {
         name: 'custom name',
-      }
-    );
-    const input = waRadio.querySelector('input') as HTMLInputElement;
+      });
+    const input = waInputRadio.querySelector('input') as HTMLInputElement;
 
-    expect(waRadio.name).toBe('custom name');
+    expect(waInputRadio.name).toBe('custom name');
     expect(input?.name).toBe('custom name');
   });
 
   it('accepts the "contentText" prop', async () => {
-    const { component: waRadio, sanitizeText } =
-      await createTestComponent<WaRadioProps>('wa-radio', 'label', {
+    const { component: waInputRadio, sanitizeText } =
+      await createTestComponent<WaInputRadioProps>('wa-input-radio', 'label', {
         contentText: 'custom content',
       });
-    const span = waRadio.querySelector('span') as HTMLSpanElement;
+    const span = waInputRadio.querySelector('span') as HTMLSpanElement;
 
-    expect(waRadio.contentText).toBe('custom content');
+    expect(waInputRadio.contentText).toBe('custom content');
     expect(sanitizeText(span)).toBe('custom content');
   });
 });

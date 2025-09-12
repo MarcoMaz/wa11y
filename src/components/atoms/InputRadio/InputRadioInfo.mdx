@@ -1,0 +1,56 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import './wa-input-radio';
+import * as InputRadioStories from './wa-input-radio.stories';
+
+<Meta title="Atoms/InputRadio" of={InputRadioStories} />
+
+# InputRadio
+&nbsp;
+<Story />
+&nbsp;
+
+## Description
+
+A input radio allows a user to select a single option at a time.
+
+## Tag
+
+`<wa-input-radio>`
+
+## ClassMap
+- label
+- input
+- span
+
+## Props 
+
+### contentText
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The label displayed next to the input radio. Defaults to **default input radio label** if not provided.
+
+### currentId
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The unique identifier for the input radio element. Defaults to **default-id** if not provided.
+
+### name
+
+- **Type: String**
+- **Reflects to Attribute: true**
+- **Description:** The name attribute for the input radio element. Defaults to **default-name** if not provided.
+
+### checked
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Description:** Indicates whether the input radio is checked. Defaults to **false**.
+
+### focused
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Description:** Indicates whether the input radio is focused. Defaults to **false**.

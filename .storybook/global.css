@@ -22,12 +22,12 @@
   --input-checkbox--checkmark-Y: 0.5rem;
   --input-checkbox--checkmark-color: #ffffff;
 
-  --radio--border-default-default: #E2E8F0;
-  --radio--border-default-hover: #B0BCC8;
-  --radio--border-default-active: #8099B4;
-  --radio--border-selected-default: #3182CE;
-  --radio--border-selected-hover: #2B6CB0;
-  --radio--border-selected-active: #1E547D;
+  --input-radio--border-default-default: #E2E8F0;
+  --input-radio--border-default-hover: #B0BCC8;
+  --input-radio--border-default-active: #8099B4;
+  --input-radio--border-selected-default: #3182CE;
+  --input-radio--border-selected-hover: #2B6CB0;
+  --input-radio--border-selected-active: #1E547D;
 
   --text-field--border-default-default: #E2E8F0;
   --text-field--border-default-hover: #B0BCC8;
@@ -177,7 +177,7 @@ wa-input-checkbox {
   }
 }
 
-wa-radio {
+wa-input-radio {
   align-items: center;
   display: flex;
   height: 2rem;
@@ -204,7 +204,7 @@ wa-radio {
     }
     
     &::before {
-      border: 2px solid var(--radio--border-default-default);
+      border: 2px solid var(--input-radio--border-default-default);
       height: 1.5rem;
       position: relative;
       width: 1.5rem;
@@ -215,7 +215,7 @@ wa-radio {
     }
     
     &::after {
-      background-color: var(--radio--border-selected-default);
+      background-color: var(--input-radio--border-selected-default);
       height: 1rem;
       left: 0.375rem;
       position: absolute;
@@ -224,11 +224,11 @@ wa-radio {
     }
     
     &:hover::before {
-      border-color: var(--radio--border-default-hover);
+      border-color: var(--input-radio--border-default-hover);
     }
     
     &:active::before {
-      border-color: var(--radio--border-default-active);
+      border-color: var(--input-radio--border-default-active);
     }
   }
 
@@ -239,11 +239,11 @@ wa-radio {
   }
 
   &[checked] label:hover::after {
-    background-color: var(--radio--border-selected-hover);
+    background-color: var(--input-radio--border-selected-hover);
   }
   
   &[checked] label:active::after {
-    background-color: var(--radio--border-default-active);
+    background-color: var(--input-radio--border-default-active);
   }
 
   &[focused] label::before {

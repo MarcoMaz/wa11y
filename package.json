@@ -14,9 +14,9 @@
       "types": "./dist/src/components/atoms/InputCheckbox/wa-input-checkbox.d.ts",
       "import": "./dist/wa-input-checkbox.es.js"
     },
-    "./wa-radio": {
-      "types": "./dist/src/components/atoms/Radio/wa-radio.d.ts",
-      "import": "./dist/wa-radio.es.js"
+    "./wa-input-radio": {
+      "types": "./dist/src/components/atoms/InputRadio/wa-input-radio.d.ts",
+      "import": "./dist/wa-input-radio.es.js"
     },
     "./wa-text-field": {
       "types": "./dist/src/components/atoms/TextField/wa-text-field.d.ts",
