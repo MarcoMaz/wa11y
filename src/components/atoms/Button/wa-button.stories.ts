@@ -12,19 +12,19 @@ export default {
     isDisabled: {
       control: 'boolean',
     },
+    label: {
+      control: 'text',
+    },
     type: {
       control: { type: 'select' },
       options: ['button', 'submit', 'reset'],
-    },
-    label: {
-      control: 'text',
     },
   },
   render: ({ isDisabled, label, type }) =>
     html`<wa-button
       .isDisabled=${isDisabled}
-      .type=${type}
       .label=${label}
+      .type=${type}
       @onClick=${() => alert('Custom event fired')}
     ></wa-button>`,
 } as Meta;
