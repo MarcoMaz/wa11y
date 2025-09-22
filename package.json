@@ -18,9 +18,9 @@
       "types": "./dist/src/components/atoms/InputRadio/wa-input-radio.d.ts",
       "import": "./dist/wa-input-radio.es.js"
     },
-    "./wa-text-field": {
-      "types": "./dist/src/components/atoms/TextField/wa-text-field.d.ts",
-      "import": "./dist/wa-text-field.es.js"
+    "./wa-input-text": {
+      "types": "./dist/src/components/atoms/InputText/wa-input-text.d.ts",
+      "import": "./dist/wa-input-text.es.js"
     },
     "./wa-wheel-picker": {
       "types": "./dist/src/components/atoms/WheelPicker/wa-wheel-picker.d.ts",

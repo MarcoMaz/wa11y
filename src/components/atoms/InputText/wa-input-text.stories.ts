@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
-import './wa-text-field';
+import './wa-input-text';
 
 export default {
-  title: 'Atoms/TextField',
+  title: 'Atoms/InputText',
   parameters: {
     layout: 'centered',
   },
@@ -26,52 +26,52 @@ export default {
     },
   },
   render: ({ currentId, name, label, placeholder, required }) =>
-    html`<wa-text-field
+    html`<wa-input-text
       .currentId="${currentId}"
       .name="${name}"
       .label="${label}"
       .placeholder="${placeholder}"
       .required="${required}"
-    ></wa-text-field>`,
+    ></wa-input-text>`,
 } as Meta;
 
-export const TextFieldDefault: StoryObj = {
-  name: 'Text Field Default',
+export const InputTextDefault: StoryObj = {
+  name: 'Input Text Default',
   args: {
-    required: false
-  }
+    required: false,
+  },
 };
 
-export const TextFieldWithCustomId: StoryObj = {
-  name: 'Text Field with custom id',
+export const InputTextWithCustomId: StoryObj = {
+  name: 'Input Text with custom id',
   args: {
     currentId: 'custom-id',
   },
 };
 
-export const TextFieldWithCustomName: StoryObj = {
-  name: 'Text Field with custom name',
+export const InputTextWithCustomName: StoryObj = {
+  name: 'Input Text with custom name',
   args: {
     name: 'custom-name',
   },
 };
 
-export const TextFieldWithCustomLabel: StoryObj = {
-  name: 'Text Field with custom label',
+export const InputTextWithCustomLabel: StoryObj = {
+  name: 'Input Text with custom label',
   args: {
     label: 'Custom label',
   },
 };
 
-export const TextFieldWithCustomPlaceholder: StoryObj = {
-  name: 'Text Field with custom placeholder',
+export const InputTextWithCustomPlaceholder: StoryObj = {
+  name: 'Input Text with custom placeholder',
   args: {
     placeholder: 'Custom placeholder',
   },
 };
 
-export const TextFieldRequired: StoryObj = {
-  name: 'Text Field required',
+export const InputTextRequired: StoryObj = {
+  name: 'Input Text required',
   args: {
     required: true,
   },

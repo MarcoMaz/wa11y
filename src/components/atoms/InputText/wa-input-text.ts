@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-export interface WaTextFieldProps extends HTMLElement {
+export interface WaInputTextProps extends HTMLElement {
   contentText?: string;
   currentId?: string;
   isRequired: boolean;
@@ -11,10 +11,10 @@ export interface WaTextFieldProps extends HTMLElement {
   placeholder?: string;
 }
 
-@customElement('wa-text-field')
-export class WaTextField
+@customElement('wa-input-text')
+export class WaInputText
   extends DynamicStyleMixin(LitElement)
-  implements WaTextFieldProps
+  implements WaInputTextProps
 {
   @property({ type: String, reflect: true }) contentText?: string;
   @property({ type: String, reflect: true }) currentId?: string;
@@ -36,9 +36,9 @@ export class WaTextField
   render() {
     const currentId = this.currentId || 'default-id';
     const currentName = this.name || 'default-name';
-    const currentContentText = this.contentText || 'default text field content';
+    const currentContentText = this.contentText || 'default input text content';
     const currentPlaceholder =
-      this.placeholder || 'default text field placeholder';
+      this.placeholder || 'default input text placeholder';
 
     return html`
       <label
@@ -61,6 +61,6 @@ export class WaTextField
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wa-text-field': WaTextField;
+    'wa-input-text': WaInputText;
   }
 }

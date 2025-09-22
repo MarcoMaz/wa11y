@@ -22,29 +22,29 @@
   --input-checkbox--checkmark-Y: 0.5rem;
   --input-checkbox--checkmark-color: #ffffff;
 
-  --input-radio--border-default-default: #E2E8F0;
-  --input-radio--border-default-hover: #B0BCC8;
-  --input-radio--border-default-active: #8099B4;
-  --input-radio--border-selected-default: #3182CE;
-  --input-radio--border-selected-hover: #2B6CB0;
-  --input-radio--border-selected-active: #1E547D;
+  --input-radio--border-default-default: #e2e8f0;
+  --input-radio--border-default-hover: #b0bcc8;
+  --input-radio--border-default-active: #8099b4;
+  --input-radio--border-selected-default: #3182ce;
+  --input-radio--border-selected-hover: #2b6cb0;
+  --input-radio--border-selected-active: #1e547d;
 
-  --text-field--border-default-default: #E2E8F0;
-  --text-field--border-default-hover: #B0BCC8;
-  --text-field--border-default-active: #8099B4;
-  --text-field--font-default: 1rem;
+  --input-text--border-default-default: #e2e8f0;
+  --input-text--border-default-hover: #b0bcc8;
+  --input-text--border-default-active: #8099b4;
+  --input-text--font-default: 1rem;
 
   --wheel-picker--color-fog: #ffffff;
-  --wheel-picker--border-default-default: #E2E8F0;
-  --wheel-picker--border-default-hover: #B0BCC8;
-  
+  --wheel-picker--border-default-default: #e2e8f0;
+  --wheel-picker--border-default-hover: #b0bcc8;
+
   --chrome-outline: #a86d5a;
   --chrome-box-shadow: #f4a26e;
 }
 
 wa-button {
   display: inline-flex;
-  
+
   &:hover {
     cursor: pointer;
   }
@@ -60,18 +60,18 @@ wa-button {
     height: 2rem;
     padding: 0.5rem 0.75rem;
   }
-  
+
   &:not([disabled]) {
     & button:hover {
       background: var(--button--background-hover);
-      cursor: pointer;  
+      cursor: pointer;
     }
-  
+
     & button:active {
-      background: var(--button--background-active);  
+      background: var(--button--background-active);
     }
   }
-  
+
   &[disabled] button {
     background: var(--button--background-disabled);
     color: var(--button--text-disabled);
@@ -81,7 +81,7 @@ wa-button {
 
 wa-input-checkbox {
   display: inline-flex;
-  
+
   & input {
     left: 0;
     opacity: 0;
@@ -96,7 +96,7 @@ wa-input-checkbox {
     min-width: 10rem;
     position: relative;
     width: var(--input-checkbox--square-size);
-  
+
     &:before {
       border-radius: var(--input-checkbox--square-radius);
       border: var(--input-checkbox--square-border) solid
@@ -104,14 +104,16 @@ wa-input-checkbox {
       content: '';
       display: flex;
       height: calc(
-        var(--input-checkbox--square-size) - var(--input-checkbox--checkmark-size) * 2
+        var(--input-checkbox--square-size) -
+          var(--input-checkbox--checkmark-size) * 2
       );
       position: absolute;
       width: calc(
-        var(--input-checkbox--square-size) - var(--input-checkbox--checkmark-size) * 2
+        var(--input-checkbox--square-size) -
+          var(--input-checkbox--checkmark-size) * 2
       );
     }
-  
+
     &:after {
       border-bottom: var(--input-checkbox--checkmark-size) solid
         var(--input-checkbox--checkmark-color);
@@ -125,20 +127,20 @@ wa-input-checkbox {
       transform: rotate(315deg);
       width: var(--input-checkbox--checkmark-W);
     }
-  
+
     &:hover {
       cursor: pointer;
-  
+
       &:before {
-        border-color: var(--input-checkbox--square--border-default-hover);   
+        border-color: var(--input-checkbox--square--border-default-hover);
       }
     }
-  
+
     &:active:before {
       border-color: var(--input-checkbox--square--border-default-active);
     }
   }
-  
+
   &[focused] label::before {
     box-shadow: 0 0 0 2px var(--chrome-box-shadow);
     outline: 1px solid var(--chrome-outline);
@@ -150,18 +152,18 @@ wa-input-checkbox {
       border: var(--input-checkbox--square-border) solid
         var(--input-checkbox--square-border-selected-default);
     }
-  
+
     label:after {
       content: '';
-      display: flex;  
+      display: flex;
     }
-  
+
     label:hover::before {
       background-color: var(--input-checkbox--square-border-selected-hover);
       border: var(--input-checkbox--square-border) solid
         var(--input-checkbox--square-border-selected-hover);
     }
-  
+
     label:active:before {
       background-color: var(--input-checkbox--square-border-selected-active);
       border: var(--input-checkbox--square-border) solid
@@ -183,7 +185,7 @@ wa-input-radio {
   height: 2rem;
   position: relative;
   width: 100%;
-  
+
   & input {
     left: 0;
     opacity: 0;
@@ -198,11 +200,11 @@ wa-input-radio {
     font-size: 1rem;
     position: relative;
     width: 100%;
-    
+
     &:hover {
       cursor: pointer;
     }
-    
+
     &::before {
       border: 2px solid var(--input-radio--border-default-default);
       height: 1.5rem;
@@ -211,9 +213,9 @@ wa-input-radio {
 
       border-radius: 50%;
       content: '';
-      display: flex;    
+      display: flex;
     }
-    
+
     &::after {
       background-color: var(--input-radio--border-selected-default);
       height: 1rem;
@@ -222,11 +224,11 @@ wa-input-radio {
       top: 0.375rem;
       width: 1rem;
     }
-    
+
     &:hover::before {
       border-color: var(--input-radio--border-default-hover);
     }
-    
+
     &:active::before {
       border-color: var(--input-radio--border-default-active);
     }
@@ -235,13 +237,13 @@ wa-input-radio {
   &[checked] label::after {
     border-radius: 50%;
     content: '';
-    display: flex;  
+    display: flex;
   }
 
   &[checked] label:hover::after {
     background-color: var(--input-radio--border-selected-hover);
   }
-  
+
   &[checked] label:active::after {
     background-color: var(--input-radio--border-default-active);
   }
@@ -249,39 +251,36 @@ wa-input-radio {
   &[focused] label::before {
     box-shadow: 0 0 0 2px var(--chrome-box-shadow);
     outline: 1px solid var(--chrome-outline);
-  }  
-  
+  }
+
   & span {
     padding-left: 0.25rem;
   }
 }
 
-
-
-
-wa-text-field {
+wa-input-text {
   display: grid;
 
   & label {
     display: flex;
     font-family: arial;
-    font-size: var(--text-field--font-default);
+    font-size: var(--input-text--font-default);
     margin-bottom: 0.25rem;
   }
-  
+
   & input {
-    border: 0.125rem solid var(--text-field--border-default-default);
+    border: 0.125rem solid var(--input-text--border-default-default);
     border-radius: 0.375rem;
-    font-size: var(--text-field--font-default);
+    font-size: var(--input-text--font-default);
     padding: 0.5rem;
   }
-  
+
   &:hover {
-    border-color: var(--text-field--border-default-hover);
+    border-color: var(--input-text--border-default-hover);
   }
-  
+
   &::placeholder {
-    color: var(--text-field--border-default-hover);
+    color: var(--input-text--border-default-hover);
   }
 }
 
@@ -289,106 +288,114 @@ wa-wheel-picker {
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: fit-content;  
-  
+  width: fit-content;
+
   &:focus-within .WheelPicker {
     box-shadow: 0 0 0 2px var(--chrome-box-shadow);
     outline: 1px solid var(--chrome-outline);
   }
 
   & .WheelPicker {
-    position:relative;
-  
+    position: relative;
+
     &:after,
     &:before {
-      content:" ";
-      height:calc(50% - 1.5rem);
-      pointer-events:none;
-      position:absolute;
-      width:100%;
+      content: ' ';
+      height: calc(50% - 1.5rem);
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
       z-index: 9999;
     }
-    
-    &:before{
-      background:linear-gradient(180deg, var(--wheel-picker--color-fog) 25%,transparent);
+
+    &:before {
+      background: linear-gradient(
+        180deg,
+        var(--wheel-picker--color-fog) 25%,
+        transparent
+      );
     }
-    
-    &:after{
-      background:linear-gradient(0deg, var(--wheel-picker--color-fog) 25%,transparent);
-      bottom:0;
+
+    &:after {
+      background: linear-gradient(
+        0deg,
+        var(--wheel-picker--color-fog) 25%,
+        transparent
+      );
+      bottom: 0;
     }
   }
-  
+
   & .WheelPicker__items {
     font-family: Arial;
-    font-size:2rem;
-    font-weight:lighter;
-    max-block-size:15rem;
-    overflow-y:auto;
-    scroll-snap-type:y mandatory;
-    scrollbar-width:none;
+    font-size: 2rem;
+    font-weight: lighter;
+    max-block-size: 15rem;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
     width: 3.5rem;
-    
-    &::-webkit-scrollbar{
-      display:none;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
-  & .WheelPicker__item{
-    align-items:center;
-    display:flex;
-    height:3rem;
+  & .WheelPicker__item {
+    align-items: center;
+    display: flex;
+    height: 3rem;
     justify-content: center;
     position: relative;
-    scroll-snap-align:center;
+    scroll-snap-align: center;
     width: 3rem;
     z-index: 999;
-    
-    &:first-of-type{
-      margin-top:6rem;
+
+    &:first-of-type {
+      margin-top: 6rem;
     }
-    
-    &:nth-last-child(2){
-      margin-bottom:6rem;
+
+    &:nth-last-child(2) {
+      margin-bottom: 6rem;
     }
   }
 
-  & .WheelPicker__aim{
-    border:.125rem solid var(--wheel-picker--border-default-default);
-    border-radius:.375rem;
-    box-sizing:content-box;
-    display:flex;
-    height:3rem;
-    position:absolute;
-    top:calc(50% - 1.5rem);
-    width:3rem;
-  
+  & .WheelPicker__aim {
+    border: 0.125rem solid var(--wheel-picker--border-default-default);
+    border-radius: 0.375rem;
+    box-sizing: content-box;
+    display: flex;
+    height: 3rem;
+    position: absolute;
+    top: calc(50% - 1.5rem);
+    width: 3rem;
+
     &:after,
-    &:before{
+    &:before {
       background: var(--wheel-picker--color-fog);
-      content:" ";
-      height:2.5rem;
-      position:absolute;
-      top:.25rem;
-      width:.125rem;
+      content: ' ';
+      height: 2.5rem;
+      position: absolute;
+      top: 0.25rem;
+      width: 0.125rem;
     }
-    
-    &:before{
-      left:-.125rem;
+
+    &:before {
+      left: -0.125rem;
     }
-      
-    &:after{
-      right:-.125rem;
+
+    &:after {
+      right: -0.125rem;
     }
   }
-  
+
   & label,
   & .WheelPicker__warning {
     font-family: arial;
     font-size: 1rem;
     padding: 0.5rem;
   }
-  
+
   & .WheelPicker__input {
     opacity: 0;
     position: absolute;
@@ -396,6 +403,6 @@ wa-wheel-picker {
   }
 }
 
-wa-form wa-text-field {
+wa-form wa-input-text {
   margin-bottom: 0.5rem;
 }

@@ -4,7 +4,7 @@ import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin.ts';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import '../../atoms/Button/wa-button';
-import '../../atoms/TextField/wa-text-field';
+import '../../atoms/InputText/wa-input-text.ts';
 
 @customElement('wa-form')
 export class WaForm extends DynamicStyleMixin(LitElement) {
@@ -13,7 +13,7 @@ export class WaForm extends DynamicStyleMixin(LitElement) {
   @query('form')
   formElement!: HTMLFormElement | null;
   @query('wa-button') submitButton!: HTMLElement | null;
-  @queryAll('wa-text-field') textFields!: NodeListOf<HTMLElement>;
+  @queryAll('wa-input-text') inputTexts!: NodeListOf<HTMLElement>;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -59,8 +59,8 @@ export class WaForm extends DynamicStyleMixin(LitElement) {
 
   private handleSubmit(event: Event) {
     event.preventDefault();
-    const values = Array.from(this.textFields).map((field) => {
-      const input = field.querySelector('input');
+    const values = Array.from(this.inputTexts).map((inputText) => {
+      const input = inputText.querySelector('input');
       return input ? input.value : '';
     });
     const submitEvent = new CustomEvent('formSubmit', {
@@ -71,9 +71,9 @@ export class WaForm extends DynamicStyleMixin(LitElement) {
     this.dispatchEvent(submitEvent);
   }
 
-  private renderTextFields() {
+  private renderInputTexts() {
     if (this.children.length === 0) {
-      return html`<wa-text-field label="Default Field"></wa-text-field>`;
+      return html`<wa-input-text label="Default Input Text"></wa-input-text>`;
     }
     return html`${Array.from(this.children)}`;
   }
@@ -88,7 +88,7 @@ export class WaForm extends DynamicStyleMixin(LitElement) {
         @submit="${this.handleSubmit}"
         class="${ifDefined(this.applyClassMap('form'))}"
       >
-        ${this.renderTextFields()}
+        ${this.renderInputTexts()}
         <wa-button type="submit"></wa-button>
       </form>
     `;
