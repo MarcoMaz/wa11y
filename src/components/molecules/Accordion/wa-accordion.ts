@@ -50,3 +50,15 @@ declare global {
     'wa-accordion': WaAccordion;
   }
 }
+
+// Notes:
+//
+// - active class is a toggle --> 'isActive'
+// - string interpolation for id, aria-controls
+// - use wa-button
+// - aria-expanded --> 'isExpanded'
+// - 'accordionItemTitle'
+// - 'children'
+// - general approach for optional ornamental dot
+//
+// go through this: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
