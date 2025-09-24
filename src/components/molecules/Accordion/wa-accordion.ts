@@ -14,6 +14,7 @@ export class WaAccordion
   render() {
     return html`
       <div class="accordion">
+        <!-- maps of elements here -->
         <div class="accordionItem -active">
           <h3 class="accordionItem__header">
             <button
@@ -24,7 +25,7 @@ export class WaAccordion
               aria-controls="accordionItem__panel-1"
             >
               <!-- here goes the title -->
-               Title
+              Title
             </button>
           </h3>
           <div
@@ -32,12 +33,14 @@ export class WaAccordion
             class="accordionItem__panel"
             aria-hidden="false"
           >
-            <!-- Here goes the children -->
-             <p>children</p>
+            <!-- missing role "region" here?          -->
+            <!-- aria-labelledby="accordion-button-1" -->
+            <!-- Here goes the children               -->
+            <p>children</p>
           </div>
           <div class="accordionItem__dot">
             <!-- Circle Svg Inside -->
-             dot svg
+            dot svg
           </div>
         </div>
       </div>
@@ -60,5 +63,8 @@ declare global {
 // - 'accordionItemTitle'
 // - 'children'
 // - general approach for optional ornamental dot
+// - it's a map of elements
+// - h3 is arbitrary, it depends where it is inserted
+// - needs a props to decide if only the active element stays open or all the elements
 //
 // go through this: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
