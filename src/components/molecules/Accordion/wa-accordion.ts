@@ -6,6 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 export interface WaAccordionProps extends HTMLElement {
   currentHeaderHeading?: string;
   isActive?: boolean;
+  itemPanelId?: string;
 }
 
 @customElement('wa-accordion')
@@ -15,6 +16,7 @@ export class WaAccordion
 {
   @property({ type: String, reflect: true }) currentHeaderHeading?: string;
   @property({ type: Boolean, reflect: true }) isActive?: boolean;
+  @property({ type: String, reflect: true }) itemPanelId?: string;
 
   createRenderRoot() {
     return this;
@@ -23,6 +25,7 @@ export class WaAccordion
   render() {
     const currentHeaderHeading =
       this.currentHeaderHeading || 'default-header-heading';
+    const itemPanelId = this.itemPanelId || 'default-accordion-item-panel-id';
 
     return html`
       <div class="${ifDefined(this.applyClassMap('accordion'))}">
@@ -40,14 +43,14 @@ export class WaAccordion
               id="accordionItem__button-1"
               type="button"
               aria-expanded=${this.isActive ? 'true' : 'false'}
-              aria-controls="accordionItem__panel-1"
+              aria-controls=${itemPanelId}
             >
               ${currentHeaderHeading}
             </button>
           </h3>
           <div
             class="${ifDefined(this.applyClassMap('accordionItem__panel'))}"
-            id="accordionItem__panel-1"
+            id=${itemPanelId}
             aria-hidden=${this.isActive ? 'false' : 'true'}
           >
             <!-- missing role "region" here?          -->
