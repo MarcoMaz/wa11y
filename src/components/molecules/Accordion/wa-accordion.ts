@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface WaAccordionProps extends HTMLElement {}
 
@@ -17,13 +18,17 @@ export class WaAccordion
 
   render() {
     return html`
-      <div class="accordion">
+      <div class="${ifDefined(this.applyClassMap('accordion'))}">
         <!-- maps of elements here -->
-        <div class="accordionItem -active">
-          <h3 class="accordionItem__header">
+        <div
+          class="${ifDefined(
+            this.applyClassMap(`accordionItem${true ? ' -active' : ''}`)
+          )}"
+        >
+          <h3 class="${ifDefined(this.applyClassMap('accordionItem__header'))}">
             <button
+              class="${ifDefined(this.applyClassMap('accordionItem__button'))}"
               id="accordionItem__button-1"
-              class="accordionItem__button"
               type="button"
               aria-expanded="true"
               aria-controls="accordionItem__panel-1"
@@ -33,8 +38,8 @@ export class WaAccordion
             </button>
           </h3>
           <div
+            class="${ifDefined(this.applyClassMap('accordionItem__panel'))}"
             id="accordionItem__panel-1"
-            class="accordionItem__panel"
             aria-hidden="false"
           >
             <!-- missing role "region" here?          -->
@@ -42,7 +47,7 @@ export class WaAccordion
             <!-- Here goes the children               -->
             <p>children</p>
           </div>
-          <div class="accordionItem__dot">
+          <div class="${ifDefined(this.applyClassMap('accordionItem__dot'))}">
             <!-- Circle Svg Inside -->
             dot svg
           </div>
