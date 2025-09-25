@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface WaAccordionProps extends HTMLElement {
   currentHeaderHeading?: string;
+  isActive?: boolean;
 }
 
 @customElement('wa-accordion')
@@ -13,6 +14,7 @@ export class WaAccordion
   implements WaAccordionProps
 {
   @property({ type: String, reflect: true }) currentHeaderHeading?: string;
+  @property({ type: Boolean, reflect: true }) isActive?: boolean;
 
   createRenderRoot() {
     return this;
@@ -27,7 +29,9 @@ export class WaAccordion
         <!-- maps of elements here -->
         <div
           class="${ifDefined(
-            this.applyClassMap(`accordionItem${true ? ' -active' : ''}`)
+            this.applyClassMap(
+              `accordionItem${this.isActive ? ' -active' : ''}`
+            )
           )}"
         >
           <h3 class="${ifDefined(this.applyClassMap('accordionItem__header'))}">
@@ -35,7 +39,7 @@ export class WaAccordion
               class="${ifDefined(this.applyClassMap('accordionItem__button'))}"
               id="accordionItem__button-1"
               type="button"
-              aria-expanded="true"
+              aria-expanded=${this.isActive ? 'true' : 'false'}
               aria-controls="accordionItem__panel-1"
             >
               ${currentHeaderHeading}
@@ -44,7 +48,7 @@ export class WaAccordion
           <div
             class="${ifDefined(this.applyClassMap('accordionItem__panel'))}"
             id="accordionItem__panel-1"
-            aria-hidden="false"
+            aria-hidden=${this.isActive ? 'false' : 'true'}
           >
             <!-- missing role "region" here?          -->
             <!-- aria-labelledby="accordion-button-1" -->
@@ -69,7 +73,6 @@ declare global {
 
 // Notes:
 //
-// - active class is a toggle --> 'isActive'
 // - string interpolation for id, aria-controls
 // - use wa-button
 // - aria-expanded --> 'isExpanded'
