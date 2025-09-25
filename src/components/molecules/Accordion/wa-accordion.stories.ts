@@ -10,7 +10,7 @@ export default {
   },
   args: {},
   argTypes: {},
-  render: () => html` <wa-accordion></wa-accordion> `,
+  render: () => html`<wa-accordion></wa-accordion>`,
 } as Meta;
 
 export const AccordionDefault: StoryObj = {

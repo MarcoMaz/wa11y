@@ -11,6 +11,10 @@ export class WaAccordion
 {
   @property({ type: String, reflect: true }) contentText?: string;
 
+  createRenderRoot() {
+    return this;
+  }
+
   render() {
     return html`
       <div class="accordion">
