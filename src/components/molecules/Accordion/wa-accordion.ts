@@ -3,20 +3,25 @@ import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-export interface WaAccordionProps extends HTMLElement {}
+export interface WaAccordionProps extends HTMLElement {
+  currentHeaderHeading?: string;
+}
 
 @customElement('wa-accordion')
 export class WaAccordion
   extends DynamicStyleMixin(LitElement)
   implements WaAccordionProps
 {
-  @property({ type: String, reflect: true }) contentText?: string;
+  @property({ type: String, reflect: true }) currentHeaderHeading?: string;
 
   createRenderRoot() {
     return this;
   }
 
   render() {
+    const currentHeaderHeading =
+      this.currentHeaderHeading || 'default-header-heading';
+
     return html`
       <div class="${ifDefined(this.applyClassMap('accordion'))}">
         <!-- maps of elements here -->
@@ -33,8 +38,7 @@ export class WaAccordion
               aria-expanded="true"
               aria-controls="accordionItem__panel-1"
             >
-              <!-- here goes the title -->
-              Title
+              ${currentHeaderHeading}
             </button>
           </h3>
           <div
@@ -69,7 +73,6 @@ declare global {
 // - string interpolation for id, aria-controls
 // - use wa-button
 // - aria-expanded --> 'isExpanded'
-// - 'accordionItemTitle'
 // - 'children'
 // - general approach for optional ornamental dot
 // - it's a map of elements
