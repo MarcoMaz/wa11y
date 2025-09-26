@@ -79,11 +79,8 @@ declare global {
 
 // Notes:
 //
-// - string interpolation for id, aria-controls
 // - use wa-button
 // - aria-expanded --> 'isExpanded'
-// - 'children'
 // - general approach for optional ornamental dot
-// - it's a map of elements
 // - h3 is arbitrary, it depends where it is inserted
 // - needs a props to decide if only the active element stays open or all the elements
