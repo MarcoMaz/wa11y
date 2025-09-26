@@ -7,6 +7,7 @@ export interface WaAccordionProps extends HTMLElement {
   currentHeaderHeading?: string;
   isActive?: boolean;
   itemPanelId?: string;
+  itemPanelLabel?: string;
 }
 
 @customElement('wa-accordion')
@@ -17,6 +18,7 @@ export class WaAccordion
   @property({ type: String, reflect: true }) currentHeaderHeading?: string;
   @property({ type: Boolean, reflect: true }) isActive?: boolean;
   @property({ type: String, reflect: true }) itemPanelId?: string;
+  @property({ type: String, reflect: true }) itemPanelLabel?: string;
 
   createRenderRoot() {
     return this;
@@ -26,6 +28,7 @@ export class WaAccordion
     const currentHeaderHeading =
       this.currentHeaderHeading || 'default-header-heading';
     const itemPanelId = this.itemPanelId || 'default-accordion-item-panel-id';
+    const itemPanelLabel = this.itemPanelLabel || 'default-item-panel-label';
 
     return html`
       <div class="${ifDefined(this.applyClassMap('accordion'))}">
@@ -40,7 +43,7 @@ export class WaAccordion
           <h3 class="${ifDefined(this.applyClassMap('accordionItem__header'))}">
             <button
               class="${ifDefined(this.applyClassMap('accordionItem__button'))}"
-              id="accordionItem__button-1"
+              id=${itemPanelLabel}
               type="button"
               aria-expanded=${this.isActive ? 'true' : 'false'}
               aria-controls=${itemPanelId}
@@ -52,9 +55,9 @@ export class WaAccordion
             class="${ifDefined(this.applyClassMap('accordionItem__panel'))}"
             id=${itemPanelId}
             aria-hidden=${this.isActive ? 'false' : 'true'}
+            aria-labelledby=${itemPanelLabel}
           >
             <!-- missing role "region" here?          -->
-            <!-- aria-labelledby="accordion-button-1" -->
             <!-- Here goes the children               -->
             <p>children</p>
           </div>
@@ -84,5 +87,3 @@ declare global {
 // - it's a map of elements
 // - h3 is arbitrary, it depends where it is inserted
 // - needs a props to decide if only the active element stays open or all the elements
-//
-// go through this: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
