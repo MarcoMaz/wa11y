@@ -145,3 +145,5 @@ declare global {
 // - use wa-button
 // - general approach for optional ornamental dot
 // - needs a props to decide if only the active element stays open or all the elements
+// - add tests
+// - clean up
