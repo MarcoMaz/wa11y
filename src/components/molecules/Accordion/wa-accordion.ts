@@ -78,6 +78,7 @@ export class WaAccordion extends DynamicStyleMixin(LitElement) {
       panelElement.setAttribute('role', 'region');
       panelElement.setAttribute('aria-labelledby', btnId);
       panelElement.setAttribute('aria-hidden', 'true');
+      panelElement.setAttribute('role', 'region');
       panelElement.hidden = true;
 
       headerButtonElement.addEventListener('click', () => {
@@ -143,7 +144,6 @@ declare global {
 
 // Notes:
 //
-// - Do I need a role region in there?
 // - use wa-button
 // - general approach for optional ornamental dot
 // - needs a props to decide if only the active element stays open or all the elements
