@@ -45,7 +45,10 @@ export class WaAccordion extends DynamicStyleMixin(LitElement) {
       const headerElement = childrenElements[i] as HTMLElement;
       const panelElement = childrenElements[i + 1] as HTMLElement;
 
-      if (!headerElement || !panelElement) break;
+      if (!headerElement || !panelElement) {
+        console.error(`[wa-accordion] header or panel missing`);
+        break;
+      }
 
       let headerButtonElement = headerElement.querySelector(
         'button'
@@ -140,7 +143,6 @@ declare global {
 
 // Notes:
 //
-// - Handle the case something of the pair (heading or panel is not handed over) 
 // - Do I need a role region in there?
 // - use wa-button
 // - general approach for optional ornamental dot
