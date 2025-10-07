@@ -1,10 +1,19 @@
 import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
+export interface WaAccordionProps extends HTMLElement {
+  collapseOthers?: boolean;
+}
+
 @customElement('wa-accordion')
-export class WaAccordion extends DynamicStyleMixin(LitElement) {
+export class WaAccordion
+  extends DynamicStyleMixin(LitElement)
+  implements WaAccordionProps
+{
   private _uid = Math.random().toString(36).slice(2);
+
+  @property({ type: Boolean, reflect: true }) collapseOthers = false;
 
   createRenderRoot() {
     return this;
@@ -82,11 +91,32 @@ export class WaAccordion extends DynamicStyleMixin(LitElement) {
       panelElement.hidden = true;
 
       headerButtonElement.addEventListener('click', () => {
-        const open =
+        const isOpen =
           headerButtonElement.getAttribute('aria-expanded') === 'true';
-        headerButtonElement.setAttribute('aria-expanded', String(!open));
-        panelElement.hidden = open;
-        panelElement.setAttribute('aria-hidden', String(open));
+        const nextOpen = !isOpen;
+
+        if (this.collapseOthers && nextOpen) {
+          // Close all other items
+          outerContainer
+            .querySelectorAll<HTMLButtonElement>('button[aria-controls]')
+            .forEach((button) => {
+              if (button !== headerButtonElement)
+                button.setAttribute('aria-expanded', 'false');
+            });
+
+          outerContainer
+            .querySelectorAll<HTMLElement>('[role="region"]')
+            .forEach((panel) => {
+              if (panel !== panelElement) {
+                panel.hidden = true;
+                panel.setAttribute('aria-hidden', 'true');
+              }
+            });
+        }
+
+        headerButtonElement.setAttribute('aria-expanded', String(nextOpen));
+        panelElement.hidden = !nextOpen;
+        panelElement.setAttribute('aria-hidden', String(!nextOpen));
       });
     }
   }
@@ -146,6 +176,6 @@ declare global {
 //
 // - use wa-button
 // - general approach for optional ornamental dot
-// - needs a props to decide if only the active element stays open or all the elements
+// - fix a11y in storybook
 // - add tests
 // - clean up
