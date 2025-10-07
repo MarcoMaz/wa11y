@@ -174,7 +174,6 @@ declare global {
 
 // Notes:
 //
-// - use wa-button
 // - general approach for optional ornamental dot
 // - fix a11y in storybook
 // - add tests
