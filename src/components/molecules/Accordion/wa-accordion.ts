@@ -37,14 +37,19 @@ export class WaAccordion
     const childrenSnapshot = Array.from(this.children) as HTMLElement[];
     if (childrenSnapshot.length === 0) return;
 
+    const addOnTemplate = this.querySelector(
+      ':scope > template[data-addon]'
+    ) as HTMLTemplateElement | null;
+
+    const filtered = addOnTemplate
+      ? childrenSnapshot.filter((el) => el !== addOnTemplate)
+      : childrenSnapshot;
+
     const outerContainer = document.createElement('div') as HTMLDivElement;
     this.setClass(outerContainer, 'accordion');
     this.insertBefore(outerContainer, childrenSnapshot[0] ?? null);
 
-    // Move the current children's snapshot into the outer container, preserving order
-    childrenSnapshot.forEach((snapshot) =>
-      outerContainer.appendChild(snapshot)
-    );
+    filtered.forEach((el) => outerContainer.appendChild(el));
 
     const childrenElements = Array.from(
       outerContainer.children
@@ -89,6 +94,14 @@ export class WaAccordion
       panelElement.setAttribute('aria-hidden', 'true');
       panelElement.setAttribute('role', 'region');
       panelElement.hidden = true;
+
+      if (addOnTemplate) {
+        const fragment = addOnTemplate.content.cloneNode(true) as DocumentFragment;
+        const addonElement = document.createElement('div');
+        this.setClass(addonElement, 'accordionItem__addon');
+        addonElement.appendChild(fragment);
+        outerContainer.insertBefore(addonElement, panelElement.nextSibling);
+      }
 
       headerButtonElement.addEventListener('click', () => {
         const isOpen =
@@ -174,7 +187,6 @@ declare global {
 
 // Notes:
 //
-// - general approach for optional ornamental dot
 // - fix a11y in storybook
 // - add tests
 // - clean up
