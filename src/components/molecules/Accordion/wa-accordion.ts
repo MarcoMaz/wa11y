@@ -80,7 +80,9 @@ export class WaAccordion
         headerElement.appendChild(headerButtonElement);
       }
 
-      const id = `${this.id || this._uid}`;
+      const idx = Math.floor(i / 2);
+
+      const id = `${this.id || this._uid}-${idx}`;
       const btnId = `accordionItem__button-${id}`;
       const panelId = `accordionItem__panel-${id}`;
 
@@ -96,7 +98,9 @@ export class WaAccordion
       panelElement.hidden = true;
 
       if (addOnTemplate) {
-        const fragment = addOnTemplate.content.cloneNode(true) as DocumentFragment;
+        const fragment = addOnTemplate.content.cloneNode(
+          true
+        ) as DocumentFragment;
         const addonElement = document.createElement('div');
         this.setClass(addonElement, 'accordionItem__addon');
         addonElement.appendChild(fragment);
@@ -187,6 +191,5 @@ declare global {
 
 // Notes:
 //
-// - fix a11y in storybook
 // - add tests
 // - clean up
