@@ -93,10 +93,10 @@ describe('wa-accordion', () => {
         `#${button.getAttribute('aria-controls')}`
       )!;
 
-    // open first, stays open
     const firstButton = buttons[0] as HTMLButtonElement;
     const secondButton = buttons[1] as HTMLButtonElement;
 
+    // open first, stays open
     firstButton.click();
     expect(firstButton.getAttribute('aria-expanded')).toBe('true');
     expect(panelOf(firstButton).hidden).toBe(false);
@@ -110,33 +110,38 @@ describe('wa-accordion', () => {
     expect(panelOf(firstButton).hidden).toBe(false);
   });
 
-  // it('collapseOthers PRESENT (true): opening one closes others', async () => {
-  //   const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-  //   el.collapseOthers = true; // use the boolean prop directly
-  //   el.innerHTML = ACCORDION_WITH_ADDON;
-  //   document.body.appendChild(el);
-  //   await el.updateComplete;
+  it('it closes others when opening one', async () => {
+    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
+    el.collapseOthers = true;
+    el.innerHTML = DEFAULT_ACCORDION_MARKUP;
+    document.body.appendChild(el);
+    await el.updateComplete;
 
-  //   const buttons = Array.from(
-  //     el.querySelectorAll('button[aria-controls]')
-  //   ) as HTMLButtonElement[];
+    const buttons = Array.from(
+      el.querySelectorAll('button[aria-controls]')
+    ) as HTMLButtonElement[];
 
-  //   const panelOf = (b: HTMLButtonElement) =>
-  //     el.querySelector<HTMLElement>(`#${b.getAttribute('aria-controls')}`)!;
+    const panelOf = (button: HTMLButtonElement) =>
+      el.querySelector<HTMLElement>(
+        `#${button.getAttribute('aria-controls')}`
+      )!;
 
-  //   // open first
-  //   buttons[0].click();
-  //   expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
-  //   expect(panelOf(buttons[0]).hidden).toBe(false);
+    const firstButton = buttons[0] as HTMLButtonElement;
+    const secondButton = buttons[1] as HTMLButtonElement;
 
-  //   // open second → first closes
-  //   buttons[1].click();
-  //   expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
-  //   expect(panelOf(buttons[1]).hidden).toBe(false);
+    // open first
+    firstButton.click();
+    expect(firstButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panelOf(firstButton).hidden).toBe(false);
 
-  //   expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
-  //   expect(panelOf(buttons[0]).hidden).toBe(true);
-  // });
+    // open second → first closes
+    secondButton.click();
+    expect(secondButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panelOf(secondButton).hidden).toBe(false);
+
+    expect(firstButton.getAttribute('aria-expanded')).toBe('false');
+    expect(panelOf(firstButton).hidden).toBe(true);
+  });
 
   // it('addon template is cloned AFTER each panel', async () => {
   //   const el = document.createElement('wa-accordion') as WaAccordionTestEl;
