@@ -139,50 +139,6 @@ export class WaAccordion
   }
 }
 
-// render() {
-//   const currentHeaderHeading =
-//     this.currentHeaderHeading || 'default-header-heading';
-//   const itemPanelId = this.itemPanelId || 'default-accordion-item-panel-id';
-//   const itemPanelLabel = this.itemPanelLabel || 'default-item-panel-label';
-
-//   return html`
-//     <div class="${ifDefined(this.applyClassMap('accordion'))}">
-//       <div
-//         class="${ifDefined(
-//           this.applyClassMap(
-//             `accordionItem${this.isActive ? ' -active' : ''}`
-//           )
-//         )}"
-//       >
-//         <h3 class="${ifDefined(this.applyClassMap('accordionItem__header'))}">
-//           <button
-//             class="${ifDefined(this.applyClassMap('accordionItem__button'))}"
-//             id=${itemPanelLabel}
-//             type="button"
-//             aria-expanded=${this.isActive ? 'true' : 'false'}
-//             aria-controls=${itemPanelId}
-//           >
-//             ${currentHeaderHeading}
-//           </button>
-//         </h3>
-//         <div
-//           class="${ifDefined(this.applyClassMap('accordionItem__panel'))}"
-//           id=${itemPanelId}
-//           aria-hidden=${this.isActive ? 'false' : 'true'}
-//           aria-labelledby=${itemPanelLabel}
-//         >
-//           <p>children</p>
-//         </div>
-//         <div class="${ifDefined(this.applyClassMap('accordionItem__dot'))}">
-//           <!-- Circle Svg Inside -->
-//           dot svg
-//         </div>
-//       </div>
-//     </div>
-//   `;
-// }
-// }
-
 declare global {
   interface HTMLElementTagNameMap {
     'wa-accordion': WaAccordion;
@@ -191,5 +147,4 @@ declare global {
 
 // Notes:
 //
-// - add tests
 // - clean up
