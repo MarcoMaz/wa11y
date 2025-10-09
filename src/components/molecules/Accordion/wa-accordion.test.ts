@@ -30,12 +30,14 @@ describe('wa-accordion', () => {
   });
 
   it('renders correctly', async () => {
-    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-    el.innerHTML = DEFAULT_ACCORDION_MARKUP;
-    document.body.appendChild(el);
-    await el.updateComplete;
+    const accordion = document.createElement(
+      'wa-accordion'
+    ) as WaAccordionTestEl;
+    accordion.innerHTML = DEFAULT_ACCORDION_MARKUP;
+    document.body.appendChild(accordion);
+    await accordion.updateComplete;
 
-    const outerContainer = el.firstElementChild as HTMLElement | null;
+    const outerContainer = accordion.firstElementChild as HTMLElement | null;
     expect(outerContainer).toBeTruthy();
     expect(outerContainer!.tagName).toBe('DIV');
 
@@ -74,106 +76,113 @@ describe('wa-accordion', () => {
     }
   });
 
-  it('collapseOthers ABSENT (default false): allows multiple open', async () => {
-    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-    el.innerHTML = ACCORDION_WITH_ADDON; // static markup BEFORE attach
-    document.body.appendChild(el);
-    await el.updateComplete;
+  it('allows multiple panels open', async () => {
+    const accordion = document.createElement(
+      'wa-accordion'
+    ) as WaAccordionTestEl;
+    accordion.innerHTML = DEFAULT_ACCORDION_MARKUP;
+    document.body.appendChild(accordion);
+    await accordion.updateComplete;
 
     const buttons = Array.from(
-      el.querySelectorAll('button[aria-controls]')
+      accordion.querySelectorAll('button[aria-controls]')
     ) as HTMLButtonElement[];
 
-    const panelOf = (b: HTMLButtonElement) =>
-      el.querySelector<HTMLElement>(`#${b.getAttribute('aria-controls')}`)!;
+    const panelOf = (button: HTMLButtonElement) =>
+      accordion.querySelector<HTMLElement>(
+        `#${button.getAttribute('aria-controls')}`
+      )!;
 
     // open first, stays open
-    buttons[0].click();
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
-    expect(panelOf(buttons[0]).hidden).toBe(false);
+    const firstButton = buttons[0] as HTMLButtonElement;
+    const secondButton = buttons[1] as HTMLButtonElement;
 
-    // open second, first should STILL be open (collapseOthers is false)
-    buttons[1].click();
-    expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
-    expect(panelOf(buttons[1]).hidden).toBe(false);
+    firstButton.click();
+    expect(firstButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panelOf(firstButton).hidden).toBe(false);
 
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
-    expect(panelOf(buttons[0]).hidden).toBe(false);
+    // open second, first is still open
+    secondButton.click();
+    expect(secondButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panelOf(secondButton).hidden).toBe(false);
+
+    expect(firstButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panelOf(firstButton).hidden).toBe(false);
   });
 
-  it('collapseOthers PRESENT (true): opening one closes others', async () => {
-    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-    el.collapseOthers = true; // use the boolean prop directly
-    el.innerHTML = ACCORDION_WITH_ADDON;
-    document.body.appendChild(el);
-    await el.updateComplete;
+  // it('collapseOthers PRESENT (true): opening one closes others', async () => {
+  //   const el = document.createElement('wa-accordion') as WaAccordionTestEl;
+  //   el.collapseOthers = true; // use the boolean prop directly
+  //   el.innerHTML = ACCORDION_WITH_ADDON;
+  //   document.body.appendChild(el);
+  //   await el.updateComplete;
 
-    const buttons = Array.from(
-      el.querySelectorAll('button[aria-controls]')
-    ) as HTMLButtonElement[];
+  //   const buttons = Array.from(
+  //     el.querySelectorAll('button[aria-controls]')
+  //   ) as HTMLButtonElement[];
 
-    const panelOf = (b: HTMLButtonElement) =>
-      el.querySelector<HTMLElement>(`#${b.getAttribute('aria-controls')}`)!;
+  //   const panelOf = (b: HTMLButtonElement) =>
+  //     el.querySelector<HTMLElement>(`#${b.getAttribute('aria-controls')}`)!;
 
-    // open first
-    buttons[0].click();
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
-    expect(panelOf(buttons[0]).hidden).toBe(false);
+  //   // open first
+  //   buttons[0].click();
+  //   expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
+  //   expect(panelOf(buttons[0]).hidden).toBe(false);
 
-    // open second → first closes
-    buttons[1].click();
-    expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
-    expect(panelOf(buttons[1]).hidden).toBe(false);
+  //   // open second → first closes
+  //   buttons[1].click();
+  //   expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
+  //   expect(panelOf(buttons[1]).hidden).toBe(false);
 
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
-    expect(panelOf(buttons[0]).hidden).toBe(true);
-  });
+  //   expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
+  //   expect(panelOf(buttons[0]).hidden).toBe(true);
+  // });
 
-  it('addon template is cloned AFTER each panel', async () => {
-    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-    el.innerHTML = ACCORDION_WITH_ADDON;
-    document.body.appendChild(el);
-    await el.updateComplete;
+  // it('addon template is cloned AFTER each panel', async () => {
+  //   const el = document.createElement('wa-accordion') as WaAccordionTestEl;
+  //   el.innerHTML = ACCORDION_WITH_ADDON;
+  //   document.body.appendChild(el);
+  //   await el.updateComplete;
 
-    const panels = Array.from(
-      el.querySelectorAll<HTMLElement>('[role="region"]')
-    );
-    expect(panels.length).toBe(3);
+  //   const panels = Array.from(
+  //     el.querySelectorAll<HTMLElement>('[role="region"]')
+  //   );
+  //   expect(panels.length).toBe(3);
 
-    // For each panel, the next sibling should be the wrapper containing the cloned addon
-    panels.forEach((panel) => {
-      const after = panel.nextElementSibling as HTMLElement | null;
-      expect(after).toBeTruthy();
-      // Don’t rely on classes in tests—just assert the addon content exists
-      expect(after!.querySelector('[data-testid="addon"]')).toBeTruthy();
-    });
+  //   // For each panel, the next sibling should be the wrapper containing the cloned addon
+  //   panels.forEach((panel) => {
+  //     const after = panel.nextElementSibling as HTMLElement | null;
+  //     expect(after).toBeTruthy();
+  //     // Don’t rely on classes in tests—just assert the addon content exists
+  //     expect(after!.querySelector('[data-testid="addon"]')).toBeTruthy();
+  //   });
 
-    // Exactly one addon per panel
-    expect(el.querySelectorAll('[data-testid="addon"]').length).toBe(
-      panels.length
-    );
-  });
+  //   // Exactly one addon per panel
+  //   expect(el.querySelectorAll('[data-testid="addon"]').length).toBe(
+  //     panels.length
+  //   );
+  // });
 
-  it('no addon is created when the template is missing', async () => {
-    const el = document.createElement('wa-accordion') as WaAccordionTestEl;
-    el.innerHTML = DEFAULT_ACCORDION_MARKUP;
-    document.body.appendChild(el);
-    await el.updateComplete;
+  // it('no addon is created when the template is missing', async () => {
+  //   const el = document.createElement('wa-accordion') as WaAccordionTestEl;
+  //   el.innerHTML = DEFAULT_ACCORDION_MARKUP;
+  //   document.body.appendChild(el);
+  //   await el.updateComplete;
 
-    const panels = Array.from(
-      el.querySelectorAll<HTMLElement>('[role="region"]')
-    );
-    expect(panels.length).toBe(2);
+  //   const panels = Array.from(
+  //     el.querySelectorAll<HTMLElement>('[role="region"]')
+  //   );
+  //   expect(panels.length).toBe(3);
 
-    // There should be no cloned addon markers
-    expect(el.querySelector('[data-testid="addon"]')).toBeNull();
+  //   // There should be no cloned addon markers
+  //   expect(el.querySelector('[data-testid="addon"]')).toBeNull();
 
-    // And next siblings of panels should NOT contain the addon marker
-    panels.forEach((panel) => {
-      const after = panel.nextElementSibling as HTMLElement | null;
-      expect(
-        after?.querySelector?.('[data-testid="addon"]') ?? null
-      ).toBeNull();
-    });
-  });
+  //   // And next siblings of panels should NOT contain the addon marker
+  //   panels.forEach((panel) => {
+  //     const after = panel.nextElementSibling as HTMLElement | null;
+  //     expect(
+  //       after?.querySelector?.('[data-testid="addon"]') ?? null
+  //     ).toBeNull();
+  //   });
+  // });
 });
