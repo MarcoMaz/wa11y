@@ -149,7 +149,3 @@ declare global {
     'wa-accordion': WaAccordion;
   }
 }
-
-// Notes:
-//
-// - write the docs
