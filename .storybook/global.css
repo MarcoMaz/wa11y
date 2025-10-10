@@ -454,11 +454,11 @@ wa-accordion .accordion {
     width: 100%;
   }
   
-  .accordionItem__panel {
+  /* .accordionItem__panel {
     display: none;
     padding: 0 4rem 1rem 0;
   }
-  
+   */
   .accordionItem__dot {
     height: 2rem;
     position: absolute;

@@ -1,10 +1,16 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
 export interface WaAccordionProps extends HTMLElement {
   collapseOthers?: boolean;
 }
+
+const ACCORDION_CLASS: string = 'accordion';
+const ACCORDION_ITEM_HEADER_CLASS: string = 'accordionItem__header';
+const ACCORDION_ITEM_BUTTON_CLASS: string = 'accordionItem__button';
+const ACCORDION_ITEM_PANEL_CLASS: string = 'accordionItem__panel';
+const ACCORDION_ITEM_ADDON_CLASS: string = 'accordionItem__addon';
 
 @customElement('wa-accordion')
 export class WaAccordion
@@ -15,6 +21,36 @@ export class WaAccordion
 
   @property({ type: Boolean, reflect: true }) collapseOthers = false;
 
+  @query(`.${ACCORDION_CLASS}`) accordion!: HTMLDivElement;
+  @query(`.${ACCORDION_ITEM_HEADER_CLASS}`)
+  accordionItemHeader!: HTMLHeadingElement;
+  @query(`.${ACCORDION_ITEM_BUTTON_CLASS}`)
+  accordionItemButton!: HTMLHeadingElement;
+  @query(`.${ACCORDION_ITEM_PANEL_CLASS}`) accordionItemPanel!: HTMLDivElement;
+  @query(`.${ACCORDION_ITEM_ADDON_CLASS}`) accordionItemAddon!: HTMLDivElement;
+
+  // Add base + mapped class (do not replace).
+  private applyDefaultAndMappedClass(
+    el: HTMLElement,
+    baseClass: string,
+    mapKey: string
+  ) {
+    if (!el) return;
+    try {
+      el.classList.add(baseClass);
+      const mapped = this.applyClassMap?.(mapKey);
+      if (typeof mapped === 'string' && mapped.trim()) {
+        // allow mapped to be a space-separated list
+        mapped
+          .trim()
+          .split(/\s+/)
+          .forEach((c) => el.classList.add(c));
+      }
+    } catch {
+      /* no-op */
+    }
+  }
+
   // Render into the light DOM instead of a shadow root, so user-provided children remain accessible
   createRenderRoot() {
     return this;
@@ -23,16 +59,6 @@ export class WaAccordion
   // Required by LitElement, but unused — all DOM setup happens manually in firstUpdated()
   render() {
     return html``;
-  }
-
-  private setClass(element: HTMLElement, key: string) {
-    try {
-      const classNameApplied = this.applyClassMap?.(key);
-      if (typeof classNameApplied === 'string' && classNameApplied)
-        element.className = classNameApplied;
-    } catch {
-      /* no-op */
-    }
   }
 
   firstUpdated() {
@@ -51,7 +77,11 @@ export class WaAccordion
     ) as HTMLElement[];
 
     const outerContainer = document.createElement('div') as HTMLDivElement;
-    this.setClass(outerContainer, 'accordion');
+    this.applyDefaultAndMappedClass(
+      outerContainer,
+      ACCORDION_CLASS,
+      'accordion'
+    );
     this.insertBefore(outerContainer, childrenSnapshot[0] ?? null);
 
     filtered.forEach((el) => outerContainer.appendChild(el));
@@ -73,10 +103,6 @@ export class WaAccordion
         'button'
       ) as HTMLButtonElement;
 
-      this.setClass(headerElement, 'accordionItem__header');
-      this.setClass(headerButtonElement, 'accordionItem__button');
-      this.setClass(panelElement, 'accordionItem__panel');
-
       if (!headerButtonElement) {
         headerButtonElement = document.createElement('button');
         headerButtonElement.type = 'button';
@@ -84,6 +110,22 @@ export class WaAccordion
         headerElement.innerHTML = '';
         headerElement.appendChild(headerButtonElement);
       }
+
+      this.applyDefaultAndMappedClass(
+        headerElement,
+        ACCORDION_ITEM_HEADER_CLASS,
+        'accordionItem__header'
+      );
+      this.applyDefaultAndMappedClass(
+        headerButtonElement,
+        ACCORDION_ITEM_BUTTON_CLASS,
+        'accordionItem__button'
+      );
+      this.applyDefaultAndMappedClass(
+        panelElement,
+        ACCORDION_ITEM_PANEL_CLASS,
+        'accordionItem__panel'
+      );
 
       const idx = Math.floor(i / 2) as number;
 
@@ -107,7 +149,11 @@ export class WaAccordion
           true
         ) as DocumentFragment;
         const addonElement = document.createElement('div') as HTMLDivElement;
-        this.setClass(addonElement, 'accordionItem__addon');
+        this.applyDefaultAndMappedClass(
+          addonElement,
+          ACCORDION_ITEM_ADDON_CLASS,
+          'accordionItem__addon'
+        );
         addonElement.appendChild(fragment);
         outerContainer.insertBefore(addonElement, panelElement.nextSibling);
       }
