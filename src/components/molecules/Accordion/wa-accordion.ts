@@ -15,18 +15,21 @@ export class WaAccordion
 
   @property({ type: Boolean, reflect: true }) collapseOthers = false;
 
+  // Render into the light DOM instead of a shadow root, so user-provided children remain accessible
   createRenderRoot() {
     return this;
   }
 
+  // Required by LitElement, but unused — all DOM setup happens manually in firstUpdated()
   render() {
     return html``;
   }
 
-  private setClass(el: HTMLElement, key: string) {
+  private setClass(element: HTMLElement, key: string) {
     try {
-      const v = this.applyClassMap?.(key);
-      if (typeof v === 'string' && v) el.className = v;
+      const classNameApplied = this.applyClassMap?.(key);
+      if (typeof classNameApplied === 'string' && classNameApplied)
+        element.className = classNameApplied;
     } catch {
       /* no-op */
     }
@@ -41,9 +44,11 @@ export class WaAccordion
       ':scope > template[data-addon]'
     ) as HTMLTemplateElement | null;
 
-    const filtered = addOnTemplate
-      ? childrenSnapshot.filter((el) => el !== addOnTemplate)
-      : childrenSnapshot;
+    const filtered = (
+      addOnTemplate
+        ? childrenSnapshot.filter((el) => el !== addOnTemplate)
+        : childrenSnapshot
+    ) as HTMLElement[];
 
     const outerContainer = document.createElement('div') as HTMLDivElement;
     this.setClass(outerContainer, 'accordion');
@@ -80,11 +85,11 @@ export class WaAccordion
         headerElement.appendChild(headerButtonElement);
       }
 
-      const idx = Math.floor(i / 2);
+      const idx = Math.floor(i / 2) as number;
 
-      const id = `${this.id || this._uid}-${idx}`;
-      const btnId = `accordionItem__button-${id}`;
-      const panelId = `accordionItem__panel-${id}`;
+      const id = `${this.id || this._uid}-${idx}` as string;
+      const btnId = `accordionItem__button-${id}` as string;
+      const panelId = `accordionItem__panel-${id}` as string;
 
       headerButtonElement.id = btnId;
       headerButtonElement.setAttribute('aria-controls', panelId);
@@ -101,16 +106,16 @@ export class WaAccordion
         const fragment = addOnTemplate.content.cloneNode(
           true
         ) as DocumentFragment;
-        const addonElement = document.createElement('div');
+        const addonElement = document.createElement('div') as HTMLDivElement;
         this.setClass(addonElement, 'accordionItem__addon');
         addonElement.appendChild(fragment);
         outerContainer.insertBefore(addonElement, panelElement.nextSibling);
       }
 
       headerButtonElement.addEventListener('click', () => {
-        const isOpen =
-          headerButtonElement.getAttribute('aria-expanded') === 'true';
-        const nextOpen = !isOpen;
+        const isOpen = (headerButtonElement.getAttribute('aria-expanded') ===
+          'true') as boolean;
+        const nextOpen = !isOpen as boolean;
 
         if (this.collapseOthers && nextOpen) {
           // Close all other items
@@ -147,4 +152,4 @@ declare global {
 
 // Notes:
 //
-// - clean up
+// - write the docs

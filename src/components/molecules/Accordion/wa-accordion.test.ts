@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import './wa-accordion'; // defines the element
+import './wa-accordion';
 import type { WaAccordionProps } from './wa-accordion';
 
 type WaAccordionTestEl = WaAccordionProps & {
@@ -43,20 +43,20 @@ describe('wa-accordion', () => {
       expect(outerContainer!.tagName).toBe('DIV');
 
       // Sequence per item: H3 (with <button> inside), DIV[role=region]
-      // 3 items => 3 * (header, panel) = 6 children
       const children = Array.from(outerContainer!.children) as HTMLElement[];
+      // 3 items => 3 * (header, panel) = 6 children
       expect(children.length).toBe(6);
 
       for (let i = 0; i < children.length; i += 2) {
-        const headerElement = children[i];
-        const panelElement = children[i + 1];
+        const headerElement = children[i] as HTMLHeadingElement;
+        const panelElement = children[i + 1] as HTMLDivElement;
 
         expect(headerElement.matches('h2,h3,h4,h5,h6')).toBe(true);
 
         const buttonElement = headerElement.querySelector(
           'button'
         ) as HTMLButtonElement | null;
-        const panelId = panelElement.id;
+        const panelId = panelElement.id as string;
 
         expect(buttonElement).toBeTruthy();
         expect(panelElement.tagName).toBe('DIV');
@@ -159,14 +159,14 @@ describe('wa-accordion', () => {
       expect(outerContainer!.tagName).toBe('DIV');
 
       // Sequence per item: Heading (with <button>), DIV[role=region], ADDON
-      // 3 items => 3 * (header, panel, addon) = 9 children
       const children = Array.from(outerContainer!.children) as HTMLElement[];
+      // 3 items => 3 * (header, panel, addon) = 9 children
       expect(children.length).toBe(9);
 
       for (let i = 0; i < children.length; i += 3) {
-        const headerElement = children[i];
-        const panelElement = children[i + 1];
-        const addonWrapper = children[i + 2];
+        const headerElement = children[i] as HTMLHeadingElement;
+        const panelElement = children[i + 1] as HTMLDivElement;
+        const addonWrapper = children[i + 2] as HTMLDivElement;
 
         expect(headerElement.matches('h2,h3,h4,h5,h6')).toBe(true);
 
@@ -192,7 +192,6 @@ describe('wa-accordion', () => {
           );
         }
 
-        // Addon is immediately after panel and contains the cloned content
         expect(panelElement.nextElementSibling).toBe(addonWrapper);
         expect(
           addonWrapper.querySelector('[data-testid="addon"]')
