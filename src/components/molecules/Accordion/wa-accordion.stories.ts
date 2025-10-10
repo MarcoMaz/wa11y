@@ -40,7 +40,7 @@ export default {
 
 export const AccordionDefault: StoryObj = {
   args: {
-    collapseOthers: true,
+    collapseOthers: false,
   },
 
   name: 'Accordion Default',
