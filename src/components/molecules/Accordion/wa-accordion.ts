@@ -11,6 +11,7 @@ const ACCORDION_ITEM_HEADER_CLASS: string = 'accordionItem__header';
 const ACCORDION_ITEM_BUTTON_CLASS: string = 'accordionItem__button';
 const ACCORDION_ITEM_PANEL_CLASS: string = 'accordionItem__panel';
 const ACCORDION_ITEM_ADDON_CLASS: string = 'accordionItem__addon';
+const ACCORDION_ITEM_CLASS: string = 'accordionItem';
 
 @customElement('wa-accordion')
 export class WaAccordion
@@ -22,6 +23,7 @@ export class WaAccordion
   @property({ type: Boolean, reflect: true }) collapseOthers = false;
 
   @query(`.${ACCORDION_CLASS}`) accordion!: HTMLDivElement;
+  @query(`.${ACCORDION_ITEM_CLASS}`) accordionItem!: HTMLDivElement;
   @query(`.${ACCORDION_ITEM_HEADER_CLASS}`)
   accordionItemHeader!: HTMLHeadingElement;
   @query(`.${ACCORDION_ITEM_BUTTON_CLASS}`)
@@ -111,6 +113,17 @@ export class WaAccordion
         headerElement.appendChild(headerButtonElement);
       }
 
+      const itemContainer = document.createElement('div') as HTMLDivElement;
+      this.applyDefaultAndMappedClass(
+        itemContainer,
+        ACCORDION_ITEM_CLASS,
+        'accordionItem'
+      );
+      // Insert the wrapper before the current header, then move nodes inside it
+      outerContainer.insertBefore(itemContainer, headerElement);
+      itemContainer.appendChild(headerElement);
+      itemContainer.appendChild(panelElement);
+
       this.applyDefaultAndMappedClass(
         headerElement,
         ACCORDION_ITEM_HEADER_CLASS,
@@ -155,7 +168,7 @@ export class WaAccordion
           'accordionItem__addon'
         );
         addonElement.appendChild(fragment);
-        outerContainer.insertBefore(addonElement, panelElement.nextSibling);
+        itemContainer.appendChild(addonElement);
       }
 
       headerButtonElement.addEventListener('click', () => {
