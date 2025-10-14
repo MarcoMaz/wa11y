@@ -429,7 +429,7 @@ wa-accordion {
       'panel addon';
     grid-template-columns: auto 4rem;
     grid-template-rows: 1fr auto;
-    max-width: 500px;
+    max-width: 31rem;
 
     /* ADDON is NOT present */
     &:has(> :last-child:nth-child(2)) .accordionItem__header {
@@ -442,14 +442,13 @@ wa-accordion {
   }
 
   .accordionItem--active {
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
+    border-top: 0.25rem solid black;
+    border-bottom: 0.25rem solid black;
 
     .accordionItem__panel {
       display: flex;
       flex-direction: column;
       grid-area: panel;
-      grid-column: span 6;
       padding: 0.5rem;
     }
 
@@ -460,20 +459,15 @@ wa-accordion {
 
   .accordionItem__header {
     grid-area: header;
-    overflow-wrap: break-word;
-    word-break: break-word;
   }
 
   .accordionItem__button {
-    align-items: center;
     cursor: pointer;
-    display: flex;
     font-size: 2rem;
     font-weight: bold;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     text-align: left;
     text-transform: uppercase;
-    width: 100%;
   }
 
   .accordionItem__panel {
@@ -485,8 +479,6 @@ wa-accordion {
     align-items: center;
     display: flex;
     grid-area: addon;
-    grid-column: span 1;
-    height: 100%;
     justify-content: center;
   }
 }
