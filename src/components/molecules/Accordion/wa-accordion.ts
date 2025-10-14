@@ -12,6 +12,7 @@ const ACCORDION_ITEM_BUTTON_CLASS: string = 'accordionItem__button';
 const ACCORDION_ITEM_PANEL_CLASS: string = 'accordionItem__panel';
 const ACCORDION_ITEM_ADDON_CLASS: string = 'accordionItem__addon';
 const ACCORDION_ITEM_CLASS: string = 'accordionItem';
+const ACCORDION_ITEM_ACTIVE_CLASS: string = 'accordionItem--active';
 
 @customElement('wa-accordion')
 export class WaAccordion
@@ -193,11 +194,20 @@ export class WaAccordion
                 panel.setAttribute('aria-hidden', 'true');
               }
             });
+
+          outerContainer
+            .querySelectorAll<HTMLElement>(`.${ACCORDION_ITEM_CLASS}`)
+            .forEach((item) => {
+              if (item !== itemContainer)
+                item.classList.remove(ACCORDION_ITEM_ACTIVE_CLASS);
+            });
         }
 
         headerButtonElement.setAttribute('aria-expanded', String(nextOpen));
         panelElement.hidden = !nextOpen;
         panelElement.setAttribute('aria-hidden', String(!nextOpen));
+
+        itemContainer.classList.toggle(ACCORDION_ITEM_ACTIVE_CLASS, nextOpen);
       });
     }
   }
