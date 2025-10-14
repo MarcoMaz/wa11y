@@ -74,21 +74,21 @@ export const AccordionWithAddon: StoryObj = {
       </svg>
     </template>
 
-    <h3>RenatoDoList</h3>
+    <h3>Example 1</h3>
     <div>
-      <em>PWA</em>
-      <p>Basic metronome with tempo and time signature customisation.</p>
+      <em>Example 1</em>
+      <p>This is the content for example 1</p>
     </div>
 
-    <h3>Polyrhythmic Metronome</h3>
+    <h3>Example 2</h3>
     <div>
-      <em>Web App</em>
-      <p>Something something…</p>
+      <em>Example 2</em>
+      <p>This is the content for example 2</p>
     </div>
-    <h3>Something else</h3>
+    <h3>Example 3</h3>
     <div>
-      <em>sfasgf</em>
-      <p>sagasgaslkjalksjg sagjlkasjglk asgkjaslg</p>
+      <em>Example 3</em>
+      <p>This is the content for example 3</p>
     </div>
   </wa-accordion>`,
 };
