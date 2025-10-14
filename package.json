@@ -26,6 +26,10 @@
       "types": "./dist/src/components/atoms/WheelPicker/wa-wheel-picker.d.ts",
       "import": "./dist/wa-wheel-picker.es.js"
     },
+    "./wa-accordion": {
+      "types": "./dist/src/components/molecules/Accordion/wa-accordion.d.ts",
+      "import": "./dist/wa-accordion.es.js"
+    },
     "./wa-form": {
       "types": "./dist/src/components/molecules/Form/wa-form.d.ts",
       "import": "./dist/wa-form.es.js"

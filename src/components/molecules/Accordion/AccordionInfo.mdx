@@ -1,0 +1,76 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import './wa-accordion';
+import * as AccordionStories from './wa-accordion.stories';
+
+<Meta title='Molecules/Accordion' of={AccordionStories} />
+
+# Accordion
+
+&nbsp;
+
+<Story />
+&nbsp;
+
+## Description
+
+An accordion organizes content into collapsible sections.
+
+Each section consists of a **header** (converted to an accessible `<button>`) and a **panel** (a `<div role="region">`) that expands or collapses.  
+DOM wiring and ARIA attributes are applied automatically on first update.
+
+## Tag
+
+`<wa-accordion>`
+
+## ClassMap
+
+- `accordion` — outer container wrapping all items
+- `accordionItem__header` — header container (wraps the internal button)
+- `accordionItem__button` — the interactive header button
+- `accordionItem__panel` — the collapsible content panel
+- `accordionItem__addon` — optional addon container inserted after each panel (when an addon template is provided)
+
+## Props
+
+### collapseOthers
+
+- **Type: Boolean**
+- **Reflects to Attribute: true**
+- **Default:** `false`
+- **Description:** When **true**, opening one item will close all other items (single-expand behavior). When **false**, multiple items can remain open.
+
+## Children Structure
+
+```html
+<wa-accordion collapseOthers>
+  <h3>Section 1</h3>
+  <div>Panel 1 content</div>
+
+  <h3>Section 2</h3>
+  <div>Panel 2 content</div>
+
+  <h3>Section 3</h3>
+  <div>Panel 3 content</div>
+</wa-accordion>
+```
+
+## Addon
+
+You can inject an extra UI fragment after each panel by including a `<template data-addon>` inside the accordion.
+
+The template content is cloned for every item and wrapped in an element with the `accordionItem__addon` class.
+
+```html
+<wa-accordion>
+  <template data-addon>
+    <svg viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
+      <circle cx="4" cy="4" r="4" />
+    </svg>
+  </template>
+  <h3>Item 1</h3>
+  <div>Panel 1</div>
+  <h3>Item 2</h3>
+  <div>Panel 2</div>
+</wa-accordion>
+```

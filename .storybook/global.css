@@ -406,3 +406,79 @@ wa-wheel-picker {
 wa-form wa-input-text {
   margin-bottom: 0.5rem;
 }
+
+wa-accordion {
+  /* native reset */
+  h3,
+  p {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    background: white;
+    border: 0;
+  }
+
+  .accordionItem {
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-areas:
+      'header addon'
+      'panel addon';
+    grid-template-columns: auto 4rem;
+    grid-template-rows: 1fr auto;
+    max-width: 31rem;
+
+    /* ADDON is NOT present */
+    &:has(> :last-child:nth-child(2)) .accordionItem__header {
+      grid-column: span 6;
+    }
+
+    &:has(+ .accordionItem--active) {
+      border-bottom: none;
+    }
+  }
+
+  .accordionItem--active {
+    border-top: 0.25rem solid black;
+    border-bottom: 0.25rem solid black;
+
+    .accordionItem__panel {
+      display: flex;
+      flex-direction: column;
+      grid-area: panel;
+      padding: 0.5rem;
+    }
+
+    .accordionItem__addon svg {
+      fill: black;
+    }
+  }
+
+  .accordionItem__header {
+    grid-area: header;
+  }
+
+  .accordionItem__button {
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .accordionItem__panel {
+    display: none;
+    grid-column: span 6;
+  }
+
+  .accordionItem__addon {
+    align-items: center;
+    display: flex;
+    grid-area: addon;
+    justify-content: center;
+  }
+}
