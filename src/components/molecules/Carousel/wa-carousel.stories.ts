@@ -11,12 +11,12 @@ export default {
   args: {},
   argTypes: {},
   render: () => html`<wa-carousel>
-    <h3>El 1</h3>
-    <div>Slide 1</div>
-    <h3>El 2</h3>
-    <div>Slide 2</div>
-    <h3>El 3</h3>
-    <div>Slide 3</div>
+    <h3>Slide 1</h3>
+    <div>Content inside slide 1</div>
+    <h3>Slide 2</h3>
+    <div>Content inside slide 2</div>
+    <h3>Slide 3</h3>
+    <div>Content inside slide 3</div>
   </wa-carousel>`,
 } as Meta;
 
