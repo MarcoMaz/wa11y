@@ -1,36 +1,57 @@
-<section class="carousel" aria-label="Main Topic">
-  <ul class="carousel__cards">
+<section
+  class="carousel"
+  aria-label="Main Topic"
+  aria-roledescription="carousel"
+>
+  <div class="carousel__controls">
+    <button
+      type="button"
+      aria-label="Previous slide"
+      aria-controls="ID_CAROUSEL_CARD"
+    >
+      <!-- Previous Arrow Icon -->
+    </button>
+    <button
+      type="button"
+      aria-label="Next slide"
+      aria-controls="ID_CAROUSEL_CARD"
+    >
+      <!-- Next Arrow Icon -->
+    </button>
+    <div class="carousel__navigation" role="tablist" aria-label="Slides">
+      <!-- HERE's there's a map of dots -->
+      <button
+        type="button"
+        aria-label="Topic 1"
+        class="-full"
+        data-slide="0"
+        role="tab"
+        aria-label="Slide 1"
+        aria-selected="false"
+        aria-controls="carousel-item-1"
+        tabindex="-1/0"
+      >
+        <!-- dot svg -->
+      </button>
+    </div>
+  </div>
+  <div
+    id="ID_CAROUSEL_CARD"
+    class="carousel__cards"
+    aria-atomic="false"
+    aria-live="polite"
+  >
     <!-- HERE's THERE'S A MAP OF CARDS -->
-    <li class="carousel__card">
+    <div
+      class="carousel__card"
+      role="group"
+      aria-roledescription="slide"
+      aria-label="X of Y"
+      id="carousel-item-1"
+    >
       <h2>Heading n</h2>
       <p>This is some text</p>
       <a href="#">Link n</a>
-    </li>
-  </ul>
-  <ul class="carousel__controls">
-    <li>
-      <button type="button" aria-label="Previous item">
-        <!-- Previous Arrow Icon -->
-      </button>
-    </li>
-    <li>
-      <button type="button" aria-label="Next item">
-        <!-- Next Arrow Icon -->
-      </button>
-    </li>
-  </ul>
-  <ul class="carousel__navigation">
-    <!-- HERE's there's a map of dots -->
-    <li>
-      <button type="button" aria-label="Topic 1" class="-full" data-slide="0">
-        <!-- dot svg -->
-      </button>
-    </li>
-  </ul>
-  <div
-    role="status"
-    aria-live="polite"
-    aria-atomic="true"
-    aria-label="Item 1 of 8"
-  ></div>
+    </div>
+  </div>
 </section>
