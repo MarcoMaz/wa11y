@@ -18,8 +18,11 @@ export class WaCarousel
 {
   @property({ type: String, reflect: true }) ariaLabel: string | null =
     'Carousel';
+  @property({ type: Boolean, reflect: true, attribute: 'navigation' })
+  navigation = false;
 
-  @query(`.${CAROUSEL_CLASS}`) carousel!: HTMLDivElement;
+  @query(`.${CAROUSEL_CLASS}`)
+  carousel!: HTMLDivElement;
   @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
   @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
@@ -120,16 +123,18 @@ export class WaCarousel
       nextBtn.innerHTML = '<span aria-hidden="true">→</span>';
     }
 
-    // Navigation wrapper (tablist)
-    const nav = document.createElement('div');
-    this.applyDefaultAndMappedClass(
-      nav,
-      CAROUSEL_NAV_CLASS,
-      'carousel__navigation'
-    );
-    nav.setAttribute('role', 'tablist');
-    nav.setAttribute('aria-label', 'Slides');
-    controls.appendChild(nav);
+    if (this.navigation) {
+      // Navigation wrapper (tablist)
+      const nav = document.createElement('div');
+      this.applyDefaultAndMappedClass(
+        nav,
+        CAROUSEL_NAV_CLASS,
+        'carousel__navigation'
+      );
+      nav.setAttribute('role', 'tablist');
+      nav.setAttribute('aria-label', 'Slides');
+      controls.appendChild(nav);
+    }
 
     // card container
     const cardContainer = document.createElement('div');
