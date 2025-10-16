@@ -5,6 +5,7 @@ import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 export interface WaCarouselProps extends HTMLElement {}
 
 const CAROUSEL_CLASS: string = 'carousel';
+const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -15,6 +16,7 @@ export class WaCarousel
     'Carousel';
 
   @query(`.${CAROUSEL_CLASS}`) carousel!: HTMLDivElement;
+  @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
@@ -59,6 +61,42 @@ export class WaCarousel
     section.setAttribute('aria-roledescription', 'carousel');
     section.setAttribute('aria-label', this.ariaLabel || 'Carousel');
     this.insertBefore(section, childrenSnapshot[0] ?? null);
+
+    // card container
+    const cardContainer = document.createElement('div');
+    this.applyDefaultAndMappedClass(
+      cardContainer,
+      CAROUSEL_CARDS_CLASS,
+      'carousel__cards'
+    );
+    cardContainer.setAttribute('aria-atomic', 'false');
+    cardContainer.setAttribute('aria-live', 'polite');
+
+    section.append(cardContainer);
+
+    cardContainer.append(...childrenSnapshot);
+
+    for (let i = 0; i < childrenSnapshot.length; i += 2) {
+      const headerElement = childrenSnapshot[i] as HTMLElement;
+      const panelElement = childrenSnapshot[i + 1] as HTMLElement;
+
+      if (!headerElement || !panelElement) {
+        console.error(`[wa-accordion] header or panel missing`);
+        break;
+      }
+
+      let headerButtonElement = headerElement.querySelector(
+        'button'
+      ) as HTMLButtonElement;
+
+      if (!headerButtonElement) {
+        headerButtonElement = document.createElement('button');
+        headerButtonElement.type = 'button';
+        headerButtonElement.innerHTML = headerElement.innerHTML;
+        headerElement.innerHTML = '';
+        headerElement.appendChild(headerButtonElement);
+      }
+    }
   }
 }
 
