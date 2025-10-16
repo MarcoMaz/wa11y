@@ -12,7 +12,7 @@ export default {
   argTypes: {},
   render: () => html`<wa-carousel>
     <h3>Slide 1</h3>
-    <div>Content inside slide 1</div>
+    <div>Content inside slide 1 <a href="#">i am link</a></div>
     <h3>Slide 2</h3>
     <div>Content inside slide 2</div>
     <h3>Slide 3</h3>

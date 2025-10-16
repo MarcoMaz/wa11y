@@ -6,6 +6,7 @@ export interface WaCarouselProps extends HTMLElement {}
 
 const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
+const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -17,6 +18,7 @@ export class WaCarousel
 
   @query(`.${CAROUSEL_CLASS}`) carousel!: HTMLDivElement;
   @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
+  @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
@@ -76,7 +78,9 @@ export class WaCarousel
 
     cardContainer.append(...childrenSnapshot);
 
-    for (let i = 0; i < childrenSnapshot.length; i += 2) {
+    const total = Math.floor(childrenSnapshot.length / 2);
+
+    for (let i = 0, idx = 0; i < childrenSnapshot.length; i += 2, idx++) {
       const headerElement = childrenSnapshot[i] as HTMLElement;
       const panelElement = childrenSnapshot[i + 1] as HTMLElement;
 
@@ -96,6 +100,24 @@ export class WaCarousel
         headerElement.innerHTML = '';
         headerElement.appendChild(headerButtonElement);
       }
+
+      // Crea il wrapper card e inseriscilo PRIMA dell’header corrente
+      const slide = document.createElement('div');
+      this.applyDefaultAndMappedClass(
+        slide,
+        CAROUSEL_CARD_CLASS,
+        'carousel__card'
+      );
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.id = `carousel-item-${this.id || 'wa'}-${idx}`;
+      slide.setAttribute('aria-label', `${idx + 1} of ${total}`);
+
+      cardContainer.insertBefore(slide, headerElement);
+
+      // Muovi i nodi nel wrapper (appendChild li SPOSTA)
+      slide.appendChild(headerElement);
+      slide.appendChild(panelElement);
     }
   }
 }
