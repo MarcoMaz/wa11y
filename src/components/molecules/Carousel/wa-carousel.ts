@@ -9,6 +9,7 @@ const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
 const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
 const CAROUSEL_ARROWS_CLASS: string = 'arrows';
+const CAROUSEL_NAV_CLASS: string = 'carousel__navigation';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -23,6 +24,7 @@ export class WaCarousel
   @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
   @query(`.${CAROUSEL_ARROWS_CLASS}`) carouselArrows!: HTMLDivElement;
+  @query(`.${CAROUSEL_NAV_CLASS}`) carouselNav!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
@@ -117,6 +119,17 @@ export class WaCarousel
       // HTML fallback (accessible): →
       nextBtn.innerHTML = '<span aria-hidden="true">→</span>';
     }
+
+    // Navigation wrapper (tablist)
+    const nav = document.createElement('div');
+    this.applyDefaultAndMappedClass(
+      nav,
+      CAROUSEL_NAV_CLASS,
+      'carousel__navigation'
+    );
+    nav.setAttribute('role', 'tablist');
+    nav.setAttribute('aria-label', 'Slides');
+    controls.appendChild(nav);
 
     // card container
     const cardContainer = document.createElement('div');
