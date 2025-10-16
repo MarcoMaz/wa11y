@@ -11,6 +11,35 @@ export default {
   args: {},
   argTypes: {},
   render: () => html`<wa-carousel>
+    <!-- <template data-prev>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </template>
+    <template data-next>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path d="M9 6l6 6-6 6" />
+      </svg>
+    </template> -->
+
     <h3>Slide 1</h3>
     <div>Content inside slide 1 <a href="#">i am link</a></div>
     <h3>Slide 2</h3>

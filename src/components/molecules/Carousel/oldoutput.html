@@ -3,22 +3,21 @@
   aria-label="Main Topic"                       //done
   aria-roledescription="carousel"               //done
 >
-  <div class="carousel__controls">
-    <button
-      type="button"
-      aria-label="Previous slide"
-      aria-controls="ID_CAROUSEL_CARD"
-    >
-      <!-- Previous Arrow Icon -->
-    </button>
-    <button
-      type="button"
-      aria-label="Next slide"
-      aria-controls="ID_CAROUSEL_CARD"
-    >
-      <!-- Next Arrow Icon -->
-    </button>
-    <div class="carousel__navigation" role="tablist" aria-label="Slides">
+  <div class="carousel__controls">              //done
+    <div class="arrows">                        //done
+      <button type="button"                     //done
+        aria-label="Previous slide"             //done
+        aria-controls="ID_CAROUSEL_CARD"
+      ></button>
+      <button type="button"                     //done
+        aria-label="Next slide"                 //done
+        aria-controls="ID_CAROUSEL_CARD"
+      ></button>
+    </div>
+    <div 
+      class="carousel__navigation" 
+      role="tablist" 
+      aria-label="Slides">
       <!-- HERE's there's a map of dots -->
       <button
         type="button"

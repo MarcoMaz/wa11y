@@ -7,6 +7,8 @@ export interface WaCarouselProps extends HTMLElement {}
 const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
 const CAROUSEL_CARD_CLASS: string = 'carousel__card';
+const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
+const CAROUSEL_ARROWS_CLASS: string = 'arrows';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -19,6 +21,8 @@ export class WaCarousel
   @query(`.${CAROUSEL_CLASS}`) carousel!: HTMLDivElement;
   @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
   @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
+  @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
+  @query(`.${CAROUSEL_ARROWS_CLASS}`) carouselArrows!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
@@ -63,6 +67,56 @@ export class WaCarousel
     section.setAttribute('aria-roledescription', 'carousel');
     section.setAttribute('aria-label', this.ariaLabel || 'Carousel');
     this.insertBefore(section, childrenSnapshot[0] ?? null);
+
+    // Controls wrapper vuoto
+    const controls = document.createElement('div');
+    this.applyDefaultAndMappedClass(
+      controls,
+      CAROUSEL_CONTROLS_CLASS,
+      'carousel__controls'
+    );
+    section.appendChild(controls);
+
+    // ---- ARROWS WRAPPER + BUTTONS (SVG via template) ----
+    const arrows = document.createElement('div');
+    this.applyDefaultAndMappedClass(arrows, CAROUSEL_ARROWS_CLASS, 'arrows');
+    controls.appendChild(arrows);
+
+    // Prev button
+    const prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.setAttribute('aria-label', 'Previous slide');
+    arrows.appendChild(prevBtn);
+
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.setAttribute('aria-label', 'Next slide');
+    arrows.appendChild(nextBtn);
+
+    // Inject user-provided SVGs via templates (accordion-style)
+    const tplPrev = this.querySelector(
+      ':scope > template[data-prev]'
+    ) as HTMLTemplateElement | null;
+    const tplNext = this.querySelector(
+      ':scope > template[data-next]'
+    ) as HTMLTemplateElement | null;
+
+    if (tplPrev) {
+      prevBtn.appendChild(tplPrev.content.cloneNode(true));
+      tplPrev.remove();
+    } else {
+      // HTML fallback (accessible): ←
+      prevBtn.innerHTML = '<span aria-hidden="true">←</span>';
+    }
+
+    if (tplNext) {
+      nextBtn.appendChild(tplNext.content.cloneNode(true));
+      tplNext.remove();
+    } else {
+      // HTML fallback (accessible): →
+      nextBtn.innerHTML = '<span aria-hidden="true">→</span>';
+    }
 
     // card container
     const cardContainer = document.createElement('div');
