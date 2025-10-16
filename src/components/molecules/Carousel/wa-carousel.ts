@@ -191,6 +191,26 @@ export class WaCarousel
       slide.appendChild(headerElement);
       slide.appendChild(panelElement);
     }
+
+    if (this.navigation) {
+      const navEl = controls.querySelector(
+        `.${CAROUSEL_NAV_CLASS}`
+      ) as HTMLDivElement | null;
+      if (navEl) {
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute(
+            'aria-controls',
+            `carousel-item-${this.id || 'wa'}-${i}`
+          );
+          dot.innerHTML = `<span class="dot" aria-hidden="true">•</span>`;
+
+          navEl.appendChild(dot);
+        }
+      }
+    }
   }
 }
 

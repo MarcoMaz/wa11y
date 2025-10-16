@@ -10,7 +10,7 @@ export default {
   },
   args: {},
   argTypes: {},
-  render: () => html`<wa-carousel>
+  render: () => html`<wa-carousel navigation>
     <!-- <template data-prev>
       <svg
         xmlns="http://www.w3.org/2000/svg"
