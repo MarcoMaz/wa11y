@@ -199,6 +199,13 @@ export class WaCarousel
       const navEl = controls.querySelector(
         `.${CAROUSEL_NAV_CLASS}`
       ) as HTMLDivElement | null;
+      const tplDot = this.querySelector(
+        ':scope > template[data-dot]'
+      ) as HTMLTemplateElement | null;
+      const tplDotActive = this.querySelector(
+        ':scope > template[data-dot-active]'
+      ) as HTMLTemplateElement | null;
+
       if (navEl) {
         for (let i = 0; i < total; i++) {
           const dot = document.createElement('button');
@@ -208,7 +215,13 @@ export class WaCarousel
             'aria-controls',
             `carousel-item-${this.id || 'wa'}-${i}`
           );
-          dot.innerHTML = `<span class="dot" aria-hidden="true">•</span>`;
+
+          const tpl = i === 0 && tplDotActive ? tplDotActive : tplDot;
+          if (tpl) {
+            dot.appendChild(tpl.content.cloneNode(true));
+          } else {
+            dot.innerHTML = `<span class="dot" aria-hidden="true">•</span>`;
+          }
 
           navEl.appendChild(dot);
         }
