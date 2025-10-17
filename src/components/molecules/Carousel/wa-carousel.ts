@@ -65,6 +65,9 @@ export class WaCarousel
     // Snapshot original children (expect pairs: heading + content)
     const childrenSnapshot = Array.from(this.children) as HTMLElement[];
     if (childrenSnapshot.length === 0) return;
+    const contentNodes = childrenSnapshot.filter(
+      (el) => el.tagName !== 'TEMPLATE'
+    );
 
     // Root <section>
     const section = document.createElement('section');
@@ -148,13 +151,13 @@ export class WaCarousel
 
     section.append(cardContainer);
 
-    cardContainer.append(...childrenSnapshot);
+    cardContainer.append(...contentNodes);
 
-    const total = Math.floor(childrenSnapshot.length / 2);
+    const total = Math.floor(contentNodes.length / 2);
 
-    for (let i = 0, idx = 0; i < childrenSnapshot.length; i += 2, idx++) {
-      const headerElement = childrenSnapshot[i] as HTMLElement;
-      const panelElement = childrenSnapshot[i + 1] as HTMLElement;
+    for (let i = 0, idx = 0; i < contentNodes.length; i += 2, idx++) {
+      const headerElement = contentNodes[i] as HTMLElement;
+      const panelElement = contentNodes[i + 1] as HTMLElement;
 
       if (!headerElement || !panelElement) {
         console.error(`[wa-accordion] header or panel missing`);

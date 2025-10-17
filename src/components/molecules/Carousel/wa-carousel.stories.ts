@@ -39,7 +39,18 @@ export default {
         <path d="M9 6l6 6-6 6" />
       </svg>
     </template> -->
-
+    <template data-dot>
+      <!-- default dot svg/html -->
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+        <circle cx="8" cy="8" r="8" />
+      </svg>
+    </template>
+    <template data-dot-active>
+      <!-- active dot svg/html -->
+      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+        <circle cx="5" cy="5" r="5" />
+      </svg>
+    </template>
     <h3>Slide 1</h3>
     <div>Content inside slide 1 <a href="#">i am link</a></div>
     <h3>Slide 2</h3>
