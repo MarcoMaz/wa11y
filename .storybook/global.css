@@ -484,12 +484,12 @@ wa-accordion {
 }
 
 /* Old Carousel code */
-.carousel__cards {
+/* .carousel__cards {
   display: flex;
   min-height: 8rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Firefox fix */
+  scrollbar-width: none; // Firefox fix
 
   .carousel__card {
     align-items: center;
@@ -553,4 +553,4 @@ wa-accordion {
 }
 .carousel {
   position: relative;
-}
+} */
