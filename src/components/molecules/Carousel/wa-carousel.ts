@@ -20,6 +20,8 @@ export class WaCarousel
     'Carousel'; // Main topic aria label
   @property({ type: Boolean, reflect: true, attribute: 'navigation' })
   navigation = false;
+  @property({ type: Number, reflect: true, attribute: 'active-index' })
+  activeIndex = 0;
 
   @query(`.${CAROUSEL_CLASS}`)
   carousel!: HTMLDivElement;
@@ -158,6 +160,15 @@ export class WaCarousel
     cardContainer.append(...contentNodes);
 
     const total = Math.floor(contentNodes.length / 2);
+    const boundActiveIndex = (n: number) =>
+      Math.max(0, Math.min(n, Math.max(0, total - 1)));
+
+    prevBtn.addEventListener('click', () => {
+      this.activeIndex = boundActiveIndex(this.activeIndex - 1);
+    });
+    nextBtn.addEventListener('click', () => {
+      this.activeIndex = boundActiveIndex(this.activeIndex + 1);
+    });
 
     for (let i = 0, idx = 0; i < contentNodes.length; i += 2, idx++) {
       const headerElement = contentNodes[i] as HTMLElement;
