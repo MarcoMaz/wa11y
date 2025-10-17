@@ -160,14 +160,47 @@ export class WaCarousel
     cardContainer.append(...contentNodes);
 
     const total = Math.floor(contentNodes.length / 2);
-    const boundActiveIndex = (n: number) =>
-      Math.max(0, Math.min(n, Math.max(0, total - 1)));
 
     prevBtn.addEventListener('click', () => {
-      this.activeIndex = boundActiveIndex(this.activeIndex - 1);
+      this.activeIndex = Math.max(
+        0,
+        Math.min(this.activeIndex - 1, Math.max(0, total - 1))
+      );
+
+      const navEl = controls.querySelector(
+        `.${CAROUSEL_NAV_CLASS}`
+      ) as HTMLDivElement | null;
+      if (navEl) {
+        const dots = Array.from(
+          navEl.querySelectorAll('button[role="tab"]')
+        ) as HTMLButtonElement[];
+        dots.forEach((d, i) => {
+          const is = i === this.activeIndex;
+          d.setAttribute('aria-selected', is ? 'true' : 'false');
+          d.tabIndex = is ? 0 : -1;
+        });
+      }
     });
+
     nextBtn.addEventListener('click', () => {
-      this.activeIndex = boundActiveIndex(this.activeIndex + 1);
+      this.activeIndex = Math.max(
+        0,
+        Math.min(this.activeIndex + 1, Math.max(0, total - 1))
+      );
+
+      const navEl = controls.querySelector(
+        `.${CAROUSEL_NAV_CLASS}`
+      ) as HTMLDivElement | null;
+      if (navEl) {
+        const dots = Array.from(
+          navEl.querySelectorAll('button[role="tab"]')
+        ) as HTMLButtonElement[];
+        dots.forEach((d, i) => {
+          const is = i === this.activeIndex;
+          d.setAttribute('aria-selected', is ? 'true' : 'false');
+          d.tabIndex = is ? 0 : -1;
+        });
+      }
     });
 
     for (let i = 0, idx = 0; i < contentNodes.length; i += 2, idx++) {
@@ -230,6 +263,11 @@ export class WaCarousel
             'aria-controls',
             `carousel-item-${this.id || 'wa'}-${i}`
           );
+          dot.setAttribute(
+            'aria-selected',
+            i === this.activeIndex ? 'true' : 'false'
+          );
+          dot.tabIndex = i === this.activeIndex ? 0 : -1;
 
           const tpl = i === 0 && tplDotActive ? tplDotActive : tplDot;
           if (tpl) {
@@ -240,6 +278,21 @@ export class WaCarousel
 
           navEl.appendChild(dot);
         }
+
+        const dots = Array.from(
+          navEl.querySelectorAll('button[role="tab"]')
+        ) as HTMLButtonElement[];
+
+        dots.forEach((d, i) => {
+          d.addEventListener('click', () => {
+            this.activeIndex = Math.max(0, Math.min(i, Math.max(0, total - 1))); // reuse your bound logic inline
+            dots.forEach((btn, j) => {
+              const is = j === this.activeIndex;
+              btn.setAttribute('aria-selected', is ? 'true' : 'false');
+              btn.tabIndex = is ? 0 : -1;
+            });
+          });
+        });
       }
     }
   }
