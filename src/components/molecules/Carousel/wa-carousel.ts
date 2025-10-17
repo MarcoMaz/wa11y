@@ -17,7 +17,7 @@ export class WaCarousel
   implements WaCarouselProps
 {
   @property({ type: String, reflect: true }) ariaLabel: string | null =
-    'Carousel';
+    'Carousel'; // Main topic aria label
   @property({ type: Boolean, reflect: true, attribute: 'navigation' })
   navigation = false;
 
@@ -148,6 +148,10 @@ export class WaCarousel
     );
     cardContainer.setAttribute('aria-atomic', 'false');
     cardContainer.setAttribute('aria-live', 'polite');
+    const cardsId = `carousel-cards-${this.id || 'wa'}`;
+    cardContainer.id = cardsId;
+    prevBtn.setAttribute('aria-controls', cardsId);
+    nextBtn.setAttribute('aria-controls', cardsId);
 
     section.append(cardContainer);
 
