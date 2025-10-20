@@ -2,7 +2,11 @@ import { html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
-export interface WaCarouselProps extends HTMLElement {}
+export interface WaCarouselProps extends HTMLElement {
+  activeIndex?: number;
+  ariaLabel: string | null;
+  navigation?: boolean;
+}
 
 const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
