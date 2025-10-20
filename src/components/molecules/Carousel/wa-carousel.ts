@@ -78,7 +78,7 @@ export class WaCarousel
     const sectionRoot = document.createElement('section') as HTMLElement;
     this.applyDefaultAndMappedClass(sectionRoot, CAROUSEL_CLASS, 'carousel');
     sectionRoot.setAttribute('aria-roledescription', 'carousel');
-    sectionRoot.setAttribute('aria-label', this.ariaLabel || 'Carousel');
+    sectionRoot.setAttribute('aria-label', this.ariaLabel || 'carousel');
     this.insertBefore(sectionRoot, childrenSnapshot[0] ?? null);
 
     // Controls
@@ -95,7 +95,7 @@ export class WaCarousel
     this.applyDefaultAndMappedClass(
       buttons,
       CAROUSEL_BUTTONS_CLASS,
-      'carousel_buttons'
+      'carousel__buttons'
     );
     controls.appendChild(buttons);
 
@@ -141,7 +141,7 @@ export class WaCarousel
         'carousel__navigation'
       );
       navigationElement.setAttribute('role', 'tablist');
-      navigationElement.setAttribute('aria-label', 'Slides');
+      navigationElement.setAttribute('aria-label', 'slides');
       controls.appendChild(navigationElement);
     }
 
@@ -154,7 +154,7 @@ export class WaCarousel
     );
     slidesContainer.setAttribute('aria-atomic', 'false');
     slidesContainer.setAttribute('aria-live', 'polite');
-    const slidesContainerId = `carousel-slides-${this.id || 'wa'}` as string;
+    const slidesContainerId = `slides-container-${this.id}` as string;
     slidesContainer.id = slidesContainerId;
     prevButton.setAttribute('aria-controls', slidesContainerId);
     nextButton.setAttribute('aria-controls', slidesContainerId);
@@ -235,7 +235,7 @@ export class WaCarousel
       );
       slide.setAttribute('role', 'group');
       slide.setAttribute('aria-roledescription', 'slide');
-      slide.id = `carousel-slide-${this.id || 'wa'}-${idx}`;
+      slide.id = `slide-${this.id}-${idx}`;
       slide.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
       slidesContainer.insertBefore(slide, headerElement);
       slide.appendChild(headerElement);
@@ -258,10 +258,7 @@ export class WaCarousel
           const dot = document.createElement('button') as HTMLButtonElement;
           dot.type = 'button';
           dot.setAttribute('role', 'tab');
-          dot.setAttribute(
-            'aria-controls',
-            `carousel-item-${this.id || 'wa'}-${i}`
-          );
+          dot.setAttribute('aria-controls', `dot-${this.id}-${i}`);
           dot.setAttribute(
             'aria-selected',
             i === this.activeIndex ? 'true' : 'false'
