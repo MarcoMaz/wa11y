@@ -288,10 +288,10 @@ export class WaCarousel
               0,
               Math.min(index, Math.max(0, totalSlides - 1))
             );
-            dots.forEach((btn, j) => {
-              const is: boolean = j === this.activeIndex;
-              btn.setAttribute('aria-selected', is ? 'true' : 'false');
-              btn.tabIndex = is ? 0 : -1;
+            dots.forEach((button, index) => {
+              const isActive: boolean = index === this.activeIndex;
+              button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+              button.tabIndex = isActive ? 0 : -1;
             });
           });
         });
