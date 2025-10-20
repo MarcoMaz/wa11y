@@ -12,8 +12,8 @@ const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
 const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
 const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
-const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
-const CAROUSEL_CARD_CLASS: string = 'carousel__card';
+const CAROUSEL_SLIDES_CLASS: string = 'carousel__slides';
+const CAROUSEL_SLIDE_CLASS: string = 'carousel__slide';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -32,8 +32,8 @@ export class WaCarousel
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
   @query(`.${CAROUSEL_BUTTONS_CLASS}`) carouselButtons!: HTMLDivElement;
   @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
-  @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
-  @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
+  @query(`.${CAROUSEL_SLIDES_CLASS}`) carouselSlides!: HTMLDivElement;
+  @query(`.${CAROUSEL_SLIDE_CLASS}`) carouselSlide!: HTMLDivElement;
 
   private applyDefaultAndMappedClass(
     el: HTMLElement,
@@ -146,20 +146,20 @@ export class WaCarousel
     }
 
     // Card container
-    const cardsContainer = document.createElement('div') as HTMLDivElement;
+    const slidesContainer = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
-      cardsContainer,
-      CAROUSEL_CARDS_CLASS,
-      'carousel__cards'
+      slidesContainer,
+      CAROUSEL_SLIDES_CLASS,
+      'carousel__slides'
     );
-    cardsContainer.setAttribute('aria-atomic', 'false');
-    cardsContainer.setAttribute('aria-live', 'polite');
-    const cardsContainerId = `carousel-cards-${this.id || 'wa'}` as string;
-    cardsContainer.id = cardsContainerId;
-    prevButton.setAttribute('aria-controls', cardsContainerId);
-    nextButton.setAttribute('aria-controls', cardsContainerId);
-    sectionRoot.append(cardsContainer);
-    cardsContainer.append(...contentNodes);
+    slidesContainer.setAttribute('aria-atomic', 'false');
+    slidesContainer.setAttribute('aria-live', 'polite');
+    const slidesContainerId = `carousel-slides-${this.id || 'wa'}` as string;
+    slidesContainer.id = slidesContainerId;
+    prevButton.setAttribute('aria-controls', slidesContainerId);
+    nextButton.setAttribute('aria-controls', slidesContainerId);
+    sectionRoot.append(slidesContainer);
+    slidesContainer.append(...contentNodes);
 
     const totalSlides = Math.floor(contentNodes.length / 2) as number;
 
@@ -226,20 +226,20 @@ export class WaCarousel
         headerElement.appendChild(headerButtonElement);
       }
 
-      // Single Card
-      const card = document.createElement('div') as HTMLDivElement;
+      // Single Slide
+      const slide = document.createElement('div') as HTMLDivElement;
       this.applyDefaultAndMappedClass(
-        card,
-        CAROUSEL_CARD_CLASS,
-        'carousel__card'
+        slide,
+        CAROUSEL_SLIDE_CLASS,
+        'carousel__slide'
       );
-      card.setAttribute('role', 'group');
-      card.setAttribute('aria-roledescription', 'slide');
-      card.id = `carousel-item-${this.id || 'wa'}-${idx}`;
-      card.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
-      cardsContainer.insertBefore(card, headerElement);
-      card.appendChild(headerElement);
-      card.appendChild(panelElement);
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.id = `carousel-slide-${this.id || 'wa'}-${idx}`;
+      slide.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
+      slidesContainer.insertBefore(slide, headerElement);
+      slide.appendChild(headerElement);
+      slide.appendChild(panelElement);
     }
 
     if (this.navigation) {
