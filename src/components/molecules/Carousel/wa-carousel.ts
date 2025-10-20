@@ -12,8 +12,8 @@ const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
 const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
 const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
-const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
+const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -29,13 +29,12 @@ export class WaCarousel
 
   @query(`.${CAROUSEL_CLASS}`)
   carousel!: HTMLDivElement;
-  @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
-  @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
   @query(`.${CAROUSEL_BUTTONS_CLASS}`) carouselButtons!: HTMLDivElement;
   @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
+  @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
+  @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
 
-  // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
     el: HTMLElement,
     baseClass: string,
@@ -73,26 +72,26 @@ export class WaCarousel
     if (childrenSnapshot.length === 0) return;
     const contentNodes = childrenSnapshot.filter(
       (el) => el.tagName !== 'TEMPLATE'
-    );
+    ) as HTMLElement[];
 
-    // Root <section>
-    const section = document.createElement('section');
-    this.applyDefaultAndMappedClass(section, CAROUSEL_CLASS, 'carousel');
-    section.setAttribute('aria-roledescription', 'carousel');
-    section.setAttribute('aria-label', this.ariaLabel || 'Carousel');
-    this.insertBefore(section, childrenSnapshot[0] ?? null);
+    // Root
+    const sectionRoot = document.createElement('section') as HTMLElement;
+    this.applyDefaultAndMappedClass(sectionRoot, CAROUSEL_CLASS, 'carousel');
+    sectionRoot.setAttribute('aria-roledescription', 'carousel');
+    sectionRoot.setAttribute('aria-label', this.ariaLabel || 'Carousel');
+    this.insertBefore(sectionRoot, childrenSnapshot[0] ?? null);
 
-    // Controls wrapper vuoto
-    const controls = document.createElement('div');
+    // Controls
+    const controls = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
       controls,
       CAROUSEL_CONTROLS_CLASS,
       'carousel__controls'
     );
-    section.appendChild(controls);
+    sectionRoot.appendChild(controls);
 
-    // ---- BUTTONS WRAPPER + BUTTONS (SVG via template) ----
-    const buttons = document.createElement('div');
+    // Buttons
+    const buttons = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
       buttons,
       CAROUSEL_BUTTONS_CLASS,
@@ -101,112 +100,107 @@ export class WaCarousel
     controls.appendChild(buttons);
 
     // Prev button
-    const prevBtn = document.createElement('button');
-    prevBtn.type = 'button';
-    prevBtn.setAttribute('aria-label', 'Previous slide');
-    buttons.appendChild(prevBtn);
+    const prevButton = document.createElement('button') as HTMLButtonElement;
+    prevButton.type = 'button';
+    prevButton.setAttribute('aria-label', 'Previous slide');
+    buttons.appendChild(prevButton);
 
     // Next button
-    const nextBtn = document.createElement('button');
-    nextBtn.type = 'button';
-    nextBtn.setAttribute('aria-label', 'Next slide');
-    buttons.appendChild(nextBtn);
+    const nextButton = document.createElement('button') as HTMLButtonElement;
+    nextButton.type = 'button';
+    nextButton.setAttribute('aria-label', 'Next slide');
+    buttons.appendChild(nextButton);
 
-    // Inject user-provided SVGs via templates (accordion-style)
-    const tplPrev = this.querySelector(
+    const templatePrevButton = this.querySelector(
       ':scope > template[data-prev]'
     ) as HTMLTemplateElement | null;
-    const tplNext = this.querySelector(
+    const templateNextButton = this.querySelector(
       ':scope > template[data-next]'
     ) as HTMLTemplateElement | null;
 
-    if (tplPrev) {
-      prevBtn.appendChild(tplPrev.content.cloneNode(true));
-      tplPrev.remove();
+    if (templatePrevButton) {
+      prevButton.appendChild(templatePrevButton.content.cloneNode(true));
+      templatePrevButton.remove();
     } else {
-      // HTML fallback (accessible): ←
-      prevBtn.innerHTML = '<span aria-hidden="true">←</span>';
+      prevButton.innerHTML = '<span aria-hidden="true">←</span>';
     }
 
-    if (tplNext) {
-      nextBtn.appendChild(tplNext.content.cloneNode(true));
-      tplNext.remove();
+    if (templateNextButton) {
+      nextButton.appendChild(templateNextButton.content.cloneNode(true));
+      templateNextButton.remove();
     } else {
-      // HTML fallback (accessible): →
-      nextBtn.innerHTML = '<span aria-hidden="true">→</span>';
+      nextButton.innerHTML = '<span aria-hidden="true">→</span>';
     }
 
+    // Navigation
     if (this.navigation) {
-      // Navigation wrapper (tablist)
-      const nav = document.createElement('div');
+      const navigationElement = document.createElement('div') as HTMLDivElement;
       this.applyDefaultAndMappedClass(
-        nav,
+        navigationElement,
         CAROUSEL_NAVIGATION_CLASS,
         'carousel__navigation'
       );
-      nav.setAttribute('role', 'tablist');
-      nav.setAttribute('aria-label', 'Slides');
-      controls.appendChild(nav);
+      navigationElement.setAttribute('role', 'tablist');
+      navigationElement.setAttribute('aria-label', 'Slides');
+      controls.appendChild(navigationElement);
     }
 
-    // card container
-    const cardContainer = document.createElement('div');
+    // Card container
+    const cardsContainer = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
-      cardContainer,
+      cardsContainer,
       CAROUSEL_CARDS_CLASS,
       'carousel__cards'
     );
-    cardContainer.setAttribute('aria-atomic', 'false');
-    cardContainer.setAttribute('aria-live', 'polite');
-    const cardsId = `carousel-cards-${this.id || 'wa'}`;
-    cardContainer.id = cardsId;
-    prevBtn.setAttribute('aria-controls', cardsId);
-    nextBtn.setAttribute('aria-controls', cardsId);
+    cardsContainer.setAttribute('aria-atomic', 'false');
+    cardsContainer.setAttribute('aria-live', 'polite');
+    const cardsContainerId = `carousel-cards-${this.id || 'wa'}` as string;
+    cardsContainer.id = cardsContainerId;
+    prevButton.setAttribute('aria-controls', cardsContainerId);
+    nextButton.setAttribute('aria-controls', cardsContainerId);
+    sectionRoot.append(cardsContainer);
+    cardsContainer.append(...contentNodes);
 
-    section.append(cardContainer);
+    const totalSlides = Math.floor(contentNodes.length / 2) as number;
 
-    cardContainer.append(...contentNodes);
-
-    const total = Math.floor(contentNodes.length / 2);
-
-    prevBtn.addEventListener('click', () => {
+    prevButton.addEventListener('click', () => {
       this.activeIndex = Math.max(
         0,
-        Math.min(this.activeIndex - 1, Math.max(0, total - 1))
+        Math.min(this.activeIndex - 1, Math.max(0, totalSlides - 1))
       );
 
-      const navEl = controls.querySelector(
+      const navigationElement = controls.querySelector(
         `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
-      if (navEl) {
+      if (navigationElement) {
         const dots = Array.from(
-          navEl.querySelectorAll('button[role="tab"]')
+          navigationElement.querySelectorAll('button[role="tab"]')
         ) as HTMLButtonElement[];
-        dots.forEach((d, i) => {
-          const is = i === this.activeIndex;
-          d.setAttribute('aria-selected', is ? 'true' : 'false');
-          d.tabIndex = is ? 0 : -1;
+        dots.forEach((dot, index) => {
+          const isActive: boolean = index === this.activeIndex;
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          dot.tabIndex = isActive ? 0 : -1;
         });
       }
     });
 
-    nextBtn.addEventListener('click', () => {
+    nextButton.addEventListener('click', () => {
       this.activeIndex = Math.max(
         0,
-        Math.min(this.activeIndex + 1, Math.max(0, total - 1))
+        Math.min(this.activeIndex + 1, Math.max(0, totalSlides - 1))
       );
 
-      const navEl = controls.querySelector(
+      const navigationElement = controls.querySelector(
         `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
-      if (navEl) {
+      if (navigationElement) {
         const dots = Array.from(
-          navEl.querySelectorAll('button[role="tab"]')
+          navigationElement.querySelectorAll('button[role="tab"]')
         ) as HTMLButtonElement[];
-        dots.forEach((d, i) => {
-          const is = i === this.activeIndex;
-          d.setAttribute('aria-selected', is ? 'true' : 'false');
-          d.tabIndex = is ? 0 : -1;
+        dots.forEach((dot, index) => {
+          const isActive: boolean = index === this.activeIndex;
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          dot.tabIndex = isActive ? 0 : -1;
         });
       }
     });
@@ -232,39 +226,36 @@ export class WaCarousel
         headerElement.appendChild(headerButtonElement);
       }
 
-      // Crea il wrapper card e inseriscilo PRIMA dell’header corrente
-      const slide = document.createElement('div');
+      // Single Card
+      const card = document.createElement('div') as HTMLDivElement;
       this.applyDefaultAndMappedClass(
-        slide,
+        card,
         CAROUSEL_CARD_CLASS,
         'carousel__card'
       );
-      slide.setAttribute('role', 'group');
-      slide.setAttribute('aria-roledescription', 'slide');
-      slide.id = `carousel-item-${this.id || 'wa'}-${idx}`;
-      slide.setAttribute('aria-label', `${idx + 1} of ${total}`);
-
-      cardContainer.insertBefore(slide, headerElement);
-
-      // Muovi i nodi nel wrapper (appendChild li SPOSTA)
-      slide.appendChild(headerElement);
-      slide.appendChild(panelElement);
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-roledescription', 'slide');
+      card.id = `carousel-item-${this.id || 'wa'}-${idx}`;
+      card.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
+      cardsContainer.insertBefore(card, headerElement);
+      card.appendChild(headerElement);
+      card.appendChild(panelElement);
     }
 
     if (this.navigation) {
-      const navEl = controls.querySelector(
+      const navigationElement = controls.querySelector(
         `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
-      const tplDot = this.querySelector(
+      const templateDotElement = this.querySelector(
         ':scope > template[data-dot]'
       ) as HTMLTemplateElement | null;
-      const tplDotActive = this.querySelector(
+      const templateDotActive = this.querySelector(
         ':scope > template[data-dot-active]'
       ) as HTMLTemplateElement | null;
 
-      if (navEl) {
-        for (let i = 0; i < total; i++) {
-          const dot = document.createElement('button');
+      if (navigationElement) {
+        for (let i = 0; i < totalSlides; i++) {
+          const dot = document.createElement('button') as HTMLButtonElement;
           dot.type = 'button';
           dot.setAttribute('role', 'tab');
           dot.setAttribute(
@@ -277,25 +268,31 @@ export class WaCarousel
           );
           dot.tabIndex = i === this.activeIndex ? 0 : -1;
 
-          const tpl = i === 0 && tplDotActive ? tplDotActive : tplDot;
-          if (tpl) {
-            dot.appendChild(tpl.content.cloneNode(true));
+          const templateDot: HTMLTemplateElement | null =
+            i === 0 && templateDotActive
+              ? templateDotActive
+              : templateDotElement;
+          if (templateDot) {
+            dot.appendChild(templateDot.content.cloneNode(true));
           } else {
             dot.innerHTML = `<span class="dot" aria-hidden="true">•</span>`;
           }
 
-          navEl.appendChild(dot);
+          navigationElement.appendChild(dot);
         }
 
         const dots = Array.from(
-          navEl.querySelectorAll('button[role="tab"]')
+          navigationElement.querySelectorAll('button[role="tab"]')
         ) as HTMLButtonElement[];
 
-        dots.forEach((d, i) => {
-          d.addEventListener('click', () => {
-            this.activeIndex = Math.max(0, Math.min(i, Math.max(0, total - 1))); // reuse your bound logic inline
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            this.activeIndex = Math.max(
+              0,
+              Math.min(index, Math.max(0, totalSlides - 1))
+            );
             dots.forEach((btn, j) => {
-              const is = j === this.activeIndex;
+              const is: boolean = j === this.activeIndex;
               btn.setAttribute('aria-selected', is ? 'true' : 'false');
               btn.tabIndex = is ? 0 : -1;
             });
@@ -311,5 +308,3 @@ declare global {
     'wa-carousel': WaCarousel;
   }
 }
-
-// test - custom ariaLabel
