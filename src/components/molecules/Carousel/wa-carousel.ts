@@ -7,9 +7,7 @@ export interface WaCarouselProps extends HTMLElement {}
 const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
 const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
-
-const CAROUSEL_NAV_CLASS: string = 'carousel__navigation';
-
+const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
 const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
 
@@ -19,10 +17,10 @@ export class WaCarousel
   implements WaCarouselProps
 {
   @property({ type: String, reflect: true }) ariaLabel: string | null =
-    'Carousel'; // Main topic aria label
-  @property({ type: Boolean, reflect: true, attribute: 'navigation' })
+    'Carousel';
+  @property({ type: Boolean, reflect: true })
   navigation = false;
-  @property({ type: Number, reflect: true, attribute: 'active-index' })
+  @property({ type: Number, reflect: true })
   activeIndex = 0;
 
   @query(`.${CAROUSEL_CLASS}`)
@@ -31,7 +29,7 @@ export class WaCarousel
   @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
   @query(`.${CAROUSEL_BUTTONS_CLASS}`) carouselButtons!: HTMLDivElement;
-  @query(`.${CAROUSEL_NAV_CLASS}`) carouselNav!: HTMLDivElement;
+  @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
   private applyDefaultAndMappedClass(
@@ -91,7 +89,11 @@ export class WaCarousel
 
     // ---- BUTTONS WRAPPER + BUTTONS (SVG via template) ----
     const buttons = document.createElement('div');
-    this.applyDefaultAndMappedClass(buttons, CAROUSEL_BUTTONS_CLASS, 'carousel_buttons');
+    this.applyDefaultAndMappedClass(
+      buttons,
+      CAROUSEL_BUTTONS_CLASS,
+      'carousel_buttons'
+    );
     controls.appendChild(buttons);
 
     // Prev button
@@ -135,7 +137,7 @@ export class WaCarousel
       const nav = document.createElement('div');
       this.applyDefaultAndMappedClass(
         nav,
-        CAROUSEL_NAV_CLASS,
+        CAROUSEL_NAVIGATION_CLASS,
         'carousel__navigation'
       );
       nav.setAttribute('role', 'tablist');
@@ -170,7 +172,7 @@ export class WaCarousel
       );
 
       const navEl = controls.querySelector(
-        `.${CAROUSEL_NAV_CLASS}`
+        `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
       if (navEl) {
         const dots = Array.from(
@@ -191,7 +193,7 @@ export class WaCarousel
       );
 
       const navEl = controls.querySelector(
-        `.${CAROUSEL_NAV_CLASS}`
+        `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
       if (navEl) {
         const dots = Array.from(
@@ -247,7 +249,7 @@ export class WaCarousel
 
     if (this.navigation) {
       const navEl = controls.querySelector(
-        `.${CAROUSEL_NAV_CLASS}`
+        `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
       const tplDot = this.querySelector(
         ':scope > template[data-dot]'
