@@ -5,11 +5,13 @@ import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 export interface WaCarouselProps extends HTMLElement {}
 
 const CAROUSEL_CLASS: string = 'carousel';
-const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
-const CAROUSEL_CARD_CLASS: string = 'carousel__card';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
-const CAROUSEL_ARROWS_CLASS: string = 'arrows';
+const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
+
 const CAROUSEL_NAV_CLASS: string = 'carousel__navigation';
+
+const CAROUSEL_CARD_CLASS: string = 'carousel__card';
+const CAROUSEL_CARDS_CLASS: string = 'carousel__cards';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -28,7 +30,7 @@ export class WaCarousel
   @query(`.${CAROUSEL_CARDS_CLASS}`) carouselCards!: HTMLDivElement;
   @query(`.${CAROUSEL_CARD_CLASS}`) carouselCard!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
-  @query(`.${CAROUSEL_ARROWS_CLASS}`) carouselArrows!: HTMLDivElement;
+  @query(`.${CAROUSEL_BUTTONS_CLASS}`) carouselButtons!: HTMLDivElement;
   @query(`.${CAROUSEL_NAV_CLASS}`) carouselNav!: HTMLDivElement;
 
   // Add base + mapped class (do not replace).
@@ -87,22 +89,22 @@ export class WaCarousel
     );
     section.appendChild(controls);
 
-    // ---- ARROWS WRAPPER + BUTTONS (SVG via template) ----
-    const arrows = document.createElement('div');
-    this.applyDefaultAndMappedClass(arrows, CAROUSEL_ARROWS_CLASS, 'arrows');
-    controls.appendChild(arrows);
+    // ---- BUTTONS WRAPPER + BUTTONS (SVG via template) ----
+    const buttons = document.createElement('div');
+    this.applyDefaultAndMappedClass(buttons, CAROUSEL_BUTTONS_CLASS, 'carousel_buttons');
+    controls.appendChild(buttons);
 
     // Prev button
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
     prevBtn.setAttribute('aria-label', 'Previous slide');
-    arrows.appendChild(prevBtn);
+    buttons.appendChild(prevBtn);
 
     // Next button
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.setAttribute('aria-label', 'Next slide');
-    arrows.appendChild(nextBtn);
+    buttons.appendChild(nextBtn);
 
     // Inject user-provided SVGs via templates (accordion-style)
     const tplPrev = this.querySelector(
