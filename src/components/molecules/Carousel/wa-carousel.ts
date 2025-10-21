@@ -22,7 +22,7 @@ export class WaCarousel
   implements WaCarouselProps
 {
   @property({ type: String, reflect: true }) ariaLabel: string | null =
-    'Carousel';
+    'carousel';
   @property({ type: Boolean, reflect: true })
   navigation = false;
   @property({ type: Number, reflect: true })
