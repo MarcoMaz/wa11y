@@ -30,30 +30,35 @@ describe('wa-carousel', () => {
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
       expect(section).toBeTruthy();
 
-      if (section) {
-        expect(section.tagName).toBe('SECTION');
-        expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
-        expect(section!.getAttribute('aria-label')).toBe('carousel');
-      }
+      expect(section!.tagName).toBe('SECTION');
+      expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
+      expect(section!.getAttribute('aria-label')).toBe('carousel');
 
-      // // Controls + Arrows Buttons group
-      // const controls = section!.querySelector(
-      //   '.carousel__controls'
-      // ) as HTMLDivElement | null;
-      // const arrowsButtonsWrap = section!.querySelector(
-      //   '.carousel__arrows-buttons'
-      // ) as HTMLDivElement | null;
-      // expect(controls).toBeTruthy();
-      // expect(arrowsButtonsWrap).toBeTruthy();
+      // Controls
+      const controls = section!.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement | null;
+      expect(controls).toBeTruthy();
 
-      // const navPrev = arrowsButtonsWrap!.querySelector(
-      //   'button[aria-label="Previous slide"]'
-      // ) as HTMLButtonElement | null;
-      // const navNext = arrowsButtonsWrap!.querySelector(
-      //   'button[aria-label="Next slide"]'
-      // ) as HTMLButtonElement | null;
-      // expect(navPrev).toBeTruthy();
-      // expect(navNext).toBeTruthy();
+      // Arrows buttons
+      const arrowsButtonsWrap = section!.querySelector(
+        '.carousel__arrows-buttons'
+      ) as HTMLDivElement | null;
+      expect(arrowsButtonsWrap).toBeTruthy();
+
+      const previousArrowButton = arrowsButtonsWrap!.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement | null;
+      expect(previousArrowButton).toBeTruthy();
+      expect(previousArrowButton!.getAttribute('aria-label')).toBe(
+        'Previous slide'
+      );
+
+      const nextArrowButton = arrowsButtonsWrap!.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement | null;
+      expect(nextArrowButton).toBeTruthy();
+      expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
       // // Slides container
       // const slidesContainer = section!.querySelector(
