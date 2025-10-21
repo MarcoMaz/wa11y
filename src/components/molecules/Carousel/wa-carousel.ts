@@ -14,6 +14,7 @@ const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
 const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
 const CAROUSEL_SLIDES_CLASS: string = 'carousel__slides';
 const CAROUSEL_SLIDE_CLASS: string = 'carousel__slide';
+const CAROUSEL_CAPTION_CLASS: string = 'carousel__caption';
 
 @customElement('wa-carousel')
 export class WaCarousel
@@ -34,6 +35,7 @@ export class WaCarousel
   @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDES_CLASS}`) carouselSlides!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDE_CLASS}`) carouselSlide!: HTMLDivElement;
+  @query(`.${CAROUSEL_CAPTION_CLASS}`) carouselCaption!: HTMLDivElement;
 
   private applyDefaultAndMappedClass(
     el: HTMLElement,
@@ -161,7 +163,7 @@ export class WaCarousel
     sectionRoot.append(slidesContainer);
     slidesContainer.append(...contentNodes);
 
-    const totalSlides = Math.floor(contentNodes.length / 2) as number;
+    const totalSlides = Math.floor(contentNodes.length / 3) as number;
 
     prevButton.addEventListener('click', () => {
       this.activeIndex = Math.max(
@@ -203,11 +205,12 @@ export class WaCarousel
       }
     });
 
-    for (let i = 0, idx = 0; i < contentNodes.length; i += 2, idx++) {
+    for (let i = 0, idx = 0; i < contentNodes.length; i += 3, idx++) {
       const headerElement = contentNodes[i] as HTMLElement;
       const panelElement = contentNodes[i + 1] as HTMLElement;
+      const captionElement = contentNodes[i + 2] as HTMLElement;
 
-      if (!headerElement || !panelElement) {
+      if (!headerElement || !panelElement || !captionElement) {
         console.error(`[wa-accordion] header or panel missing`);
         break;
       }
@@ -235,9 +238,27 @@ export class WaCarousel
       slide.setAttribute('aria-roledescription', 'slide');
       slide.id = `slide-${this.id}-${idx}`;
       slide.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
+
+      this.applyDefaultAndMappedClass(
+        captionElement,
+        CAROUSEL_CAPTION_CLASS,
+        'carousel__caption'
+      );
+
+      const captionId = `slide-caption-${this.id}-${idx}`;
+      captionElement.id = captionId;
+
+      const captionDescription =
+        headerButtonElement.getAttribute('aria-describedby');
+      headerButtonElement.setAttribute(
+        'aria-describedby',
+        captionDescription ? `${captionDescription} ${captionId}` : captionId
+      );
+
       slidesContainer.insertBefore(slide, headerElement);
       slide.appendChild(headerElement);
       slide.appendChild(panelElement);
+      slide.appendChild(captionElement);
     }
 
     if (this.navigation) {

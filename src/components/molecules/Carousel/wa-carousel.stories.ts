@@ -6,10 +6,15 @@ import './wa-carousel';
 const slides = html`
   <h3>Slide 1</h3>
   <div>Content inside slide 1 <a href="#">i am link</a></div>
+  <p>Caption 1</p>
   <h3>Slide 2</h3>
   <div>Content inside slide 2</div>
+  <p>Caption 2</p>
+
   <h3>Slide 3</h3>
   <div>Content inside slide 3</div>
+  <p>Caption 3</p>
+
 `;
 
 const ARROW_PREV = html`<template data-prev>
