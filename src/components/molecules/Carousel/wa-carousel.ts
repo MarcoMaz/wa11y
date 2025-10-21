@@ -179,7 +179,6 @@ export class WaCarousel
         dots.forEach((dot, index) => {
           const isActive: boolean = index === this.activeIndex;
           dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-          dot.tabIndex = isActive ? 0 : -1;
         });
       }
     });
@@ -200,7 +199,6 @@ export class WaCarousel
         dots.forEach((dot, index) => {
           const isActive: boolean = index === this.activeIndex;
           dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-          dot.tabIndex = isActive ? 0 : -1;
         });
       }
     });
@@ -263,7 +261,6 @@ export class WaCarousel
             'aria-selected',
             i === this.activeIndex ? 'true' : 'false'
           );
-          dot.tabIndex = i === this.activeIndex ? 0 : -1;
 
           const templateDot: HTMLTemplateElement | null =
             i === 0 && templateDotActive
@@ -291,7 +288,6 @@ export class WaCarousel
             dots.forEach((button, index) => {
               const isActive: boolean = index === this.activeIndex;
               button.setAttribute('aria-selected', isActive ? 'true' : 'false');
-              button.tabIndex = isActive ? 0 : -1;
             });
           });
         });
