@@ -87,57 +87,50 @@ describe('wa-carousel', () => {
         slidesContainer!.id
       );
 
-      // const slides = Array.from(
-      //   slidesContainer!.querySelectorAll('.carousel__slide')
-      // ) as HTMLDivElement[];
-      // expect(slides.length).toBe(3);
+      /* SLIDES */
+      const slides = Array.from(
+        slidesContainer!.querySelectorAll('.carousel__slide')
+      ) as HTMLDivElement[];
+      expect(slides.length).toBe(3);
 
-      // slides.forEach((slide, idx) => {
-      //   const header = slide.querySelector(
-      //     'h2,h3,h4,h5,h6'
-      //   ) as HTMLHeadingElement | null;
-      //   expect(header).toBeTruthy();
+      slides.forEach((slide, idx) => {
+        expect(slide.getAttribute('role')).toBe('group');
+        expect(slide.getAttribute('aria-roledescription')).toBe('slide');
+        expect(slide.id).toMatch(/^slide-/);
+        expect(slide.getAttribute('aria-label')).toBe(`${idx + 1} of 3`);
 
-      //   const headerButton = header!.querySelector(
-      //     'button'
-      //   ) as HTMLButtonElement | null;
-      //   expect(headerButton).toBeTruthy();
+        const header = slide.querySelector(
+          'h2,h3,h4,h5,h6'
+        ) as HTMLHeadingElement | null;
+        expect(header).toBeTruthy();
 
-      //   const contentDivs = Array.from(
-      //     slide.querySelectorAll(':scope > div')
-      //   ) as HTMLDivElement[];
-      //   expect(contentDivs.length).toBeGreaterThanOrEqual(1);
+        const caption = slide.querySelector(
+          ':scope > p.carousel__caption'
+        ) as HTMLParagraphElement | null;
+        expect(caption).toBeTruthy();
 
-      //   const caption = slide.querySelector(
-      //     ':scope > p.carousel__caption'
-      //   ) as HTMLParagraphElement | null;
-      //   expect(caption).toBeTruthy();
-      //   expect(caption!.id).toBe(`slide-caption-${carousel.id}-${idx}`);
+        const captionId = caption!.getAttribute('id');
+        expect(captionId).toBeTruthy();
+        expect(captionId).not.toBe('');
 
-      //   // aria-describedby links header button → caption id
-      //   expect(headerButton!.getAttribute('aria-describedby')).toContain(
-      //     caption!.id
-      //   );
-      // });
+        const headerButton = header!.querySelector(
+          'button'
+        ) as HTMLButtonElement | null;
+        expect(headerButton).toBeTruthy();
+        expect(headerButton!.getAttribute('aria-describedby')).toContain(
+          caption!.id
+        );
+
+        const contentDivs = Array.from(
+          slide.querySelectorAll(':scope > div')
+        ) as HTMLDivElement[];
+        expect(contentDivs.length).toBeGreaterThanOrEqual(1);
+      });
     });
   });
 });
 
 /*
-import { describe, it, expect, beforeEach } from 'vitest';
-import './wa-carousel';
-import type { WaCarouselProps } from './wa-carousel';
-
-type WaCarouselTestEl = WaCarouselProps & {
-  updateComplete: Promise<boolean>;
-};
-
-const DEFAULT_CAROUSEL_MARKUP = `
-  <h3>Slide 1</h3><div>Content 1 <a href="#">link</a></div><p>Caption 1</p>
-  <h3>Slide 2</h3><div>Content 2</div><p>Caption 2</p>
-  <h3>Slide 3</h3><div>Content 3</div><p>Caption 3</p>
-`;
-
 const CAROUSEL_WITH_TEMPLATES = `
   <template data-prev>
     <svg data-testid="prev-ico" viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
@@ -171,61 +164,6 @@ describe('wa-carousel', () => {
   });
 
   describe('Default', () => {
-    it('renders structure and wraps triplets into slides', async () => {
-      const el = document.createElement('wa-carousel') as WaCarouselTestEl;
-      el.innerHTML = DEFAULT_CAROUSEL_MARKUP;
-      document.body.appendChild(el);
-      await el.updateComplete;
-
-      // Root section.carousel
-      const section = el.querySelector('.carousel') as HTMLElement | null;
-      expect(section).toBeTruthy();
-      expect(section!.tagName).toBe('SECTION');
-
-      // Controls + Buttons group
-      const controls = section!.querySelector('.carousel__controls') as HTMLDivElement | null;
-      const buttonsWrap = section!.querySelector('.carousel__buttons') as HTMLDivElement | null;
-      expect(controls).toBeTruthy();
-      expect(buttonsWrap).toBeTruthy();
-
-      const navPrev = buttonsWrap!.querySelector('button[aria-label="Previous slide"]') as HTMLButtonElement | null;
-      const navNext = buttonsWrap!.querySelector('button[aria-label="Next slide"]') as HTMLButtonElement | null;
-      expect(navPrev).toBeTruthy();
-      expect(navNext).toBeTruthy();
-
-      // Fallback arrows present when no templates provided
-      const prevSpan = navPrev!.querySelector('span[aria-hidden="true"]');
-      const nextSpan = navNext!.querySelector('span[aria-hidden="true"]');
-      expect(prevSpan?.innerHTML).toBe('&larr;');
-      expect(nextSpan?.innerHTML).toBe('&rarr;');
-
-      // Slides container
-      const slidesContainer = section!.querySelector('.carousel__slides') as HTMLDivElement | null;
-      expect(slidesContainer).toBeTruthy();
-
-      // Slides (triplets -> 3 slides)
-      const slides = Array.from(slidesContainer!.querySelectorAll('.carousel__slide')) as HTMLDivElement[];
-      expect(slides.length).toBe(3);
-
-      slides.forEach((slide, idx) => {
-        // Each slide contains: <h3> with <button>, content <div>, caption <p.carousel__caption>
-        const header = slide.querySelector('h2,h3,h4,h5,h6') as HTMLHeadingElement | null;
-        expect(header).toBeTruthy();
-
-        const btn = header!.querySelector('button') as HTMLButtonElement | null;
-        expect(btn).toBeTruthy();
-
-        const contentDivs = Array.from(slide.querySelectorAll(':scope > div')) as HTMLDivElement[];
-        expect(contentDivs.length).toBeGreaterThanOrEqual(1);
-        const panel = contentDivs[0];
-
-        const caption = slide.querySelector(':scope > p.carousel__caption') as HTMLParagraphElement | null;
-        expect(caption).toBeTruthy();
-        expect(caption!.id).toBe(`slide-caption-${el.id}-${idx}`);
-
-        // aria-describedby links header button → caption id
-        expect(btn!.getAttribute('aria-describedby')).toContain(caption!.id);
-      });
     });
 
     it('does NOT render navigation dots by default', async () => {
