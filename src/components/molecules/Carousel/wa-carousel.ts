@@ -124,14 +124,14 @@ export class WaCarousel
       prevButton.appendChild(templatePrevButton.content.cloneNode(true));
       templatePrevButton.remove();
     } else {
-      prevButton.innerHTML = '<span aria-hidden="true">←</span>';
+      prevButton.innerHTML = '<span aria-hidden="true">&larr;</span>';
     }
 
     if (templateNextButton) {
       nextButton.appendChild(templateNextButton.content.cloneNode(true));
       templateNextButton.remove();
     } else {
-      nextButton.innerHTML = '<span aria-hidden="true">→</span>';
+      nextButton.innerHTML = '<span aria-hidden="true">&rarr;</span>';
     }
 
     // Navigation
@@ -290,7 +290,7 @@ export class WaCarousel
           if (templateDot) {
             dot.appendChild(templateDot.content.cloneNode(true));
           } else {
-            dot.innerHTML = `<span class="dot" aria-hidden="true">•</span>`;
+            dot.innerHTML = `<span class="dot" aria-hidden="true">&bull</span>`;
           }
 
           navigationElement.appendChild(dot);
