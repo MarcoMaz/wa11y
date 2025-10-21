@@ -21,6 +21,8 @@ export class WaCarousel
   extends DynamicStyleMixin(LitElement)
   implements WaCarouselProps
 {
+  private _uid = Math.random().toString(36).slice(2);
+
   @property({ type: String, reflect: true }) ariaLabel: string | null =
     'carousel';
   @property({ type: Boolean, reflect: true })
@@ -31,7 +33,8 @@ export class WaCarousel
   @query(`.${CAROUSEL_CLASS}`)
   carousel!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
-  @query(`.${CAROUSEL_ARROWS_BUTTONS_CLASS}`) carouselArrowsButtons!: HTMLDivElement;
+  @query(`.${CAROUSEL_ARROWS_BUTTONS_CLASS}`)
+  carouselArrowsButtons!: HTMLDivElement;
   @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDES_CLASS}`) carouselSlides!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDE_CLASS}`) carouselSlide!: HTMLDivElement;
@@ -69,6 +72,8 @@ export class WaCarousel
   }
 
   firstUpdated() {
+    const baseId = this.id && this.id.trim() ? this.id : this._uid;
+
     // Snapshot original children (expect pairs: heading + content)
     const childrenSnapshot = Array.from(this.children) as HTMLElement[];
     if (childrenSnapshot.length === 0) return;
@@ -156,7 +161,7 @@ export class WaCarousel
     );
     slidesContainer.setAttribute('aria-atomic', 'false');
     slidesContainer.setAttribute('aria-live', 'polite');
-    const slidesContainerId = `slides-container-${this.id}` as string;
+    const slidesContainerId = `slides-container-${baseId}` as string;
     slidesContainer.id = slidesContainerId;
     prevButton.setAttribute('aria-controls', slidesContainerId);
     nextButton.setAttribute('aria-controls', slidesContainerId);
@@ -236,7 +241,7 @@ export class WaCarousel
       );
       slide.setAttribute('role', 'group');
       slide.setAttribute('aria-roledescription', 'slide');
-      slide.id = `slide-${this.id}-${idx}`;
+      slide.id = `slide-${baseId}-${idx}`;
       slide.setAttribute('aria-label', `${idx + 1} of ${totalSlides}`);
 
       this.applyDefaultAndMappedClass(
@@ -245,7 +250,7 @@ export class WaCarousel
         'carousel__caption'
       );
 
-      const captionId = `slide-caption-${this.id}-${idx}`;
+      const captionId = `slide-caption-${baseId}-${idx}`;
       captionElement.id = captionId;
 
       const captionDescription =
@@ -277,7 +282,7 @@ export class WaCarousel
           const dot = document.createElement('button') as HTMLButtonElement;
           dot.type = 'button';
           dot.setAttribute('role', 'tab');
-          dot.setAttribute('aria-controls', `dot-${this.id}-${i}`);
+          dot.setAttribute('aria-controls', `dot-${baseId}-${i}`);
           dot.setAttribute(
             'aria-selected',
             i === this.activeIndex ? 'true' : 'false'

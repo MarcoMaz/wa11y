@@ -54,17 +54,38 @@ describe('wa-carousel', () => {
         'Previous slide'
       );
 
+      const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
+        'span[aria-hidden="true"]'
+      );
+      expect(defaultPreviousArrowSpan).not.toBeNull();
+      expect(defaultPreviousArrowSpan!.textContent).toBe('←');
+
       const nextArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
       expect(nextArrowButton).toBeTruthy();
       expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
-      // // Slides container
-      // const slidesContainer = section!.querySelector(
-      //   '.carousel__slides'
-      // ) as HTMLDivElement | null;
-      // expect(slidesContainer).toBeTruthy();
+      const defaultNextArrowSpan = nextArrowButton!.querySelector(
+        'span[aria-hidden="true"]'
+      );
+      expect(defaultNextArrowSpan).not.toBeNull();
+      expect(defaultNextArrowSpan!.textContent).toBe('→');
+
+      const slidesContainer = section!.querySelector(
+        '.carousel__slides'
+      ) as HTMLDivElement | null;
+      expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.id).toMatch(/^slides-container-/);
+      expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
+      expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
+
+      expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
+        slidesContainer!.id
+      );
+      expect(nextArrowButton!.getAttribute('aria-controls')).toBe(
+        slidesContainer!.id
+      );
 
       // const slides = Array.from(
       //   slidesContainer!.querySelectorAll('.carousel__slide')
