@@ -10,7 +10,7 @@ export interface WaCarouselProps extends HTMLElement {
 
 const CAROUSEL_CLASS: string = 'carousel';
 const CAROUSEL_CONTROLS_CLASS: string = 'carousel__controls';
-const CAROUSEL_BUTTONS_CLASS: string = 'carousel__buttons';
+const CAROUSEL_ARROWS_BUTTONS_CLASS: string = 'carousel__arrows-buttons';
 const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
 const CAROUSEL_SLIDES_CLASS: string = 'carousel__slides';
 const CAROUSEL_SLIDE_CLASS: string = 'carousel__slide';
@@ -31,7 +31,7 @@ export class WaCarousel
   @query(`.${CAROUSEL_CLASS}`)
   carousel!: HTMLDivElement;
   @query(`.${CAROUSEL_CONTROLS_CLASS}`) carouselControls!: HTMLDivElement;
-  @query(`.${CAROUSEL_BUTTONS_CLASS}`) carouselButtons!: HTMLDivElement;
+  @query(`.${CAROUSEL_ARROWS_BUTTONS_CLASS}`) carouselArrowsButtons!: HTMLDivElement;
   @query(`.${CAROUSEL_NAVIGATION_CLASS}`) carouselNavigation!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDES_CLASS}`) carouselSlides!: HTMLDivElement;
   @query(`.${CAROUSEL_SLIDE_CLASS}`) carouselSlide!: HTMLDivElement;
@@ -92,26 +92,26 @@ export class WaCarousel
     );
     sectionRoot.appendChild(controls);
 
-    // Buttons
-    const buttons = document.createElement('div') as HTMLDivElement;
+    // Arrows Buttons
+    const arrowsButtons = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
-      buttons,
-      CAROUSEL_BUTTONS_CLASS,
-      'carousel__buttons'
+      arrowsButtons,
+      CAROUSEL_ARROWS_BUTTONS_CLASS,
+      'carousel__arrows-buttons'
     );
-    controls.appendChild(buttons);
+    controls.appendChild(arrowsButtons);
 
     // Prev button
     const prevButton = document.createElement('button') as HTMLButtonElement;
     prevButton.type = 'button';
     prevButton.setAttribute('aria-label', 'Previous slide');
-    buttons.appendChild(prevButton);
+    arrowsButtons.appendChild(prevButton);
 
     // Next button
     const nextButton = document.createElement('button') as HTMLButtonElement;
     nextButton.type = 'button';
     nextButton.setAttribute('aria-label', 'Next slide');
-    buttons.appendChild(nextButton);
+    arrowsButtons.appendChild(nextButton);
 
     const templatePrevButton = this.querySelector(
       ':scope > template[data-prev]'
