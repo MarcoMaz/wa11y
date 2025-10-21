@@ -31,20 +31,20 @@ describe('wa-carousel', () => {
       expect(section).toBeTruthy();
       expect(section!.tagName).toBe('SECTION');
 
-      // Controls + Buttons group
+      // Controls + Arrows Buttons group
       const controls = section!.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement | null;
-      const buttonsWrap = section!.querySelector(
-        '.carousel__buttons'
+      const arrowsButtonsWrap = section!.querySelector(
+        '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
       expect(controls).toBeTruthy();
-      expect(buttonsWrap).toBeTruthy();
+      expect(arrowsButtonsWrap).toBeTruthy();
 
-      const navPrev = buttonsWrap!.querySelector(
+      const navPrev = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement | null;
-      const navNext = buttonsWrap!.querySelector(
+      const navNext = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
       expect(navPrev).toBeTruthy();
