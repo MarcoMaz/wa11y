@@ -200,16 +200,6 @@ describe('wa-carousel', () => {
       ) as HTMLButtonElement[];
       expect(dots.length).toBe(3);
 
-      dots.forEach((dot) => {
-        expect(dot.tagName).toBe('BUTTON');
-        expect(dot.type).toBe('button');
-        expect(dot.role).toBe('tab');
-
-        const innerSpan = dot.querySelector('span[aria-hidden="true"]');
-        expect(innerSpan).toBeTruthy();
-        expect(innerSpan!.textContent?.trim()).toBe('•');
-      });
-
       // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
@@ -264,6 +254,22 @@ describe('wa-carousel', () => {
           slide.querySelectorAll(':scope > div')
         ) as HTMLDivElement[];
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
+      });
+
+      dots.forEach((dot, index) => {
+        expect(dot.tagName).toBe('BUTTON');
+        expect(dot.type).toBe('button');
+        expect(dot.role).toBe('tab');
+
+        const controlsId = dot.getAttribute('aria-controls');
+        expect(controlsId).toBe(slides[index].id);
+
+        const targetSlide = section!.querySelector(`#${controlsId}`);
+        expect(targetSlide).toBe(slides[index]);
+
+        const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+        expect(innerSpan).toBeTruthy();
+        expect(innerSpan!.textContent?.trim()).toBe('•');
       });
     });
   });

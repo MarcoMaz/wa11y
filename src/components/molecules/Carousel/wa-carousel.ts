@@ -282,7 +282,7 @@ export class WaCarousel
           const dot = document.createElement('button') as HTMLButtonElement;
           dot.type = 'button';
           dot.setAttribute('role', 'tab');
-          dot.setAttribute('aria-controls', `dot-${baseId}-${i}`);
+          dot.setAttribute('aria-controls', `slide-${baseId}-${i}`);
           dot.setAttribute(
             'aria-selected',
             i === this.activeIndex ? 'true' : 'false'
