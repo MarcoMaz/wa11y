@@ -156,6 +156,7 @@ describe('wa-carousel', () => {
         const captionId = caption!.getAttribute('id');
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
+        expect(captionId).toMatch(/^slide-caption-/);
 
         const headerButton = header!.querySelector(
           'button'
@@ -284,6 +285,7 @@ describe('wa-carousel', () => {
         const captionId = caption!.getAttribute('id');
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
+        expect(captionId).toMatch(/^slide-caption-/);
 
         const headerButton = header!.querySelector(
           'button'
@@ -426,6 +428,7 @@ describe('wa-carousel', () => {
         const captionId = caption!.getAttribute('id');
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
+        expect(captionId).toMatch(/^slide-caption-/);
 
         const headerButton = header!.querySelector(
           'button'
@@ -568,6 +571,7 @@ describe('wa-carousel', () => {
         const captionId = caption!.getAttribute('id');
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
+        expect(captionId).toMatch(/^slide-caption-/);
 
         const headerButton = header!.querySelector(
           'button'
