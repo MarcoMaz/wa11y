@@ -72,6 +72,7 @@ describe('wa-carousel', () => {
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
 
+      // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
       ) as HTMLDivElement | null;
@@ -87,7 +88,122 @@ describe('wa-carousel', () => {
         slidesContainer!.id
       );
 
-      /* SLIDES */
+      // Slides
+      const slides = Array.from(
+        slidesContainer!.querySelectorAll('.carousel__slide')
+      ) as HTMLDivElement[];
+      expect(slides.length).toBe(3);
+
+      slides.forEach((slide, idx) => {
+        expect(slide.getAttribute('role')).toBe('group');
+        expect(slide.getAttribute('aria-roledescription')).toBe('slide');
+        expect(slide.id).toMatch(/^slide-/);
+        expect(slide.getAttribute('aria-label')).toBe(`${idx + 1} of 3`);
+
+        const header = slide.querySelector(
+          'h2,h3,h4,h5,h6'
+        ) as HTMLHeadingElement | null;
+        expect(header).toBeTruthy();
+
+        const caption = slide.querySelector(
+          ':scope > p.carousel__caption'
+        ) as HTMLParagraphElement | null;
+        expect(caption).toBeTruthy();
+
+        const captionId = caption!.getAttribute('id');
+        expect(captionId).toBeTruthy();
+        expect(captionId).not.toBe('');
+
+        const headerButton = header!.querySelector(
+          'button'
+        ) as HTMLButtonElement | null;
+        expect(headerButton).toBeTruthy();
+        expect(headerButton!.getAttribute('aria-describedby')).toContain(
+          caption!.id
+        );
+
+        const contentDivs = Array.from(
+          slide.querySelectorAll(':scope > div')
+        ) as HTMLDivElement[];
+        expect(contentDivs.length).toBeGreaterThanOrEqual(1);
+      });
+    });
+  });
+
+  describe('With Navigation', () => {
+    it('renders correctly', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+      carousel.navigation = true;
+
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      // Root section.carousel
+      const section = carousel.querySelector('.carousel') as HTMLElement | null;
+      expect(section).toBeTruthy();
+
+      expect(section!.tagName).toBe('SECTION');
+      expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
+      expect(section!.getAttribute('aria-label')).toBe('carousel');
+
+      // Controls
+      const controls = section!.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement | null;
+      expect(controls).toBeTruthy();
+
+      // Arrows buttons
+      const arrowsButtonsWrap = section!.querySelector(
+        '.carousel__arrows-buttons'
+      ) as HTMLDivElement | null;
+      expect(arrowsButtonsWrap).toBeTruthy();
+
+      const previousArrowButton = arrowsButtonsWrap!.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement | null;
+      expect(previousArrowButton).toBeTruthy();
+      expect(previousArrowButton!.getAttribute('aria-label')).toBe(
+        'Previous slide'
+      );
+
+      const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
+        'span[aria-hidden="true"]'
+      );
+      expect(defaultPreviousArrowSpan).not.toBeNull();
+      expect(defaultPreviousArrowSpan!.textContent).toBe('←');
+
+      const nextArrowButton = arrowsButtonsWrap!.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement | null;
+      expect(nextArrowButton).toBeTruthy();
+      expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
+
+      const defaultNextArrowSpan = nextArrowButton!.querySelector(
+        'span[aria-hidden="true"]'
+      );
+      expect(defaultNextArrowSpan).not.toBeNull();
+      expect(defaultNextArrowSpan!.textContent).toBe('→');
+
+      // Slides container
+      const slidesContainer = section!.querySelector(
+        '.carousel__slides'
+      ) as HTMLDivElement | null;
+      expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.id).toMatch(/^slides-container-/);
+      expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
+      expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
+
+      expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
+        slidesContainer!.id
+      );
+      expect(nextArrowButton!.getAttribute('aria-controls')).toBe(
+        slidesContainer!.id
+      );
+
+      // Slides
       const slides = Array.from(
         slidesContainer!.querySelectorAll('.carousel__slide')
       ) as HTMLDivElement[];
