@@ -295,7 +295,7 @@ export class WaCarousel
           if (templateDot) {
             dot.appendChild(templateDot.content.cloneNode(true));
           } else {
-            dot.innerHTML = `<span class="dot" aria-hidden="true">&bull</span>`;
+            dot.innerHTML = `<span aria-hidden="true">•</span>`;
           }
 
           navigationElement.appendChild(dot);

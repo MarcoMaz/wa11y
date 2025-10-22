@@ -187,6 +187,29 @@ describe('wa-carousel', () => {
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
 
+      // Dots
+      const navigation = controls!.querySelector(
+        '.carousel__navigation'
+      ) as HTMLDivElement | null;
+      expect(navigation).toBeTruthy();
+      expect(navigation!.getAttribute('role')).toBe('tablist');
+      expect(navigation!.getAttribute('aria-label')).toBe('slides');
+
+      const dots = Array.from(
+        navigation!.querySelectorAll('button[role="tab"]')
+      ) as HTMLButtonElement[];
+      expect(dots.length).toBe(3);
+
+      dots.forEach((dot) => {
+        expect(dot.tagName).toBe('BUTTON');
+        expect(dot.type).toBe('button');
+        expect(dot.role).toBe('tab');
+
+        const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+        expect(innerSpan).toBeTruthy();
+        expect(innerSpan!.textContent?.trim()).toBe('•');
+      });
+
       // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
