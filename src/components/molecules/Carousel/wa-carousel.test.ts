@@ -105,7 +105,7 @@ describe('wa-carousel', () => {
 
       const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
         'span[aria-hidden="true"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(defaultPreviousArrowSpan).not.toBeNull();
       expect(defaultPreviousArrowSpan!.textContent).toBe('←');
@@ -119,7 +119,7 @@ describe('wa-carousel', () => {
 
       const defaultNextArrowSpan = nextArrowButton!.querySelector(
         'span[aria-hidden="true"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
@@ -167,7 +167,7 @@ describe('wa-carousel', () => {
 
         expect(caption).toBeTruthy();
 
-        const captionId = caption!.getAttribute('id');
+        const captionId = caption!.getAttribute('id') as string;
 
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
@@ -290,7 +290,7 @@ describe('wa-carousel', () => {
 
       const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
         'span[aria-hidden="true"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(defaultPreviousArrowSpan).not.toBeNull();
       expect(defaultPreviousArrowSpan!.textContent).toBe('←');
@@ -304,7 +304,7 @@ describe('wa-carousel', () => {
 
       const defaultNextArrowSpan = nextArrowButton!.querySelector(
         'span[aria-hidden="true"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
@@ -368,7 +368,7 @@ describe('wa-carousel', () => {
 
         expect(caption).toBeTruthy();
 
-        const captionId = caption!.getAttribute('id');
+        const captionId = caption!.getAttribute('id') as string;
 
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
@@ -395,15 +395,15 @@ describe('wa-carousel', () => {
         expect(dot.type).toBe('button');
         expect(dot.role).toBe('tab');
 
-        const controlsId = dot.getAttribute('aria-controls');
+        const controlsId = dot.getAttribute('aria-controls') as string | null;
 
         expect(controlsId).toBe(slides[index].id);
 
-        const targetSlide = section!.querySelector(`#${controlsId}`);
+        const targetSlide = section!.querySelector(`#${controlsId}`) as Element | null;
 
         expect(targetSlide).toBe(slides[index]);
 
-        const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+        const innerSpan = dot.querySelector('span[aria-hidden="true"]') as HTMLSpanElement;
 
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
@@ -539,7 +539,7 @@ describe('wa-carousel', () => {
 
       const customPrevArrowButton = previousArrowButton!.querySelector(
         '[data-testid="prev-ico"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(customPrevArrowButton).toBeTruthy();
 
@@ -552,7 +552,7 @@ describe('wa-carousel', () => {
 
       const customNextArrowButton = nextArrowButton!.querySelector(
         '[data-testid="next-ico"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(customNextArrowButton).toBeTruthy();
 
@@ -615,7 +615,7 @@ describe('wa-carousel', () => {
 
         expect(caption).toBeTruthy();
 
-        const captionId = caption!.getAttribute('id');
+        const captionId = caption!.getAttribute('id') as string;
 
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
@@ -642,15 +642,15 @@ describe('wa-carousel', () => {
         expect(dot.type).toBe('button');
         expect(dot.role).toBe('tab');
 
-        const controlsId = dot.getAttribute('aria-controls');
+        const controlsId = dot.getAttribute('aria-controls') as string | null;
 
         expect(controlsId).toBe(slides[index].id);
 
-        const targetSlide = section!.querySelector(`#${controlsId}`);
+        const targetSlide = section!.querySelector(`#${controlsId}`) as Element | null;
 
         expect(targetSlide).toBe(slides[index]);
 
-        const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+        const innerSpan = dot.querySelector('span[aria-hidden="true"]') as HTMLSpanElement;
 
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
@@ -786,7 +786,7 @@ describe('wa-carousel', () => {
 
       const customPrevArrowButton = previousArrowButton!.querySelector(
         '[data-testid="prev-ico"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(customPrevArrowButton).toBeTruthy();
 
@@ -799,7 +799,7 @@ describe('wa-carousel', () => {
 
       const customNextArrowButton = nextArrowButton!.querySelector(
         '[data-testid="next-ico"]'
-      );
+      ) as HTMLSpanElement;
 
       expect(customNextArrowButton).toBeTruthy();
 
@@ -862,7 +862,7 @@ describe('wa-carousel', () => {
 
         expect(caption).toBeTruthy();
 
-        const captionId = caption!.getAttribute('id');
+        const captionId = caption!.getAttribute('id') as string;
 
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
@@ -889,11 +889,11 @@ describe('wa-carousel', () => {
         expect(dot.type).toBe('button');
         expect(dot.role).toBe('tab');
 
-        const controlsId = dot.getAttribute('aria-controls');
+        const controlsId = dot.getAttribute('aria-controls') as string | null;
 
         expect(controlsId).toBe(slides[index].id);
 
-        const targetSlide = section!.querySelector(`#${controlsId}`);
+        const targetSlide = section!.querySelector(`#${controlsId}`) as Element | null;
 
         expect(targetSlide).toBe(slides[index]);
 
