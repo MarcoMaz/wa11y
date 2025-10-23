@@ -461,13 +461,11 @@ describe('wa-carousel', () => {
         nav.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
 
-      // initial state
       expect(carousel.activeIndex).toBe(0);
       expect(dots[0].getAttribute('aria-selected')).toBe('true');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
@@ -475,7 +473,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next again
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(2);
@@ -483,7 +480,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('true');
 
-      // navigate previous
       prevBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
@@ -708,13 +704,11 @@ describe('wa-carousel', () => {
         nav.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
 
-      // initial state
       expect(carousel.activeIndex).toBe(0);
       expect(dots[0].getAttribute('aria-selected')).toBe('true');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
@@ -722,7 +716,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next again
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(2);
@@ -730,7 +723,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('true');
 
-      // navigate previous
       prevBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
@@ -954,13 +946,11 @@ describe('wa-carousel', () => {
         nav.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
 
-      // initial state
       expect(carousel.activeIndex).toBe(0);
       expect(dots[0].getAttribute('aria-selected')).toBe('true');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
@@ -968,7 +958,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
       expect(dots[2].getAttribute('aria-selected')).toBe('false');
 
-      // navigate next again
       nextBtn.click();
 
       expect(carousel.activeIndex).toBe(2);
@@ -976,7 +965,6 @@ describe('wa-carousel', () => {
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
       expect(dots[2].getAttribute('aria-selected')).toBe('true');
 
-      // navigate previous
       prevBtn.click();
 
       expect(carousel.activeIndex).toBe(1);
