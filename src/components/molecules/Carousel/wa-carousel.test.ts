@@ -196,6 +196,42 @@ describe('wa-carousel', () => {
         'Featured projects carousel'
       );
     });
+
+    it('updates activeIndex and aria-selected when navigating with arrows', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement;
+      const controls = section.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement;
+
+      const prevBtn = controls.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement;
+      const nextBtn = controls.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement;
+
+      // initial state
+      expect(carousel.activeIndex).toBe(0);
+
+      // navigate next
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+
+      // navigate next again
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(2);
+
+      // navigate previous
+      prevBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+    });
   });
 
   describe('With Navigation', () => {
@@ -373,6 +409,62 @@ describe('wa-carousel', () => {
         'Featured projects carousel'
       );
     });
+
+    it('updates activeIndex and aria-selected when navigating with arrows', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+      carousel.navigation = true;
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement;
+      const controls = section.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement;
+
+      const prevBtn = controls.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement;
+      const nextBtn = controls.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement;
+
+      const nav = controls.querySelector(
+        '.carousel__navigation'
+      ) as HTMLDivElement;
+      const dots = Array.from(
+        nav.querySelectorAll('button[role="tab"]')
+      ) as HTMLButtonElement[];
+
+      // initial state
+      expect(carousel.activeIndex).toBe(0);
+      expect(dots[0].getAttribute('aria-selected')).toBe('true');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next again
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(2);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('true');
+
+      // navigate previous
+      prevBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+    });
   });
 
   describe('With Custom Arrows', () => {
@@ -548,6 +640,62 @@ describe('wa-carousel', () => {
         'Featured projects carousel'
       );
     });
+
+    it('updates activeIndex and aria-selected when navigating with arrows', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+      carousel.navigation = true;
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement;
+      const controls = section.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement;
+
+      const prevBtn = controls.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement;
+      const nextBtn = controls.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement;
+
+      const nav = controls.querySelector(
+        '.carousel__navigation'
+      ) as HTMLDivElement;
+      const dots = Array.from(
+        nav.querySelectorAll('button[role="tab"]')
+      ) as HTMLButtonElement[];
+
+      // initial state
+      expect(carousel.activeIndex).toBe(0);
+      expect(dots[0].getAttribute('aria-selected')).toBe('true');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next again
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(2);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('true');
+
+      // navigate previous
+      prevBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+    });
   });
 
   describe('With Custom Dots', () => {
@@ -722,6 +870,62 @@ describe('wa-carousel', () => {
       expect(section!.getAttribute('aria-label')).toBe(
         'Featured projects carousel'
       );
+    });
+
+    it('updates activeIndex and aria-selected when navigating with arrows', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+      carousel.navigation = true;
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement;
+      const controls = section.querySelector(
+        '.carousel__controls'
+      ) as HTMLDivElement;
+
+      const prevBtn = controls.querySelector(
+        'button[aria-label="Previous slide"]'
+      ) as HTMLButtonElement;
+      const nextBtn = controls.querySelector(
+        'button[aria-label="Next slide"]'
+      ) as HTMLButtonElement;
+
+      const nav = controls.querySelector(
+        '.carousel__navigation'
+      ) as HTMLDivElement;
+      const dots = Array.from(
+        nav.querySelectorAll('button[role="tab"]')
+      ) as HTMLButtonElement[];
+
+      // initial state
+      expect(carousel.activeIndex).toBe(0);
+      expect(dots[0].getAttribute('aria-selected')).toBe('true');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
+
+      // navigate next again
+      nextBtn.click();
+      expect(carousel.activeIndex).toBe(2);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('false');
+      expect(dots[2].getAttribute('aria-selected')).toBe('true');
+
+      // navigate previous
+      prevBtn.click();
+      expect(carousel.activeIndex).toBe(1);
+      expect(dots[0].getAttribute('aria-selected')).toBe('false');
+      expect(dots[1].getAttribute('aria-selected')).toBe('true');
+      expect(dots[2].getAttribute('aria-selected')).toBe('false');
     });
   });
 });
