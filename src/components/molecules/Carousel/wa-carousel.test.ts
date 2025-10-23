@@ -82,12 +82,14 @@ describe('wa-carousel', () => {
         '.carousel__controls'
       ) as HTMLDivElement | null;
       expect(controls).toBeTruthy();
+      expect(controls!.tagName).toBe('DIV');
 
       // Arrows buttons
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
       expect(arrowsButtonsWrap).toBeTruthy();
+      expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
@@ -120,6 +122,8 @@ describe('wa-carousel', () => {
         '.carousel__slides'
       ) as HTMLDivElement | null;
       expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.tagName).toBe('DIV');
+
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
@@ -138,6 +142,8 @@ describe('wa-carousel', () => {
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
+        expect(slide.tagName).toBe('DIV');
+
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -198,12 +204,14 @@ describe('wa-carousel', () => {
         '.carousel__controls'
       ) as HTMLDivElement | null;
       expect(controls).toBeTruthy();
+      expect(controls!.tagName).toBe('DIV');
 
       // Arrows buttons
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
       expect(arrowsButtonsWrap).toBeTruthy();
+      expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
@@ -235,6 +243,8 @@ describe('wa-carousel', () => {
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
+      expect(navigation!.tagName).toBe('DIV');
+
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -249,6 +259,8 @@ describe('wa-carousel', () => {
         '.carousel__slides'
       ) as HTMLDivElement | null;
       expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.tagName).toBe('DIV');
+
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
@@ -267,6 +279,8 @@ describe('wa-carousel', () => {
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
+        expect(slide.tagName).toBe('DIV');
+
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -315,6 +329,12 @@ describe('wa-carousel', () => {
         const innerSpan = dot.querySelector('span[aria-hidden="true"]');
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
+
+        if (index === 0) {
+          expect(dot.getAttribute('aria-selected')).toBe('true');
+        } else {
+          expect(dot.getAttribute('aria-selected')).toBe('false');
+        }
       });
     });
   });
@@ -343,12 +363,14 @@ describe('wa-carousel', () => {
         '.carousel__controls'
       ) as HTMLDivElement | null;
       expect(controls).toBeTruthy();
+      expect(controls!.tagName).toBe('DIV');
 
       // Arrows buttons
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
       expect(arrowsButtonsWrap).toBeTruthy();
+      expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
@@ -378,6 +400,8 @@ describe('wa-carousel', () => {
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
+      expect(navigation!.tagName).toBe('DIV');
+
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -392,6 +416,8 @@ describe('wa-carousel', () => {
         '.carousel__slides'
       ) as HTMLDivElement | null;
       expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.tagName).toBe('DIV');
+
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
@@ -410,6 +436,8 @@ describe('wa-carousel', () => {
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
+        expect(slide.tagName).toBe('DIV');
+
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -458,6 +486,12 @@ describe('wa-carousel', () => {
         const innerSpan = dot.querySelector('span[aria-hidden="true"]');
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
+
+        if (index === 0) {
+          expect(dot.getAttribute('aria-selected')).toBe('true');
+        } else {
+          expect(dot.getAttribute('aria-selected')).toBe('false');
+        }
       });
     });
   });
@@ -486,12 +520,14 @@ describe('wa-carousel', () => {
         '.carousel__controls'
       ) as HTMLDivElement | null;
       expect(controls).toBeTruthy();
+      expect(controls!.tagName).toBe('DIV');
 
       // Arrows buttons
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
       expect(arrowsButtonsWrap).toBeTruthy();
+      expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
@@ -521,6 +557,8 @@ describe('wa-carousel', () => {
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
+      expect(navigation!.tagName).toBe('DIV');
+
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -535,6 +573,8 @@ describe('wa-carousel', () => {
         '.carousel__slides'
       ) as HTMLDivElement | null;
       expect(slidesContainer).toBeTruthy();
+      expect(slidesContainer!.tagName).toBe('DIV');
+
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
@@ -553,6 +593,8 @@ describe('wa-carousel', () => {
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
+        expect(slide.tagName).toBe('DIV');
+
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -601,9 +643,11 @@ describe('wa-carousel', () => {
         if (index === 0) {
           expect(dot.querySelector('[data-testid="dot-active"]')).toBeTruthy();
           expect(dot.querySelector('[data-testid="dot"]')).toBeFalsy();
+          expect(dot.getAttribute('aria-selected')).toBe('true');
         } else {
           expect(dot.querySelector('[data-testid="dot"]')).toBeTruthy();
           expect(dot.querySelector('[data-testid="dot-active"]')).toBeFalsy();
+          expect(dot.getAttribute('aria-selected')).toBe('false');
         }
       });
     });
