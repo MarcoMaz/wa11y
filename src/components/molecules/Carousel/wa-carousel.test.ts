@@ -6,13 +6,13 @@ type WaCarouselTestEl = WaCarouselProps & {
   updateComplete: Promise<boolean>;
 };
 
-const DEFAULT_CAROUSEL_MARKUP = `
+const DEFAULT_CAROUSEL_MARKUP: string = `
   <h3>Slide 1</h3><div>Content 1 <a href="#">link</a></div><p>Caption 1</p>
   <h3>Slide 2</h3><div>Content 2</div><p>Caption 2</p>
   <h3>Slide 3</h3><div>Content 3</div><p>Caption 3</p>
 `;
 
-const CAROUSEL_WITH_CUSTOM_ARROWS_MARKUP = `
+const CAROUSEL_WITH_CUSTOM_ARROWS_MARKUP: string = `
   <template data-prev>
     <svg data-testid="prev-ico" viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
       <circle cx="4" cy="4" r="4" />
@@ -28,7 +28,7 @@ const CAROUSEL_WITH_CUSTOM_ARROWS_MARKUP = `
   <h3>Slide 3</h3><div>Content 3</div><p>Caption 3</p>
 `;
 
-const CAROUSEL_WITH_CUSTOM_DOTS_MARKUP = `
+const CAROUSEL_WITH_CUSTOM_DOTS_MARKUP: string = `
   <template data-prev>
     <svg data-testid="prev-ico" viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
       <circle cx="4" cy="4" r="4" />
@@ -67,12 +67,13 @@ describe('wa-carousel', () => {
       ) as WaCarouselTestEl;
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       // Root section.carousel
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
-      expect(section).toBeTruthy();
 
+      expect(section).toBeTruthy();
       expect(section!.tagName).toBe('SECTION');
       expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
       expect(section!.getAttribute('aria-label')).toBe('carousel');
@@ -81,6 +82,7 @@ describe('wa-carousel', () => {
       const controls = section!.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement | null;
+
       expect(controls).toBeTruthy();
       expect(controls!.tagName).toBe('DIV');
 
@@ -88,12 +90,14 @@ describe('wa-carousel', () => {
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
+
       expect(arrowsButtonsWrap).toBeTruthy();
       expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement | null;
+
       expect(previousArrowButton).toBeTruthy();
       expect(previousArrowButton!.getAttribute('aria-label')).toBe(
         'Previous slide'
@@ -102,18 +106,21 @@ describe('wa-carousel', () => {
       const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
         'span[aria-hidden="true"]'
       );
+
       expect(defaultPreviousArrowSpan).not.toBeNull();
       expect(defaultPreviousArrowSpan!.textContent).toBe('←');
 
       const nextArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
+
       expect(nextArrowButton).toBeTruthy();
       expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
       const defaultNextArrowSpan = nextArrowButton!.querySelector(
         'span[aria-hidden="true"]'
       );
+
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
 
@@ -121,13 +128,12 @@ describe('wa-carousel', () => {
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
       ) as HTMLDivElement | null;
+
       expect(slidesContainer).toBeTruthy();
       expect(slidesContainer!.tagName).toBe('DIV');
-
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
-
       expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
         slidesContainer!.id
       );
@@ -139,11 +145,11 @@ describe('wa-carousel', () => {
       const slides = Array.from(
         slidesContainer!.querySelectorAll('.carousel__slide')
       ) as HTMLDivElement[];
+
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
         expect(slide.tagName).toBe('DIV');
-
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -152,14 +158,17 @@ describe('wa-carousel', () => {
         const header = slide.querySelector(
           'h2,h3,h4,h5,h6'
         ) as HTMLHeadingElement | null;
+
         expect(header).toBeTruthy();
 
         const caption = slide.querySelector(
           ':scope > p.carousel__caption'
         ) as HTMLParagraphElement | null;
+
         expect(caption).toBeTruthy();
 
         const captionId = caption!.getAttribute('id');
+
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
@@ -167,6 +176,7 @@ describe('wa-carousel', () => {
         const headerButton = header!.querySelector(
           'button'
         ) as HTMLButtonElement | null;
+
         expect(headerButton).toBeTruthy();
         expect(headerButton!.getAttribute('aria-describedby')).toContain(
           caption!.id
@@ -175,6 +185,7 @@ describe('wa-carousel', () => {
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
         ) as HTMLDivElement[];
+
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
     });
@@ -183,14 +194,14 @@ describe('wa-carousel', () => {
       const carousel = document.createElement(
         'wa-carousel'
       ) as WaCarouselTestEl;
-
       carousel.ariaLabel = 'Featured projects carousel';
-
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
+
       expect(section).toBeTruthy();
       expect(section!.getAttribute('aria-label')).toBe(
         'Featured projects carousel'
@@ -203,13 +214,13 @@ describe('wa-carousel', () => {
       ) as WaCarouselTestEl;
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement;
       const controls = section.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement;
-
       const prevBtn = controls.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement;
@@ -217,19 +228,18 @@ describe('wa-carousel', () => {
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement;
 
-      // initial state
       expect(carousel.activeIndex).toBe(0);
 
-      // navigate next
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
 
-      // navigate next again
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(2);
 
-      // navigate previous
       prevBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
     });
   });
@@ -240,15 +250,15 @@ describe('wa-carousel', () => {
         'wa-carousel'
       ) as WaCarouselTestEl;
       carousel.navigation = true;
-
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       // Root section.carousel
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
-      expect(section).toBeTruthy();
 
+      expect(section).toBeTruthy();
       expect(section!.tagName).toBe('SECTION');
       expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
       expect(section!.getAttribute('aria-label')).toBe('carousel');
@@ -257,6 +267,7 @@ describe('wa-carousel', () => {
       const controls = section!.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement | null;
+
       expect(controls).toBeTruthy();
       expect(controls!.tagName).toBe('DIV');
 
@@ -264,12 +275,14 @@ describe('wa-carousel', () => {
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
+
       expect(arrowsButtonsWrap).toBeTruthy();
       expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement | null;
+
       expect(previousArrowButton).toBeTruthy();
       expect(previousArrowButton!.getAttribute('aria-label')).toBe(
         'Previous slide'
@@ -278,18 +291,21 @@ describe('wa-carousel', () => {
       const defaultPreviousArrowSpan = previousArrowButton!.querySelector(
         'span[aria-hidden="true"]'
       );
+
       expect(defaultPreviousArrowSpan).not.toBeNull();
       expect(defaultPreviousArrowSpan!.textContent).toBe('←');
 
       const nextArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
+
       expect(nextArrowButton).toBeTruthy();
       expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
       const defaultNextArrowSpan = nextArrowButton!.querySelector(
         'span[aria-hidden="true"]'
       );
+
       expect(defaultNextArrowSpan).not.toBeNull();
       expect(defaultNextArrowSpan!.textContent).toBe('→');
 
@@ -297,8 +313,8 @@ describe('wa-carousel', () => {
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
-      expect(navigation!.tagName).toBe('DIV');
 
+      expect(navigation!.tagName).toBe('DIV');
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -306,19 +322,19 @@ describe('wa-carousel', () => {
       const dots = Array.from(
         navigation!.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
+
       expect(dots.length).toBe(3);
 
       // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
       ) as HTMLDivElement | null;
+
       expect(slidesContainer).toBeTruthy();
       expect(slidesContainer!.tagName).toBe('DIV');
-
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
-
       expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
         slidesContainer!.id
       );
@@ -330,11 +346,11 @@ describe('wa-carousel', () => {
       const slides = Array.from(
         slidesContainer!.querySelectorAll('.carousel__slide')
       ) as HTMLDivElement[];
+
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
         expect(slide.tagName).toBe('DIV');
-
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -343,14 +359,17 @@ describe('wa-carousel', () => {
         const header = slide.querySelector(
           'h2,h3,h4,h5,h6'
         ) as HTMLHeadingElement | null;
+
         expect(header).toBeTruthy();
 
         const caption = slide.querySelector(
           ':scope > p.carousel__caption'
         ) as HTMLParagraphElement | null;
+
         expect(caption).toBeTruthy();
 
         const captionId = caption!.getAttribute('id');
+
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
@@ -358,6 +377,7 @@ describe('wa-carousel', () => {
         const headerButton = header!.querySelector(
           'button'
         ) as HTMLButtonElement | null;
+
         expect(headerButton).toBeTruthy();
         expect(headerButton!.getAttribute('aria-describedby')).toContain(
           caption!.id
@@ -366,6 +386,7 @@ describe('wa-carousel', () => {
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
         ) as HTMLDivElement[];
+
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
@@ -375,12 +396,15 @@ describe('wa-carousel', () => {
         expect(dot.role).toBe('tab');
 
         const controlsId = dot.getAttribute('aria-controls');
+
         expect(controlsId).toBe(slides[index].id);
 
         const targetSlide = section!.querySelector(`#${controlsId}`);
+
         expect(targetSlide).toBe(slides[index]);
 
         const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
 
@@ -396,14 +420,14 @@ describe('wa-carousel', () => {
       const carousel = document.createElement(
         'wa-carousel'
       ) as WaCarouselTestEl;
-
       carousel.ariaLabel = 'Featured projects carousel';
-
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
+
       expect(section).toBeTruthy();
       expect(section!.getAttribute('aria-label')).toBe(
         'Featured projects carousel'
@@ -417,20 +441,19 @@ describe('wa-carousel', () => {
       carousel.navigation = true;
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement;
       const controls = section.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement;
-
       const prevBtn = controls.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement;
       const nextBtn = controls.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement;
-
       const nav = controls.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement;
@@ -446,6 +469,7 @@ describe('wa-carousel', () => {
 
       // navigate next
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
@@ -453,6 +477,7 @@ describe('wa-carousel', () => {
 
       // navigate next again
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(2);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
@@ -460,6 +485,7 @@ describe('wa-carousel', () => {
 
       // navigate previous
       prevBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
@@ -473,15 +499,15 @@ describe('wa-carousel', () => {
         'wa-carousel'
       ) as WaCarouselTestEl;
       carousel.navigation = true;
-
       carousel.innerHTML = CAROUSEL_WITH_CUSTOM_ARROWS_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       // Root section.carousel
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
-      expect(section).toBeTruthy();
 
+      expect(section).toBeTruthy();
       expect(section!.tagName).toBe('SECTION');
       expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
       expect(section!.getAttribute('aria-label')).toBe('carousel');
@@ -490,6 +516,7 @@ describe('wa-carousel', () => {
       const controls = section!.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement | null;
+
       expect(controls).toBeTruthy();
       expect(controls!.tagName).toBe('DIV');
 
@@ -497,12 +524,14 @@ describe('wa-carousel', () => {
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
+
       expect(arrowsButtonsWrap).toBeTruthy();
       expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement | null;
+
       expect(previousArrowButton).toBeTruthy();
       expect(previousArrowButton!.getAttribute('aria-label')).toBe(
         'Previous slide'
@@ -511,25 +540,28 @@ describe('wa-carousel', () => {
       const customPrevArrowButton = previousArrowButton!.querySelector(
         '[data-testid="prev-ico"]'
       );
+
       expect(customPrevArrowButton).toBeTruthy();
 
       const nextArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
+
       expect(nextArrowButton).toBeTruthy();
       expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
       const customNextArrowButton = nextArrowButton!.querySelector(
         '[data-testid="next-ico"]'
       );
+
       expect(customNextArrowButton).toBeTruthy();
 
       // Dots
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
-      expect(navigation!.tagName).toBe('DIV');
 
+      expect(navigation!.tagName).toBe('DIV');
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -537,19 +569,19 @@ describe('wa-carousel', () => {
       const dots = Array.from(
         navigation!.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
+
       expect(dots.length).toBe(3);
 
       // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
       ) as HTMLDivElement | null;
+
       expect(slidesContainer).toBeTruthy();
       expect(slidesContainer!.tagName).toBe('DIV');
-
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
-
       expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
         slidesContainer!.id
       );
@@ -561,11 +593,11 @@ describe('wa-carousel', () => {
       const slides = Array.from(
         slidesContainer!.querySelectorAll('.carousel__slide')
       ) as HTMLDivElement[];
+
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
         expect(slide.tagName).toBe('DIV');
-
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -574,14 +606,17 @@ describe('wa-carousel', () => {
         const header = slide.querySelector(
           'h2,h3,h4,h5,h6'
         ) as HTMLHeadingElement | null;
+
         expect(header).toBeTruthy();
 
         const caption = slide.querySelector(
           ':scope > p.carousel__caption'
         ) as HTMLParagraphElement | null;
+
         expect(caption).toBeTruthy();
 
         const captionId = caption!.getAttribute('id');
+
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
@@ -589,6 +624,7 @@ describe('wa-carousel', () => {
         const headerButton = header!.querySelector(
           'button'
         ) as HTMLButtonElement | null;
+
         expect(headerButton).toBeTruthy();
         expect(headerButton!.getAttribute('aria-describedby')).toContain(
           caption!.id
@@ -597,6 +633,7 @@ describe('wa-carousel', () => {
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
         ) as HTMLDivElement[];
+
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
@@ -606,12 +643,15 @@ describe('wa-carousel', () => {
         expect(dot.role).toBe('tab');
 
         const controlsId = dot.getAttribute('aria-controls');
+
         expect(controlsId).toBe(slides[index].id);
 
         const targetSlide = section!.querySelector(`#${controlsId}`);
+
         expect(targetSlide).toBe(slides[index]);
 
         const innerSpan = dot.querySelector('span[aria-hidden="true"]');
+
         expect(innerSpan).toBeTruthy();
         expect(innerSpan!.textContent?.trim()).toBe('•');
 
@@ -627,14 +667,14 @@ describe('wa-carousel', () => {
       const carousel = document.createElement(
         'wa-carousel'
       ) as WaCarouselTestEl;
-
       carousel.ariaLabel = 'Featured projects carousel';
-
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
+
       expect(section).toBeTruthy();
       expect(section!.getAttribute('aria-label')).toBe(
         'Featured projects carousel'
@@ -648,20 +688,19 @@ describe('wa-carousel', () => {
       carousel.navigation = true;
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement;
       const controls = section.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement;
-
       const prevBtn = controls.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement;
       const nextBtn = controls.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement;
-
       const nav = controls.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement;
@@ -677,6 +716,7 @@ describe('wa-carousel', () => {
 
       // navigate next
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
@@ -684,6 +724,7 @@ describe('wa-carousel', () => {
 
       // navigate next again
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(2);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
@@ -691,6 +732,7 @@ describe('wa-carousel', () => {
 
       // navigate previous
       prevBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
@@ -704,15 +746,15 @@ describe('wa-carousel', () => {
         'wa-carousel'
       ) as WaCarouselTestEl;
       carousel.navigation = true;
-
       carousel.innerHTML = CAROUSEL_WITH_CUSTOM_DOTS_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       // Root section.carousel
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
-      expect(section).toBeTruthy();
 
+      expect(section).toBeTruthy();
       expect(section!.tagName).toBe('SECTION');
       expect(section!.getAttribute('aria-roledescription')).toBe('carousel');
       expect(section!.getAttribute('aria-label')).toBe('carousel');
@@ -721,6 +763,7 @@ describe('wa-carousel', () => {
       const controls = section!.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement | null;
+
       expect(controls).toBeTruthy();
       expect(controls!.tagName).toBe('DIV');
 
@@ -728,12 +771,14 @@ describe('wa-carousel', () => {
       const arrowsButtonsWrap = section!.querySelector(
         '.carousel__arrows-buttons'
       ) as HTMLDivElement | null;
+
       expect(arrowsButtonsWrap).toBeTruthy();
       expect(arrowsButtonsWrap!.tagName).toBe('DIV');
 
       const previousArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement | null;
+
       expect(previousArrowButton).toBeTruthy();
       expect(previousArrowButton!.getAttribute('aria-label')).toBe(
         'Previous slide'
@@ -742,25 +787,28 @@ describe('wa-carousel', () => {
       const customPrevArrowButton = previousArrowButton!.querySelector(
         '[data-testid="prev-ico"]'
       );
+
       expect(customPrevArrowButton).toBeTruthy();
 
       const nextArrowButton = arrowsButtonsWrap!.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement | null;
+
       expect(nextArrowButton).toBeTruthy();
       expect(nextArrowButton!.getAttribute('aria-label')).toBe('Next slide');
 
       const customNextArrowButton = nextArrowButton!.querySelector(
         '[data-testid="next-ico"]'
       );
+
       expect(customNextArrowButton).toBeTruthy();
 
       // Dots
       const navigation = controls!.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement | null;
-      expect(navigation!.tagName).toBe('DIV');
 
+      expect(navigation!.tagName).toBe('DIV');
       expect(navigation).toBeTruthy();
       expect(navigation!.getAttribute('role')).toBe('tablist');
       expect(navigation!.getAttribute('aria-label')).toBe('slides');
@@ -768,19 +816,19 @@ describe('wa-carousel', () => {
       const dots = Array.from(
         navigation!.querySelectorAll('button[role="tab"]')
       ) as HTMLButtonElement[];
+
       expect(dots.length).toBe(3);
 
       // Slides container
       const slidesContainer = section!.querySelector(
         '.carousel__slides'
       ) as HTMLDivElement | null;
+
       expect(slidesContainer).toBeTruthy();
       expect(slidesContainer!.tagName).toBe('DIV');
-
       expect(slidesContainer!.id).toMatch(/^slides-container-/);
       expect(slidesContainer?.getAttribute('aria-atomic')).toBe('false');
       expect(slidesContainer?.getAttribute('aria-live')).toBe('polite');
-
       expect(previousArrowButton!.getAttribute('aria-controls')).toBe(
         slidesContainer!.id
       );
@@ -792,11 +840,11 @@ describe('wa-carousel', () => {
       const slides = Array.from(
         slidesContainer!.querySelectorAll('.carousel__slide')
       ) as HTMLDivElement[];
+
       expect(slides.length).toBe(3);
 
       slides.forEach((slide, idx) => {
         expect(slide.tagName).toBe('DIV');
-
         expect(slide.getAttribute('role')).toBe('group');
         expect(slide.getAttribute('aria-roledescription')).toBe('slide');
         expect(slide.id).toMatch(/^slide-/);
@@ -805,14 +853,17 @@ describe('wa-carousel', () => {
         const header = slide.querySelector(
           'h2,h3,h4,h5,h6'
         ) as HTMLHeadingElement | null;
+
         expect(header).toBeTruthy();
 
         const caption = slide.querySelector(
           ':scope > p.carousel__caption'
         ) as HTMLParagraphElement | null;
+
         expect(caption).toBeTruthy();
 
         const captionId = caption!.getAttribute('id');
+
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
@@ -820,6 +871,7 @@ describe('wa-carousel', () => {
         const headerButton = header!.querySelector(
           'button'
         ) as HTMLButtonElement | null;
+
         expect(headerButton).toBeTruthy();
         expect(headerButton!.getAttribute('aria-describedby')).toContain(
           caption!.id
@@ -828,6 +880,7 @@ describe('wa-carousel', () => {
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
         ) as HTMLDivElement[];
+
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
@@ -837,9 +890,11 @@ describe('wa-carousel', () => {
         expect(dot.role).toBe('tab');
 
         const controlsId = dot.getAttribute('aria-controls');
+
         expect(controlsId).toBe(slides[index].id);
 
         const targetSlide = section!.querySelector(`#${controlsId}`);
+
         expect(targetSlide).toBe(slides[index]);
 
         if (index === 0) {
@@ -858,14 +913,14 @@ describe('wa-carousel', () => {
       const carousel = document.createElement(
         'wa-carousel'
       ) as WaCarouselTestEl;
-
       carousel.ariaLabel = 'Featured projects carousel';
-
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement | null;
+
       expect(section).toBeTruthy();
       expect(section!.getAttribute('aria-label')).toBe(
         'Featured projects carousel'
@@ -879,20 +934,19 @@ describe('wa-carousel', () => {
       carousel.navigation = true;
       carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
       document.body.appendChild(carousel);
+
       await carousel.updateComplete;
 
       const section = carousel.querySelector('.carousel') as HTMLElement;
       const controls = section.querySelector(
         '.carousel__controls'
       ) as HTMLDivElement;
-
       const prevBtn = controls.querySelector(
         'button[aria-label="Previous slide"]'
       ) as HTMLButtonElement;
       const nextBtn = controls.querySelector(
         'button[aria-label="Next slide"]'
       ) as HTMLButtonElement;
-
       const nav = controls.querySelector(
         '.carousel__navigation'
       ) as HTMLDivElement;
@@ -908,6 +962,7 @@ describe('wa-carousel', () => {
 
       // navigate next
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
@@ -915,6 +970,7 @@ describe('wa-carousel', () => {
 
       // navigate next again
       nextBtn.click();
+
       expect(carousel.activeIndex).toBe(2);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('false');
@@ -922,6 +978,7 @@ describe('wa-carousel', () => {
 
       // navigate previous
       prevBtn.click();
+
       expect(carousel.activeIndex).toBe(1);
       expect(dots[0].getAttribute('aria-selected')).toBe('false');
       expect(dots[1].getAttribute('aria-selected')).toBe('true');
