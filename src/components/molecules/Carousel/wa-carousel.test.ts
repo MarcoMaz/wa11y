@@ -178,6 +178,24 @@ describe('wa-carousel', () => {
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
     });
+
+    it('applies a custom aria-label when ariaLabel prop is set', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+
+      carousel.ariaLabel = 'Featured projects carousel';
+
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement | null;
+      expect(section).toBeTruthy();
+      expect(section!.getAttribute('aria-label')).toBe(
+        'Featured projects carousel'
+      );
+    });
   });
 
   describe('With Navigation', () => {
@@ -337,6 +355,24 @@ describe('wa-carousel', () => {
         }
       });
     });
+
+    it('applies a custom aria-label when ariaLabel prop is set', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+
+      carousel.ariaLabel = 'Featured projects carousel';
+
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement | null;
+      expect(section).toBeTruthy();
+      expect(section!.getAttribute('aria-label')).toBe(
+        'Featured projects carousel'
+      );
+    });
   });
 
   describe('With Custom Arrows', () => {
@@ -494,6 +530,24 @@ describe('wa-carousel', () => {
         }
       });
     });
+
+    it('applies a custom aria-label when ariaLabel prop is set', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+
+      carousel.ariaLabel = 'Featured projects carousel';
+
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement | null;
+      expect(section).toBeTruthy();
+      expect(section!.getAttribute('aria-label')).toBe(
+        'Featured projects carousel'
+      );
+    });
   });
 
   describe('With Custom Dots', () => {
@@ -650,6 +704,24 @@ describe('wa-carousel', () => {
           expect(dot.getAttribute('aria-selected')).toBe('false');
         }
       });
+    });
+
+    it('applies a custom aria-label when ariaLabel prop is set', async () => {
+      const carousel = document.createElement(
+        'wa-carousel'
+      ) as WaCarouselTestEl;
+
+      carousel.ariaLabel = 'Featured projects carousel';
+
+      carousel.innerHTML = DEFAULT_CAROUSEL_MARKUP;
+      document.body.appendChild(carousel);
+      await carousel.updateComplete;
+
+      const section = carousel.querySelector('.carousel') as HTMLElement | null;
+      expect(section).toBeTruthy();
+      expect(section!.getAttribute('aria-label')).toBe(
+        'Featured projects carousel'
+      );
     });
   });
 });
