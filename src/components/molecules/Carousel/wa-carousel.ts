@@ -74,7 +74,7 @@ export class WaCarousel
   firstUpdated() {
     const baseId = this.id && this.id.trim() ? this.id : this._uid;
 
-    // Snapshot original children (expect pairs: heading + content)
+    // Snapshot original children (expect triples: heading + content + caption)
     const childrenSnapshot = Array.from(this.children) as HTMLElement[];
     if (childrenSnapshot.length === 0) return;
     const contentNodes = childrenSnapshot.filter(
@@ -152,7 +152,7 @@ export class WaCarousel
       controls.appendChild(navigationElement);
     }
 
-    // Card container
+    // Slides container
     const slidesContainer = document.createElement('div') as HTMLDivElement;
     this.applyDefaultAndMappedClass(
       slidesContainer,
@@ -161,6 +161,7 @@ export class WaCarousel
     );
     slidesContainer.setAttribute('aria-atomic', 'false');
     slidesContainer.setAttribute('aria-live', 'polite');
+
     const slidesContainerId = `slides-container-${baseId}` as string;
     slidesContainer.id = slidesContainerId;
     prevButton.setAttribute('aria-controls', slidesContainerId);
@@ -170,45 +171,35 @@ export class WaCarousel
 
     const totalSlides = Math.floor(contentNodes.length / 3) as number;
 
-    prevButton.addEventListener('click', () => {
-      this.activeIndex = Math.max(
-        0,
-        Math.min(this.activeIndex - 1, Math.max(0, totalSlides - 1))
-      );
-
-      const navigationElement = controls.querySelector(
+    const getDots = (): HTMLButtonElement[] => {
+      const nav = controls.querySelector(
         `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
-      if (navigationElement) {
-        const dots = Array.from(
-          navigationElement.querySelectorAll('button[role="tab"]')
-        ) as HTMLButtonElement[];
-        dots.forEach((dot, index) => {
-          const isActive: boolean = index === this.activeIndex;
-          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        });
-      }
-    });
+      return nav
+        ? (Array.from(
+            nav.querySelectorAll('button[role="tab"]')
+          ) as HTMLButtonElement[])
+        : [];
+    };
 
-    nextButton.addEventListener('click', () => {
-      this.activeIndex = Math.max(
-        0,
-        Math.min(this.activeIndex + 1, Math.max(0, totalSlides - 1))
-      );
+    const updateDotsSelection = (active: number) => {
+      getDots().forEach((dot, i) => {
+        dot.setAttribute('aria-selected', i === active ? 'true' : 'false');
+      });
+    };
 
-      const navigationElement = controls.querySelector(
-        `.${CAROUSEL_NAVIGATION_CLASS}`
-      ) as HTMLDivElement | null;
-      if (navigationElement) {
-        const dots = Array.from(
-          navigationElement.querySelectorAll('button[role="tab"]')
-        ) as HTMLButtonElement[];
-        dots.forEach((dot, index) => {
-          const isActive: boolean = index === this.activeIndex;
-          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        });
-      }
-    });
+    const setActiveIndex = (next: number) => {
+      const max = Math.max(0, totalSlides - 1);
+      this.activeIndex = Math.max(0, Math.min(next, max));
+      updateDotsSelection(this.activeIndex);
+    };
+
+    prevButton.addEventListener('click', () =>
+      setActiveIndex(this.activeIndex - 1)
+    );
+    nextButton.addEventListener('click', () =>
+      setActiveIndex(this.activeIndex + 1)
+    );
 
     for (let i = 0, idx = 0; i < contentNodes.length; i += 3, idx++) {
       const headerElement = contentNodes[i] as HTMLElement;
@@ -297,26 +288,10 @@ export class WaCarousel
           } else {
             dot.innerHTML = `<span aria-hidden="true">•</span>`;
           }
+          dot.addEventListener('click', () => setActiveIndex(i));
 
           navigationElement.appendChild(dot);
         }
-
-        const dots = Array.from(
-          navigationElement.querySelectorAll('button[role="tab"]')
-        ) as HTMLButtonElement[];
-
-        dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => {
-            this.activeIndex = Math.max(
-              0,
-              Math.min(index, Math.max(0, totalSlides - 1))
-            );
-            dots.forEach((button, index) => {
-              const isActive: boolean = index === this.activeIndex;
-              button.setAttribute('aria-selected', isActive ? 'true' : 'false');
-            });
-          });
-        });
       }
     }
   }
