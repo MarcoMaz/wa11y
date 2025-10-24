@@ -194,12 +194,36 @@ export class WaCarousel
       updateDotsSelection(this.activeIndex);
     };
 
-    prevButton.addEventListener('click', () =>
-      setActiveIndex(this.activeIndex - 1)
-    );
-    nextButton.addEventListener('click', () =>
-      setActiveIndex(this.activeIndex + 1)
-    );
+    // Click delegation
+    controls.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+
+      // Arrows
+      const arrowButton = target.closest(
+        'button[aria-label]'
+      ) as HTMLButtonElement | null;
+      if (arrowButton) {
+        const label = arrowButton.getAttribute('aria-label');
+        if (label === 'Previous slide') setActiveIndex(this.activeIndex - 1);
+        else if (label === 'Next slide') setActiveIndex(this.activeIndex + 1);
+        return;
+      }
+
+      // Dots
+      const dotButton = target.closest(
+        'button[role="tab"]'
+      ) as HTMLButtonElement | null;
+      if (dotButton) {
+        const navigation = dotButton.closest(`.${CAROUSEL_NAVIGATION_CLASS}`);
+        if (navigation) {
+          const allDots = Array.from(
+            navigation.querySelectorAll('button[role="tab"]')
+          ) as HTMLButtonElement[];
+          const index = allDots.indexOf(dotButton);
+          if (index >= 0) setActiveIndex(index);
+        }
+      }
+    });
 
     for (let i = 0, idx = 0; i < contentNodes.length; i += 3, idx++) {
       const headerElement = contentNodes[i] as HTMLElement;
@@ -288,7 +312,6 @@ export class WaCarousel
           } else {
             dot.innerHTML = `<span aria-hidden="true">•</span>`;
           }
-          dot.addEventListener('click', () => setActiveIndex(i));
 
           navigationElement.appendChild(dot);
         }
