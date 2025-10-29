@@ -67,7 +67,9 @@ export class WaCarousel
     );
     if (!slides?.length) return;
     const target = slides[this.activeIndex];
-    if (target) target.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    if (target && typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    }
   }
 
   // Render into the light DOM instead of a shadow root, so user-provided children remain accessible
