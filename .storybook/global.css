@@ -483,7 +483,6 @@ wa-accordion {
   }
 }
 
-
 /* CAROUSEL */
 .carousel__caption {
   position: absolute !important;
@@ -522,6 +521,9 @@ wa-accordion {
 
 .carousel__slides {
   display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
 .carousel__slide {
@@ -534,4 +536,5 @@ wa-accordion {
   padding: 2rem;
   box-sizing: border-box;
   min-height: 16rem;
+  scroll-snap-align: start;
 }

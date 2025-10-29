@@ -14,7 +14,6 @@ const slides = html`
   <h3>Slide 3</h3>
   <div>Content inside slide 3</div>
   <p>Caption 3</p>
-
 `;
 
 const ARROW_PREV = html`<template data-prev>
@@ -63,6 +62,9 @@ const makeCarousel = ({
   </wa-carousel>`;
 };
 
+const OverflowHiddenDecorator = (Story: any) =>
+  html`<div style="overflow:hidden;">${Story()}</div>`;
+
 export default {
   title: 'Molecules/Carousel',
   parameters: {
@@ -75,19 +77,23 @@ export default {
 export const CarouselDefault: StoryObj = {
   name: 'Carousel Default',
   render: () => makeCarousel(),
+  decorators: [OverflowHiddenDecorator],
 };
 
 export const CarouselWithNavigation: StoryObj = {
   name: 'Carousel With Navigation',
   render: () => makeCarousel({ navigation: true }),
+  decorators: [OverflowHiddenDecorator],
 };
 
 export const CarouselWithCustomArrows: StoryObj = {
   name: 'Carousel With Custom Arrows',
   render: () => makeCarousel({ navigation: true, arrows: true }),
+  decorators: [OverflowHiddenDecorator],
 };
 
 export const CarouselWithCustomDots: StoryObj = {
   name: 'Carousel With CustomDots',
   render: () => makeCarousel({ navigation: true, dots: true }),
+  decorators: [OverflowHiddenDecorator],
 };
