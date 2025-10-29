@@ -329,6 +329,16 @@ export class WaCarousel
         }
       }
     }
+
+    this.carouselSlides.addEventListener('scroll', () => {
+      const scrollLeft = this.carouselSlides.scrollLeft;
+      const slideWidth = this.carouselSlides.clientWidth;
+      const index = Math.round(scrollLeft / slideWidth);
+      if (index !== this.activeIndex) {
+        this.activeIndex = index;
+        updateDotsSelection(index);
+      }
+    });
   }
 }
 
