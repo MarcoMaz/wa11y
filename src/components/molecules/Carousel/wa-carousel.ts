@@ -61,6 +61,15 @@ export class WaCarousel
     }
   }
 
+  private scrollToActiveSlide() {
+    const slides = this.carouselSlides?.querySelectorAll(
+      `.${CAROUSEL_SLIDE_CLASS}`
+    );
+    if (!slides?.length) return;
+    const target = slides[this.activeIndex];
+    if (target) target.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+  }
+
   // Render into the light DOM instead of a shadow root, so user-provided children remain accessible
   createRenderRoot() {
     return this;
@@ -192,6 +201,7 @@ export class WaCarousel
       const max = Math.max(0, totalSlides - 1);
       this.activeIndex = Math.max(0, Math.min(next, max));
       updateDotsSelection(this.activeIndex);
+      this.scrollToActiveSlide();
     };
 
     // Click delegation
