@@ -16,6 +16,9 @@ const CAROUSEL_SLIDES_CLASS: string = 'carousel__slides';
 const CAROUSEL_SLIDE_CLASS: string = 'carousel__slide';
 const CAROUSEL_CAPTION_CLASS: string = 'carousel__caption';
 
+const FOCUSABLE_SELECTOR: string =
+  'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
+
 @customElement('wa-carousel')
 export class WaCarousel
   extends DynamicStyleMixin(LitElement)
@@ -64,12 +67,56 @@ export class WaCarousel
   private scrollToActiveSlide() {
     const slides = this.carouselSlides?.querySelectorAll(
       `.${CAROUSEL_SLIDE_CLASS}`
-    );
+    ) as NodeListOf<Element>;
     if (!slides?.length) return;
-    const target = slides[this.activeIndex];
+    const target = slides[this.activeIndex] as Element;
     if (target && typeof target.scrollIntoView === 'function') {
       target.scrollIntoView({ behavior: 'smooth', inline: 'start' });
     }
+  }
+
+  private updateSlideInteractivity() {
+    if (!this.carouselSlides) return;
+
+    const slides = Array.from(
+      this.carouselSlides.querySelectorAll<HTMLElement>(
+        `.${CAROUSEL_SLIDE_CLASS}`
+      )
+    ) as HTMLElement[];
+
+    slides.forEach((slide: HTMLElement, index: number) => {
+      const isActive: boolean = index === this.activeIndex;
+
+      slide.toggleAttribute('aria-hidden', !isActive);
+
+      const focusables = slide.querySelectorAll<HTMLElement>(
+        FOCUSABLE_SELECTOR
+      ) as NodeListOf<HTMLElement>;
+
+      if (!isActive) {
+        focusables.forEach((element: HTMLElement) => {
+          if (!element.hasAttribute('data-prev-tabindex')) {
+            element.setAttribute(
+              'data-prev-tabindex',
+              String(element.tabIndex)
+            );
+          }
+          element.tabIndex = -1;
+        });
+      } else {
+        focusables.forEach((element: HTMLElement) => {
+          if (element.hasAttribute('data-prev-tabindex')) {
+            const previousItem = Number(
+              element.getAttribute('data-prev-tabindex')
+            ) as number;
+            element.tabIndex = Number.isNaN(previousItem) ? 0 : previousItem;
+            element.removeAttribute('data-prev-tabindex');
+          } else if (element.hasAttribute('tabindex')) {
+            element.removeAttribute('tabindex');
+          }
+        });
+      }
+    });
   }
 
   // Render into the light DOM instead of a shadow root, so user-provided children remain accessible
@@ -204,6 +251,7 @@ export class WaCarousel
       this.activeIndex = Math.max(0, Math.min(next, max));
       updateDotsSelection(this.activeIndex);
       this.scrollToActiveSlide();
+      this.updateSlideInteractivity();
     };
 
     // Click delegation
@@ -338,7 +386,10 @@ export class WaCarousel
         this.activeIndex = index;
         updateDotsSelection(index);
       }
+      this.updateSlideInteractivity();
     });
+
+    this.updateSlideInteractivity();
   }
 }
 
