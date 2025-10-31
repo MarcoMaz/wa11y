@@ -87,8 +87,6 @@ export class WaCarousel
     slides.forEach((slide: HTMLElement, index: number) => {
       const isActive: boolean = index === this.activeIndex;
 
-      slide.toggleAttribute('aria-hidden', !isActive);
-
       const focusables = slide.querySelectorAll<HTMLElement>(
         FOCUSABLE_SELECTOR
       ) as NodeListOf<HTMLElement>;
