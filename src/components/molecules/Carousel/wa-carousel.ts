@@ -295,18 +295,6 @@ export class WaCarousel
         break;
       }
 
-      let headerButtonElement = headerElement.querySelector(
-        'button'
-      ) as HTMLButtonElement;
-
-      if (!headerButtonElement) {
-        headerButtonElement = document.createElement('button');
-        headerButtonElement.type = 'button';
-        headerButtonElement.innerHTML = headerElement.innerHTML;
-        headerElement.innerHTML = '';
-        headerElement.appendChild(headerButtonElement);
-      }
-
       // Single Slide
       const slide = document.createElement('div') as HTMLDivElement;
       this.applyDefaultAndMappedClass(
@@ -328,9 +316,8 @@ export class WaCarousel
       const captionId = `slide-caption-${baseId}-${idx}`;
       captionElement.id = captionId;
 
-      const captionDescription =
-        headerButtonElement.getAttribute('aria-describedby');
-      headerButtonElement.setAttribute(
+      const captionDescription = headerElement.getAttribute('aria-describedby');
+      headerElement.setAttribute(
         'aria-describedby',
         captionDescription ? `${captionDescription} ${captionId}` : captionId
       );

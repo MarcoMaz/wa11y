@@ -172,15 +172,8 @@ describe('wa-carousel', () => {
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
-
-        const headerButton = header!.querySelector(
-          'button'
-        ) as HTMLButtonElement | null;
-
-        expect(headerButton).toBeTruthy();
-        expect(headerButton!.getAttribute('aria-describedby')).toContain(
-          caption!.id
-        );
+        expect(header!.hasAttribute('aria-describedby')).toBe(true);
+        expect(header!.getAttribute('aria-describedby')).toContain(caption!.id);
 
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
@@ -373,15 +366,8 @@ describe('wa-carousel', () => {
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
-
-        const headerButton = header!.querySelector(
-          'button'
-        ) as HTMLButtonElement | null;
-
-        expect(headerButton).toBeTruthy();
-        expect(headerButton!.getAttribute('aria-describedby')).toContain(
-          caption!.id
-        );
+        expect(header!.hasAttribute('aria-describedby')).toBe(true);
+        expect(header!.getAttribute('aria-describedby')).toContain(caption!.id);
 
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
@@ -620,15 +606,8 @@ describe('wa-carousel', () => {
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
-
-        const headerButton = header!.querySelector(
-          'button'
-        ) as HTMLButtonElement | null;
-
-        expect(headerButton).toBeTruthy();
-        expect(headerButton!.getAttribute('aria-describedby')).toContain(
-          caption!.id
-        );
+        expect(header!.hasAttribute('aria-describedby')).toBe(true);
+        expect(header!.getAttribute('aria-describedby')).toContain(caption!.id);
 
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
@@ -867,15 +846,8 @@ describe('wa-carousel', () => {
         expect(captionId).toBeTruthy();
         expect(captionId).not.toBe('');
         expect(captionId).toMatch(/^slide-caption-/);
-
-        const headerButton = header!.querySelector(
-          'button'
-        ) as HTMLButtonElement | null;
-
-        expect(headerButton).toBeTruthy();
-        expect(headerButton!.getAttribute('aria-describedby')).toContain(
-          caption!.id
-        );
+        expect(header!.hasAttribute('aria-describedby')).toBe(true);
+        expect(header!.getAttribute('aria-describedby')).toContain(caption!.id);
 
         const contentDivs = Array.from(
           slide.querySelectorAll(':scope > div')
