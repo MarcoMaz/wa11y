@@ -376,6 +376,8 @@ describe('wa-carousel', () => {
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
+      const total = slides.length;
+
       dots.forEach((dot, index) => {
         expect(dot.tagName).toBe('BUTTON');
         expect(dot.type).toBe('button');
@@ -384,6 +386,9 @@ describe('wa-carousel', () => {
         const controlsId = dot.getAttribute('aria-controls') as string | null;
 
         expect(controlsId).toBe(slides[index].id);
+        expect(dot.getAttribute('aria-label')).toBe(
+          `Go to slide ${index + 1} of ${total}`
+        );
 
         const targetSlide = section!.querySelector(
           `#${controlsId}`
@@ -616,10 +621,15 @@ describe('wa-carousel', () => {
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
+      const total = slides.length;
+
       dots.forEach((dot, index) => {
         expect(dot.tagName).toBe('BUTTON');
         expect(dot.type).toBe('button');
         expect(dot.role).toBe('tab');
+        expect(dot.getAttribute('aria-label')).toBe(
+          `Go to slide ${index + 1} of ${total}`
+        );
 
         const controlsId = dot.getAttribute('aria-controls') as string | null;
 
@@ -856,10 +866,15 @@ describe('wa-carousel', () => {
         expect(contentDivs.length).toBeGreaterThanOrEqual(1);
       });
 
+      const total = slides.length;
+
       dots.forEach((dot, index) => {
         expect(dot.tagName).toBe('BUTTON');
         expect(dot.type).toBe('button');
         expect(dot.role).toBe('tab');
+        expect(dot.getAttribute('aria-label')).toBe(
+          `Go to slide ${index + 1} of ${total}`
+        );
 
         const controlsId = dot.getAttribute('aria-controls') as string | null;
 

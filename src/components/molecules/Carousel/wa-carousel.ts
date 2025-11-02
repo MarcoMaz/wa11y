@@ -273,7 +273,9 @@ export class WaCarousel
         'button[role="tab"]'
       ) as HTMLButtonElement | null;
       if (dotButton) {
-        const navigationDotButton = dotButton.closest(`.${CAROUSEL_NAVIGATION_CLASS}`);
+        const navigationDotButton = dotButton.closest(
+          `.${CAROUSEL_NAVIGATION_CLASS}`
+        );
         if (navigationDotButton) {
           const allDots = Array.from(
             navigationDotButton.querySelectorAll('button[role="tab"]')
@@ -346,6 +348,10 @@ export class WaCarousel
           dot.setAttribute(
             'aria-selected',
             i === this.activeIndex ? 'true' : 'false'
+          );
+          dot.setAttribute(
+            'aria-label',
+            `Go to slide ${i + 1} of ${totalSlides}`
           );
 
           const templateDot: HTMLTemplateElement | null =
