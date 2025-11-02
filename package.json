@@ -30,6 +30,10 @@
       "types": "./dist/src/components/molecules/Accordion/wa-accordion.d.ts",
       "import": "./dist/wa-accordion.es.js"
     },
+    "./wa-carousel": {
+      "types": "./dist/src/components/molecules/Carousel/wa-carousel.d.ts",
+      "import": "./dist/wa-carousel.es.js"
+    },
     "./wa-form": {
       "types": "./dist/src/components/molecules/Form/wa-form.d.ts",
       "import": "./dist/wa-form.es.js"

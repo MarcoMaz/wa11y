@@ -12,6 +12,7 @@ export default defineConfig({
         'wa-input-text': resolve(__dirname, 'src/components/atoms/InputText/wa-input-text.ts'),
         'wa-wheel-picker': resolve(__dirname, 'src/components/atoms/WheelPicker/wa-wheel-picker.ts'),
         'wa-accordion': resolve(__dirname, 'src/components/molecules/Accordion/wa-accordion.ts'),
+        'wa-carousel': resolve(__dirname, 'src/components/molecules/Carousel/wa-carousel.ts'),
         'wa-form': resolve(__dirname, 'src/components/molecules/Form/wa-form.ts'),
       },
       name: 'wa11y',
