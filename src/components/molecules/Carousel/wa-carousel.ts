@@ -15,7 +15,6 @@ const CAROUSEL_NAVIGATION_CLASS: string = 'carousel__navigation';
 const CAROUSEL_SLIDES_CLASS: string = 'carousel__slides';
 const CAROUSEL_SLIDE_CLASS: string = 'carousel__slide';
 const CAROUSEL_CAPTION_CLASS: string = 'carousel__caption';
-
 const FOCUSABLE_SELECTOR: string =
   'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
 
@@ -134,7 +133,7 @@ export class WaCarousel
     const childrenSnapshot = Array.from(this.children) as HTMLElement[];
     if (childrenSnapshot.length === 0) return;
     const contentNodes = childrenSnapshot.filter(
-      (el) => el.tagName !== 'TEMPLATE'
+      (element) => element.tagName !== 'TEMPLATE'
     ) as HTMLElement[];
 
     // Root
@@ -228,12 +227,12 @@ export class WaCarousel
     const totalSlides = Math.floor(contentNodes.length / 3) as number;
 
     const getDots = (): HTMLButtonElement[] => {
-      const nav = controls.querySelector(
+      const navigationDots = controls.querySelector(
         `.${CAROUSEL_NAVIGATION_CLASS}`
       ) as HTMLDivElement | null;
-      return nav
+      return navigationDots
         ? (Array.from(
-            nav.querySelectorAll('button[role="tab"]')
+            navigationDots.querySelectorAll('button[role="tab"]')
           ) as HTMLButtonElement[])
         : [];
     };
@@ -261,9 +260,11 @@ export class WaCarousel
         'button[aria-label]'
       ) as HTMLButtonElement | null;
       if (arrowButton) {
-        const label = arrowButton.getAttribute('aria-label');
-        if (label === 'Previous slide') setActiveIndex(this.activeIndex - 1);
-        else if (label === 'Next slide') setActiveIndex(this.activeIndex + 1);
+        const arrowButtonAriaLabel = arrowButton.getAttribute('aria-label');
+        if (arrowButtonAriaLabel === 'Previous slide')
+          setActiveIndex(this.activeIndex - 1);
+        else if (arrowButtonAriaLabel === 'Next slide')
+          setActiveIndex(this.activeIndex + 1);
         return;
       }
 
@@ -272,10 +273,10 @@ export class WaCarousel
         'button[role="tab"]'
       ) as HTMLButtonElement | null;
       if (dotButton) {
-        const navigation = dotButton.closest(`.${CAROUSEL_NAVIGATION_CLASS}`);
-        if (navigation) {
+        const navigationDotButton = dotButton.closest(`.${CAROUSEL_NAVIGATION_CLASS}`);
+        if (navigationDotButton) {
           const allDots = Array.from(
-            navigation.querySelectorAll('button[role="tab"]')
+            navigationDotButton.querySelectorAll('button[role="tab"]')
           ) as HTMLButtonElement[];
           const index = allDots.indexOf(dotButton);
           if (index >= 0) setActiveIndex(index);
