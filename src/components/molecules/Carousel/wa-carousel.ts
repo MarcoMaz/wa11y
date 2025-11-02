@@ -185,14 +185,14 @@ export class WaCarousel
       prevButton.appendChild(templatePrevButton.content.cloneNode(true));
       templatePrevButton.remove();
     } else {
-      prevButton.innerHTML = '<span aria-hidden="true">&larr;</span>';
+      prevButton.innerHTML = '<span aria-hidden="true">Previous</span>';
     }
 
     if (templateNextButton) {
       nextButton.appendChild(templateNextButton.content.cloneNode(true));
       templateNextButton.remove();
     } else {
-      nextButton.innerHTML = '<span aria-hidden="true">&rarr;</span>';
+      nextButton.innerHTML = '<span aria-hidden="true">Next</span>';
     }
 
     // Navigation

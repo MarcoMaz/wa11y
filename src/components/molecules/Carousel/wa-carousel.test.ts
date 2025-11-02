@@ -108,7 +108,7 @@ describe('wa-carousel', () => {
       ) as HTMLSpanElement;
 
       expect(defaultPreviousArrowSpan).not.toBeNull();
-      expect(defaultPreviousArrowSpan!.textContent).toBe('←');
+      expect(defaultPreviousArrowSpan!.textContent).toBe('Previous');
 
       const nextArrowButton = arrowsButtons!.querySelector(
         'button[aria-label="Next slide"]'
@@ -122,7 +122,7 @@ describe('wa-carousel', () => {
       ) as HTMLSpanElement;
 
       expect(defaultNextArrowSpan).not.toBeNull();
-      expect(defaultNextArrowSpan!.textContent).toBe('→');
+      expect(defaultNextArrowSpan!.textContent).toBe('Next');
 
       // Slides container
       const slidesContainer = section!.querySelector(
@@ -286,7 +286,7 @@ describe('wa-carousel', () => {
       ) as HTMLSpanElement;
 
       expect(defaultPreviousArrowSpan).not.toBeNull();
-      expect(defaultPreviousArrowSpan!.textContent).toBe('←');
+      expect(defaultPreviousArrowSpan!.textContent).toBe('Previous');
 
       const nextArrowButton = arrowsButtons!.querySelector(
         'button[aria-label="Next slide"]'
@@ -300,7 +300,7 @@ describe('wa-carousel', () => {
       ) as HTMLSpanElement;
 
       expect(defaultNextArrowSpan).not.toBeNull();
-      expect(defaultNextArrowSpan!.textContent).toBe('→');
+      expect(defaultNextArrowSpan!.textContent).toBe('Next');
 
       // Dots
       const navigation = controls!.querySelector(
