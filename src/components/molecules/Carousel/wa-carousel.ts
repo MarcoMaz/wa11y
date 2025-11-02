@@ -216,9 +216,9 @@ export class WaCarousel
     );
     slidesContainer.setAttribute('aria-atomic', 'false');
     slidesContainer.setAttribute('aria-live', 'polite');
-
     const slidesContainerId = `slides-container-${baseId}` as string;
     slidesContainer.id = slidesContainerId;
+
     prevButton.setAttribute('aria-controls', slidesContainerId);
     nextButton.setAttribute('aria-controls', slidesContainerId);
     sectionRoot.append(slidesContainer);
@@ -314,7 +314,6 @@ export class WaCarousel
 
       const captionId = `slide-caption-${baseId}-${idx}`;
       captionElement.id = captionId;
-
       const captionDescription = headerElement.getAttribute('aria-describedby');
       headerElement.setAttribute(
         'aria-describedby',
