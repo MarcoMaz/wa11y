@@ -42,38 +42,43 @@ describe('wa-accordion', () => {
       expect(outerContainer).toBeTruthy();
       expect(outerContainer!.tagName).toBe('DIV');
 
-      // Sequence per item: H3 (with <button> inside), DIV[role=region]
-      const children = Array.from(outerContainer!.children) as HTMLElement[];
-      // 3 items => 3 * (header, panel) = 6 children
-      expect(children.length).toBe(6);
+      const itemWrappers = Array.from(
+        outerContainer!.querySelectorAll<HTMLElement>(':scope > .accordionItem')
+      );
+      expect(itemWrappers.length).toBe(3);
 
-      for (let i = 0; i < children.length; i += 2) {
-        const headerElement = children[i] as HTMLHeadingElement;
-        const panelElement = children[i + 1] as HTMLDivElement;
-
-        expect(headerElement.matches('h2,h3,h4,h5,h6')).toBe(true);
-
-        const buttonElement = headerElement.querySelector(
-          'button'
+      for (const item of itemWrappers) {
+        const headerElement = item.querySelector(
+          'h2,h3,h4,h5,h6'
+        ) as HTMLHeadingElement | null;
+        const buttonElement = item.querySelector(
+          'h2 button,h3 button,h4 button,h5 button,h6 button'
         ) as HTMLButtonElement | null;
-        const panelId = panelElement.id as string;
+        const panelElement = item.querySelector<HTMLElement>(
+          '.accordionItem__panel'
+        );
 
+        const panelId = panelElement!.id;
+
+        expect(headerElement).toBeTruthy();
         expect(buttonElement).toBeTruthy();
-        expect(panelElement.tagName).toBe('DIV');
-        expect(panelElement.getAttribute('role')).toBe('region');
-        expect(panelElement.hidden).toBe(true);
-        expect(panelElement.getAttribute('aria-hidden')).toBe('true');
+        expect(panelElement).toBeTruthy();
 
-        if (buttonElement) {
-          expect(buttonElement.type).toBe('button');
-          expect(buttonElement.id).toBeTruthy();
-          expect(buttonElement.getAttribute('aria-controls')).toBeTruthy();
-          expect(buttonElement.getAttribute('aria-expanded')).toBe('false');
-          expect(panelId).toBe(buttonElement.getAttribute('aria-controls'));
-          expect(panelElement.getAttribute('aria-labelledby')).toBe(
-            buttonElement.id
-          );
-        }
+        // Panel basics
+        expect(panelElement!.tagName).toBe('DIV');
+        expect(panelElement!.getAttribute('role')).toBe('region');
+        expect(panelElement!.hidden).toBe(true);
+        expect(panelElement!.getAttribute('aria-hidden')).toBe('true');
+
+        // Button ↔ panel wiring
+        expect(buttonElement!.type).toBe('button');
+        expect(buttonElement!.id).toBeTruthy();
+        expect(buttonElement!.getAttribute('aria-controls')).toBeTruthy();
+        expect(buttonElement!.getAttribute('aria-expanded')).toBe('false');
+        expect(panelId).toBe(buttonElement!.getAttribute('aria-controls'));
+        expect(panelElement!.getAttribute('aria-labelledby')).toBe(
+          buttonElement!.id
+        );
       }
     });
 
@@ -158,43 +163,48 @@ describe('wa-accordion', () => {
       expect(outerContainer).toBeTruthy();
       expect(outerContainer!.tagName).toBe('DIV');
 
-      // Sequence per item: Heading (with <button>), DIV[role=region], ADDON
-      const children = Array.from(outerContainer!.children) as HTMLElement[];
-      // 3 items => 3 * (header, panel, addon) = 9 children
-      expect(children.length).toBe(9);
+      const itemWrappers = Array.from(
+        outerContainer!.querySelectorAll<HTMLElement>(':scope > .accordionItem')
+      );
+      expect(itemWrappers.length).toBe(3);
 
-      for (let i = 0; i < children.length; i += 3) {
-        const headerElement = children[i] as HTMLHeadingElement;
-        const panelElement = children[i + 1] as HTMLDivElement;
-        const addonWrapper = children[i + 2] as HTMLDivElement;
-
-        expect(headerElement.matches('h2,h3,h4,h5,h6')).toBe(true);
-
-        const buttonElement = headerElement.querySelector(
-          'button'
+      for (const item of itemWrappers) {
+        const headerElement = item.querySelector(
+          'h2,h3,h4,h5,h6'
+        ) as HTMLHeadingElement | null;
+        const buttonElement = item.querySelector(
+          'h2 button,h3 button,h4 button,h5 button,h6 button'
         ) as HTMLButtonElement | null;
-        const panelId = panelElement.id;
+        const panelElement = item.querySelector<HTMLElement>(
+          '.accordionItem__panel'
+        );
+        const addonWrapper = item.querySelector<HTMLElement>(
+          '.accordionItem__addon'
+        );
+        const panelId = panelElement!.id;
 
+        expect(headerElement).toBeTruthy();
         expect(buttonElement).toBeTruthy();
-        expect(panelElement.tagName).toBe('DIV');
-        expect(panelElement.getAttribute('role')).toBe('region');
-        expect(panelElement.hidden).toBe(true);
-        expect(panelElement.getAttribute('aria-hidden')).toBe('true');
+        expect(panelElement).toBeTruthy();
+        expect(addonWrapper).toBeTruthy();
 
-        if (buttonElement) {
-          expect(buttonElement.type).toBe('button');
-          expect(buttonElement.id).toBeTruthy();
-          expect(buttonElement.getAttribute('aria-controls')).toBeTruthy();
-          expect(buttonElement.getAttribute('aria-expanded')).toBe('false');
-          expect(panelId).toBe(buttonElement.getAttribute('aria-controls'));
-          expect(panelElement.getAttribute('aria-labelledby')).toBe(
-            buttonElement.id
-          );
-        }
+        // Panel basics
+        expect(panelElement!.tagName).toBe('DIV');
+        expect(panelElement!.getAttribute('role')).toBe('region');
+        expect(panelElement!.hidden).toBe(true);
+        expect(panelElement!.getAttribute('aria-hidden')).toBe('true');
 
-        expect(panelElement.nextElementSibling).toBe(addonWrapper);
+        // Button ↔ panel wiring
+        expect(buttonElement!.type).toBe('button');
+        expect(buttonElement!.id).toBeTruthy();
+        expect(buttonElement!.getAttribute('aria-controls')).toBeTruthy();
+        expect(buttonElement!.getAttribute('aria-expanded')).toBe('false');
+        expect(panelId).toBe(buttonElement!.getAttribute('aria-controls'));
+        expect(panelElement!.getAttribute('aria-labelledby')).toBe(
+          buttonElement!.id
+        );
         expect(
-          addonWrapper.querySelector('[data-testid="addon"]')
+          addonWrapper!.querySelector('[data-testid="addon"]')
         ).toBeTruthy();
       }
     });

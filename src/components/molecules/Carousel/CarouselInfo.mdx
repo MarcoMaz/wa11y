@@ -1,0 +1,123 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import './wa-carousel';
+import * as CarouselStories from './wa-carousel.stories';
+
+<Meta title='Molecules/Carousel' of={CarouselStories} />
+
+# Carousel
+
+&nbsp;
+
+<Story />
+&nbsp;
+
+## Description
+
+A carousel rotates content display and lets users navigate through multiple slides or items using arrows or navigation dots.
+
+Each section consists of a **header**, **content** and **caption**.
+
+## Tag
+
+`<wa-carousel>`
+
+## ClassMap
+
+- `carousel` — root `<section>` wrapping the entire carousel
+- `carousel__controls` — container for all controls (arrows and optional dots)
+- `carousel__arrows-buttons` — wrapper for the previous and next buttons
+- `carousel__navigation` — wrapper for the dots navigation (rendered when `navigation` is `true`)
+- `carousel__slides` — live region container of all slides
+- `carousel__slide` — single slide wrapper (grouping heading, content, caption)
+- `carousel__caption` — caption element inside each slide
+
+## Props
+
+### ariaLabel
+
+- **Type:** `string | null`
+- **Reflects to Attribute:** `true`
+- **Default:** `"carousel"`
+- **Description:** Accessible label for the carousel `<section>`.
+
+---
+
+### navigation
+
+- **Type:** `boolean`
+- **Reflects to Attribute:** `true`
+- **Default:** `false`
+- **Description:** When `true`, renders a tablist of dots that lets users jump to a specific slide.
+
+---
+
+### activeIndex
+
+- **Type:** `number`
+- **Reflects to Attribute:** `true`
+- **Default:** `0`
+- **Description:** Zero-based index of the currently active slide.
+
+## Children Structure
+
+```html
+<wa-carousel>
+  <h3>Slide 1</h3>
+  <div>Content 1</div>
+  <p>Caption 1</p>
+
+  <h3>Slide 2</h3>
+  <div>Content 2</div>
+  <p>Caption 2</p>
+
+  <h3>Slide 3</h3>
+  <div>Content 3</div>
+  <p>Caption 3</p>
+</wa-carousel>
+```
+
+## Templating Arrows and Dots
+
+You can customize the appearance of arrows and dots using `<template>` elements placed inside the carousel.
+
+### Available templates
+
+- `<template data-prev>`: overrides the Previous button content
+- `<template data-next>`: overrides the Next button content
+- `<template data-dot>`: template for inactive navigation dots
+- `<template data-dot-active>`: template for the active dot (index 0 on load)
+
+```html
+<wa-carousel navigation>
+  <template data-prev>
+    <span aria-hidden="true">⟵</span>
+  </template>
+
+  <template data-next>
+    <span aria-hidden="true">⟶</span>
+  </template>
+
+  <template data-dot>
+    <span aria-hidden="true">○</span>
+  </template>
+
+  <template data-dot-active>
+    <span aria-hidden="true">●</span>
+  </template>
+
+  <h3>Slide 1</h3>
+  <div>Content 1</div>
+  <p>Caption 1</p>
+
+  <h3>Slide 2</h3>
+  <div>Content 2</div>
+  <p>Caption 2</p>
+
+  <h3>Slide 3</h3>
+  <div>Content 3</div>
+  <p>Caption 3</p>
+</wa-carousel>
+```
+
+If no templates are provided, default arrows (← / →) and dots (•) are rendered.
