@@ -10,14 +10,19 @@ export default {
   },
   args: {
     collapseOthers: false,
+    openIndex: -1,
   },
   argTypes: {
     collapseOthers: {
       control: 'boolean',
     },
+    openIndex: {
+      control: { type: 'number', min: -1 },
+    },
   },
-  render: ({ collapseOthers }) => html`<wa-accordion
+  render: ({ collapseOthers, openIndex }) => html`<wa-accordion
     .collapseOthers=${collapseOthers}
+    .openIndex=${openIndex}
   >
     <h3>RenatoDoList</h3>
     <div>
@@ -50,6 +55,13 @@ export const AccordionCollapseOthers: StoryObj = {
   name: 'Accordion Collapse Others',
   args: {
     collapseOthers: true,
+  },
+};
+
+export const AccordionOpenByDefault: StoryObj = {
+  name: 'Accordion Open By Default',
+  args: {
+    openIndex: 0,
   },
 };
 

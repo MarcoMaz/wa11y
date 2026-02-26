@@ -4,6 +4,7 @@ import { DynamicStyleMixin } from '../../../mixins/DynamicStyleMixin';
 
 export interface WaAccordionProps extends HTMLElement {
   collapseOthers?: boolean;
+  openIndex?: number;
 }
 
 const ACCORDION_CLASS: string = 'accordion';
@@ -22,6 +23,7 @@ export class WaAccordion
   private _uid = Math.random().toString(36).slice(2);
 
   @property({ type: Boolean, reflect: true }) collapseOthers = false;
+  @property({ type: Number, reflect: true }) openIndex = -1;
 
   @query(`.${ACCORDION_CLASS}`) accordion!: HTMLDivElement;
   @query(`.${ACCORDION_ITEM_CLASS}`) accordionItem!: HTMLDivElement;
@@ -170,6 +172,13 @@ export class WaAccordion
         );
         addonElement.appendChild(fragment);
         itemContainer.appendChild(addonElement);
+      }
+
+      if (idx === this.openIndex) {
+        headerButtonElement.setAttribute('aria-expanded', 'true');
+        panelElement.hidden = false;
+        panelElement.setAttribute('aria-hidden', 'false');
+        itemContainer.classList.add(ACCORDION_ITEM_ACTIVE_CLASS);
       }
 
       headerButtonElement.addEventListener('click', () => {

@@ -150,6 +150,59 @@ describe('wa-accordion', () => {
     });
   });
 
+  describe('openIndex', () => {
+    it('opens the specified item by default', async () => {
+      const accordion = document.createElement(
+        'wa-accordion'
+      ) as WaAccordionTestEl;
+      (accordion as unknown as { openIndex: number }).openIndex = 1;
+      accordion.innerHTML = DEFAULT_ACCORDION_MARKUP;
+      document.body.appendChild(accordion);
+      await accordion.updateComplete;
+
+      const buttons = Array.from(
+        accordion.querySelectorAll('button[aria-controls]')
+      ) as HTMLButtonElement[];
+
+      const panelOf = (button: HTMLButtonElement) =>
+        accordion.querySelector<HTMLElement>(
+          `#${button.getAttribute('aria-controls')}`
+        )!;
+
+      expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
+      expect(panelOf(buttons[0]).hidden).toBe(true);
+
+      expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
+      expect(panelOf(buttons[1]).hidden).toBe(false);
+
+      expect(buttons[2].getAttribute('aria-expanded')).toBe('false');
+      expect(panelOf(buttons[2]).hidden).toBe(true);
+    });
+
+    it('keeps all panels closed when openIndex is -1', async () => {
+      const accordion = document.createElement(
+        'wa-accordion'
+      ) as WaAccordionTestEl;
+      accordion.innerHTML = DEFAULT_ACCORDION_MARKUP;
+      document.body.appendChild(accordion);
+      await accordion.updateComplete;
+
+      const buttons = Array.from(
+        accordion.querySelectorAll('button[aria-controls]')
+      ) as HTMLButtonElement[];
+
+      const panelOf = (button: HTMLButtonElement) =>
+        accordion.querySelector<HTMLElement>(
+          `#${button.getAttribute('aria-controls')}`
+        )!;
+
+      for (const button of buttons) {
+        expect(button.getAttribute('aria-expanded')).toBe('false');
+        expect(panelOf(button).hidden).toBe(true);
+      }
+    });
+  });
+
   describe('with Addon', () => {
     it('renders correctly', async () => {
       const accordion = document.createElement(
